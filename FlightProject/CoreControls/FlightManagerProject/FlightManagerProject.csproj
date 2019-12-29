@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C31E7E46-7F91-44E1-9496-CDE3D77BBC90}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FlightManagerProject</RootNamespace>
+    <AssemblyName>FlightManagerProject</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Admin\Administrator.cs" />
+    <Compile Include="DAO\AirLineMsSqlDao.cs" />
+    <Compile Include="DAO\CountryMsSqlDao.cs" />
+    <Compile Include="DAO\CustomerMsSqlDao.cs" />
+    <Compile Include="DAO\FlightsMsSqlDao.cs" />
+    <Compile Include="DAO\TicketsMsSqlDao.cs" />
+    <Compile Include="Exceptions\ExceptionCountryNotFound.cs" />
+    <Compile Include="Exceptions\ExceptionFlightNotFound.cs" />
+    <Compile Include="Exceptions\ExceptionTicketNotFound.cs" />
+    <Compile Include="Exceptions\ExceptionTicketSoldOut.cs" />
+    <Compile Include="Exceptions\ExceptionUserNotFound.cs" />
+    <Compile Include="Exceptions\ExceptionWrongPassword.cs" />
+    <Compile Include="Facade\AnonymousFacade.cs" />
+    <Compile Include="Facade\FacadeBase.cs" />
+    <Compile Include="Facade\LoggedInAdminFacade.cs" />
+    <Compile Include="Facade\LoggedInAirLineFacade.cs" />
+    <Compile Include="Facade\LoggedInCustomerFacade.cs" />
+    <Compile Include="IAirLineDao.cs" />
+    <Compile Include="IAnonymousFacade.cs" />
+    <Compile Include="IBasic.cs" />
+    <Compile Include="ICountryDao.cs" />
+    <Compile Include="ICustomerDao.cs" />
+    <Compile Include="ILoggedInAdminFacade.cs" />
+    <Compile Include="ILoggedInAirLineFacade.cs" />
+    <Compile Include="ILoggedInCustomerFacade.cs" />
+    <Compile Include="ILoginService.cs" />
+    <Compile Include="ILoginTokenBase.cs" />
+    <Compile Include="IPoco.cs" />
+    <Compile Include="IFlightsDao.cs" />
+    <Compile Include="ITicketDao.cs" />
+    <Compile Include="IUser.cs" />
+    <Compile Include="POCO\AirLine.cs" />
+    <Compile Include="POCO\Country.cs" />
+    <Compile Include="POCO\Customer.cs" />
+    <Compile Include="POCO\Flight.cs" />
+    <Compile Include="POCO\Ticket.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Services\ConfigurationUtils.cs" />
+    <Compile Include="Services\DailyCLeanUpTool.cs" />
+    <Compile Include="Services\ErrorLogger.cs" />
+    <Compile Include="Services\FlightCenter.cs" />
+    <Compile Include="Services\LoginService.cs" />
+    <Compile Include="Services\LoginToken.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
