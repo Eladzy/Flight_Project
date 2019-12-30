@@ -158,9 +158,12 @@ namespace FlightProjectWebServices.Controllers
             return Ok(flights);
         }
 
-        //[HttpGet]
-        //[ResponseType(typeof(IEnumerable<Flight>))]
-        //[Route("api/search/{id}/{airline}/{origin}/{dest}/{depDate}/{LandDate}/{vacancy}")]
-        //IHttpActionResult GetBySearch([FromBody] long id,[FromBody]string airline,)
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<Flight>))]
+        [Route("api/search")]
+        IHttpActionResult GetBySearch([FromBody] long id=0,[FromBody]string airlineName="",[FromBody]string originCountry="",[FromBody]string destCountry="",[FromBody]DateTime? depTime=null,[FromBody]DateTime? landTime = null)
+        {
+            return Ok();
+        }
     }
 }
