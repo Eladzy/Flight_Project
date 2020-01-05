@@ -20,10 +20,12 @@ namespace FlightDataBaseFiller
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new ViewModel();
+            ViewModel VM = new ViewModel();
+            this.DataContext = VM;
         }
     }
 }

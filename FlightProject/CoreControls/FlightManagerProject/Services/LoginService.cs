@@ -13,6 +13,8 @@ namespace FlightManagerProject
         public AirLineMsSqlDao AirlineDao =new AirLineMsSqlDao();
         public CustomerMsSqlDao CustomerDao = new CustomerMsSqlDao();
         
+       
+
         public  bool TryAdminLogin(string username, string password,out LoginToken<Administrator>token)
         {
             if (string.IsNullOrWhiteSpace(username))

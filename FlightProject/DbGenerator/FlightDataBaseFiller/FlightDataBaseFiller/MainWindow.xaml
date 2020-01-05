@@ -19,15 +19,15 @@
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
         <TextBlock Text="Airline Companies" Grid.Row="1" Margin="30,10"/>
-        <TextBox x:Name="airlineBox" Grid.Row="1" Margin="15,10" Height="15" Width="70"/>
+        <TextBox x:Name="airlineBox" Text="{Binding NumAirlines,Mode=TwoWay}" Grid.Row="1" Margin="15,10" Height="15" Width="70"/>
         <TextBlock Text="Customers" Grid.Row="2" Margin="30,10"/>
-        <TextBox x:Name="customerBox" Grid.Row="2" Margin="15,10" Height="15" Width="70"/>
+        <TextBox x:Name="customerBox" Text="{Binding NumCustomers,Mode=TwoWay}" Grid.Row="2" Margin="15,10" Height="15" Width="70"/>
         <TextBlock Text="Flights Per Companies" Grid.Row="3" Margin="30,10"/>
-        <TextBox x:Name="flightsPerBox" Grid.Row="3" Margin="15,10" Height="15" Width="70"/>
-        <TextBlock Text="Tickets Per Customer" Grid.Row="4" Margin="30,10"/>
-        <TextBox x:Name="ticketsPerBox" Grid.Row="4" Margin="15,10" Height="15" Width="70"/>
+        <TextBox x:Name="flightsPerBox" Text="{Binding NumFlights, Mode=TwoWay}" Grid.Row="3" Margin="15,10" Height="15" Width="70"/>
+        <TextBlock Text="Tickets Per Customer"  Grid.Row="4" Margin="30,10"/>
+        <TextBox x:Name="ticketsPerBox" Text="{Binding TicketsPerCustomer,Mode=TwoWay}" Grid.Row="4" Margin="15,10" Height="15" Width="70"/>
         <TextBlock Text="Countries" Grid.Row="5" Margin="30,10"/>
-        <TextBox x:Name="countriesBox" Grid.Row="5" Margin="15,10" Height="15" Width="70"/>
+        <TextBox x:Name="countriesBox" Text="{Binding NumCountries,Mode=TwoWay}" Grid.Row="5" Margin="15,10" Height="15" Width="70"/>
         <TextBlock x:Name="progressBlk" Grid.Row="6" VerticalAlignment="Bottom" Text="placeholder" Margin="100,10" FontSize="20"/>
         <ProgressBar x:Name="generalProgress" HorizontalAlignment="Center" Grid.Row="7" Height="20" Width="550"/>
         <ListBox Name="infoLstBox" HorizontalAlignment="Center" Grid.Row="8" MinWidth="500" Height="120" MaxHeight="120" ScrollViewer.VerticalScrollBarVisibility="Auto"/>

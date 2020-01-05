@@ -7,9 +7,9 @@ using System.Windows.Threading;
 using Prism;
 using Prism.Commands;
 
-namespace FlightDataBaseFiller.ViewModel
+namespace FlightDataBaseFiller
 {
-    class ViewModel
+    public class ViewModel
     {
         Dispatcher dispatcher { get; set; }
 
@@ -17,14 +17,16 @@ namespace FlightDataBaseFiller.ViewModel
 
         public int NumAirlines { get; set; }
 
-        public int NumCuntries { get; set; }
+        public int NumCountries { get; set; }
+
+        public int NumFlights { get; set; }
+
         public int TicketsPerCustomer { get; set; }
 
         public DelegateCommand Command { get; set; }
         private DispatcherTimer Timer=new DispatcherTimer();
         public ViewModel()
-        {
-            
+        {  
             this.Timer.Interval = TimeSpan.FromMilliseconds(500);
             this.Timer.Tick += VerifyValues;
             this.Timer.Start();
@@ -33,17 +35,17 @@ namespace FlightDataBaseFiller.ViewModel
 
         private void ExecuteCommand()
         {
-            throw new NotImplementedException();
+           // throw new NotImplementedException();
         }
 
         private bool CanExecuteCommand()
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         private void VerifyValues(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+           //throw new NotImplementedException();
         }
     }
 }

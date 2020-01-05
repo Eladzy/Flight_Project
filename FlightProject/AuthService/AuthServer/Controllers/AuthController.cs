@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using FlightManagerProject;
 
 namespace AuthServer.Controllers
 {
@@ -25,7 +26,7 @@ namespace AuthServer.Controllers
 
             //signing credentials
             var signingCredentials = new SigningCredentials(symmetricalSecureKey, SecurityAlgorithms.HmacSha256Signature);
-
+            
             //create token
             var token = new JwtSecurityToken(
                 issuer: "smesk.in",
