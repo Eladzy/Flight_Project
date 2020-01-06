@@ -45,7 +45,9 @@ namespace FlightDataBaseFiller
 
         private void VerifyValues(object sender, EventArgs e)
         {
-           //throw new NotImplementedException();
+           //make sure the number of bought tickets does not exceed the overall tickets
+
+           
         }
     }
 }

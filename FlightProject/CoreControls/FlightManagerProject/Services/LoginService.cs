@@ -9,9 +9,9 @@ using System.Diagnostics;
 namespace FlightManagerProject
 {
    public  class LoginService : ILoginService
-    {
-        public AirLineMsSqlDao AirlineDao =new AirLineMsSqlDao();
-        public CustomerMsSqlDao CustomerDao = new CustomerMsSqlDao();
+    {//ask if i can make that static
+        public  AirLineMsSqlDao AirlineDao =new AirLineMsSqlDao();
+        public  CustomerMsSqlDao CustomerDao = new CustomerMsSqlDao();
         
        
 

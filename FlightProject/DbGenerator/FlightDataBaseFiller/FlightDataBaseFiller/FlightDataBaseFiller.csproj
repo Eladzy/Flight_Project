@@ -91,6 +91,7 @@
     <Compile Include="FlightFactory.cs" />
     <Compile Include="GeneralDataGenerator.cs" />
     <Compile Include="GetRestCountries.cs" />
+    <Compile Include="TicketBuy.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
