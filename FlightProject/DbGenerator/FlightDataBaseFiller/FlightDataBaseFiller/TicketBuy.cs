@@ -26,19 +26,58 @@ namespace FlightDataBaseFiller
 
         public void TicketAquisition()
         {
-            while (TicketsPerCustomer > 0)
+            foreach (Customer c in TotalCustomers)
             {
-                foreach (Customer c in TotalCustomers)
+                int ticketsPerCustomer = this.TicketsPerCustomer;
+                while (ticketsPerCustomer > 0)
                 {
+                    List<Flight> flights = this.TotalFlights;//to cancel?
                     LoginToken<Customer> token;
+
                     if(GetLoginService.TryCustomerLogin(c.User_Name,c.Password,out token))
-                    {
-                        var getCustomerFacade = (LoggedInCustomerFacade)FlightCenter.GetInstance().GetFacade(token);
-                        getCustomerFacade.PurchaseTicket
+                    { 
+                        try
+                        {
+                            MakePurchase(flights, token);
+                        }
+                        catch (ExceptionTicketSoldOut e)
+                        {
+
+                            ErrorLogger.Logger(e);
+                            ticketsPerCustomer++;
+                        }
+                        catch(ExceptionFlightNotFound e)
+                        {
+                            ErrorLogger.Logger(e);
+                            ticketsPerCustomer++;
+                        }
+                        catch(ExceptionTicketNotFound e)
+                        {
+                            ErrorLogger.Logger(e);
+                            ticketsPerCustomer++;
+                        }
+                        catch (Exception e)
+                        {
+                            ErrorLogger.Logger(e);
+                            System.Windows.MessageBox.Show("Error has Ocurred","Error",System.Windows.MessageBoxButton.OK,System.Windows.MessageBoxImage.Error);
+                            return;
+                        }
+                        finally
+                        {
+                            ticketsPerCustomer--;
+                        }
+                       
+                       
                     }
                 }
             }
         }
 
+        private static void MakePurchase(List<Flight> flights, LoginToken<Customer> token)
+        {
+            Random rnd = new Random();
+            var getCustomerFacade = (LoggedInCustomerFacade)FlightCenter.GetInstance().GetFacade(token);
+            getCustomerFacade.PurchaseTicket(token, flights[rnd.Next(0, flights.Count)]);
+        }
     }
 }
