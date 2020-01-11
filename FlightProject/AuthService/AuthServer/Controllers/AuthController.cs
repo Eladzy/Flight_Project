@@ -15,6 +15,11 @@ namespace AuthServer.Controllers
     [Route("api/Auth")]
     public class AuthController : ControllerBase
     {
+
+        private LoginService LoginServices=new LoginService();
+
+        
+
         [HttpPost("token")]
         public ActionResult GetToken()
         {
@@ -26,16 +31,20 @@ namespace AuthServer.Controllers
 
             //signing credentials
             var signingCredentials = new SigningCredentials(symmetricalSecureKey, SecurityAlgorithms.HmacSha256Signature);
-            
+            //TODO:get the signing credentials into 2 strings
+           // var token=LoginServices.TryLogin()
+
             //create token
-            var token = new JwtSecurityToken(
+            var jToken = new JwtSecurityToken(
                 issuer: "smesk.in",
                 audience: "readers",
                 expires: DateTime.Now.AddHours(1),
                 signingCredentials :signingCredentials
 
                 );
-            return Ok(new JwtSecurityTokenHandler().WriteToken(token));
+
+
+            return Ok(new JwtSecurityTokenHandler().WriteToken(jToken));
         }
 
     }

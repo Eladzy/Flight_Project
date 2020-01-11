@@ -8,14 +8,35 @@ using System.Diagnostics;
 
 namespace FlightManagerProject
 {
-   public  class LoginService : ILoginService
+   public  class LoginService : ILoginService//to change and renovate the whole class
     {//ask if i can make that static
-        public  AirLineMsSqlDao AirlineDao =new AirLineMsSqlDao();
-        public  CustomerMsSqlDao CustomerDao = new CustomerMsSqlDao();
+       private  AirLineMsSqlDao AirlineDao =new AirLineMsSqlDao();
+       private  CustomerMsSqlDao CustomerDao = new CustomerMsSqlDao();
         
-       
 
-        public  bool TryAdminLogin(string username, string password,out LoginToken<Administrator>token)
+        public ILoginTokenBase TryLogin(string username, string password) 
+        {
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+                return null;   
+            LoginToken<Administrator> admin;
+            LoginToken<AirLine> airline;
+            LoginToken<Customer> customer;
+            if (TryAdminLogin(username, password, out admin))
+            {
+                return admin;
+            }
+            if(TryAirLineLogin(username,password,out airline))
+            {
+                return airline;
+            }
+            if(TryCustomerLogin(username,password,out customer))
+            {
+                return customer;
+            }
+            return null;
+        }
+
+        public bool TryAdminLogin(string username, string password,out LoginToken<Administrator>token)
         {
             if (string.IsNullOrWhiteSpace(username))
             {
