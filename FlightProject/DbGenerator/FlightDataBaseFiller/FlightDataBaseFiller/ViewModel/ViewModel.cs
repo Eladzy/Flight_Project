@@ -7,7 +7,7 @@ using System.Windows.Threading;
 using Prism;
 using Prism.Commands;
 
-namespace FlightDataBaseFiller
+namespace FlightDataBaseFiller//inotifypropertychanged
 {
     public class ViewModel
     {
@@ -46,7 +46,7 @@ namespace FlightDataBaseFiller
         private void VerifyValues(object sender, EventArgs e)
         {
            //make sure the number of bought tickets does not exceed the overall tickets
-
+           FormValueValidation(this.NumAirlines,this.NumCountries,this.NumCustomers,this.NumFlights,this.TicketsPerCustomer) bool?
            
         }
     }

@@ -89,6 +89,7 @@
     <Compile Include="DataReceivingUnit.cs" />
     <Compile Include="DelagatingCommand.cs" />
     <Compile Include="FlightFactory.cs" />
+    <Compile Include="FormValueValidation.cs" />
     <Compile Include="GeneralDataGenerator.cs" />
     <Compile Include="GetRestCountries.cs" />
     <Compile Include="TicketBuy.cs" />
