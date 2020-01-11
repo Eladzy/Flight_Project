@@ -31,6 +31,7 @@ namespace AuthServer.Controllers
 
             //signing credentials
             var signingCredentials = new SigningCredentials(symmetricalSecureKey, SecurityAlgorithms.HmacSha256Signature);
+           
             //TODO:get the signing credentials into 2 strings
            // var token=LoginServices.TryLogin()
 
