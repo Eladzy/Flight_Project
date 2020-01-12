@@ -21,7 +21,7 @@ namespace AuthServer.Controllers
         
 
         [HttpPost("token")]
-        public ActionResult GetToken()
+        public ActionResult GetToken([FromForm] string username,[FromForm]string password)
         {
             //security key
             string securityKey = "Super_Long_Security_KEY_For_Token_Validation_And_Auth_Project_2019_11_11$smesk.in";
