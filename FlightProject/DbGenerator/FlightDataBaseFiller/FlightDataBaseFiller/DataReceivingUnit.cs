@@ -90,7 +90,11 @@ namespace FlightDataBaseFiller
             }
             return flights;
          }
+        public void GenerateData()
+        {
+            List<Country> countries = GetCountries();
+        }
     }
 
-
+   
 }
