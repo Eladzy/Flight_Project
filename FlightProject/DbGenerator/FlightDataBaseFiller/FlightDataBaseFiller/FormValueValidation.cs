@@ -8,12 +8,13 @@ namespace FlightDataBaseFiller
 {
     static class FormValueValidation//idataerror
     {
-        //public FormValueValidation()
-        //{
-        //    public static bool Validate(int numAirlines,int numCountries,int numCustomers,int numFlights,int ticketsPerCustomer)
-        //    {
+        public static bool FormValueValidation()
+        {
+            public static bool Validate(int numAirlines, int numCountries, int numCustomers, int numFlights, int ticketsPerCustomer)
+            {
 
-        //    }
-        //}
+                return false;
+            }
+        }
     }
 }
