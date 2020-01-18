@@ -92,12 +92,26 @@ namespace FlightDataBaseFiller
             }
             return flights;
          }
+
+        private List<Ticket> GetTickets(List<Customer> customers, List<Flight> flights)
+        {
+            foreach(Customer customer in customers)
+            {
+                for (int i = 0; i < flights.Count; i++)
+                {
+
+                }
+            }
+        }
+
         public void GenerateData()//todo
         {
             List<Country> countries = GetCountries();
             List<Customer> customers = GetCustomers();
             List<AirLine> airlines = GetAirLines();
             List<Flight> flights = GetFlights(airlines,countries);
+            //purchase
+          //send to db
         }
     }
 
