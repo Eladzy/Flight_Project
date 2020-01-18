@@ -1,55 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using FlightManagerProject;
-using System.Security.Claims;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.IdentityModel.Tokens.Jwt;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
+//using Microsoft.AspNetCore.Http;
+//using Microsoft.AspNetCore.Mvc;
+//using Microsoft.IdentityModel.Tokens;
+//using FlightManagerProject;
+//using System.Security.Claims;
 
-namespace AuthServer.Controllers
-{
-    [Produces("application/json")]
-    [Route("api/Auth")]
-    public class AuthController : ControllerBase
-    {
+//namespace AuthServer.Controllers
+//{
+//    [Produces("application/json")]
+//    [Route("api/Auth")]
+//    public class AuthController : ControllerBase
+//    {
 
-        private LoginService LoginServices=new LoginService();
+//        private LoginService LoginServices=new LoginService();
 
         
 
-        [HttpPost("token")]
-        public ActionResult GetToken([FromForm] string username,[FromForm]string password)
-        {
-            //security key
-            string securityKey = "Super_Long_Security_KEY_For_Token_Validation_And_Auth_Project_2019_11_11$smesk.in";
+//        [HttpPost("token")]
+//        public ActionResult GetToken([FromForm] string username,[FromForm]string password)
+//        {
+//            //security key
+//            string securityKey = "Super_Long_Security_KEY_For_Token_Validation_And_Auth_Project_2019_11_11$smesk.in";
 
-            //symmetrical key
-            var symmetricalSecureKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(securityKey));
+//            //symmetrical key
+//            var symmetricalSecureKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(securityKey));
 
-            //signing credentials
-            var signingCredentials = new SigningCredentials(symmetricalSecureKey, SecurityAlgorithms.HmacSha256Signature);
+//            //signing credentials
+//            var signingCredentials = new SigningCredentials(symmetricalSecureKey, SecurityAlgorithms.HmacSha256Signature);
 
-            //TODO:get the signing credentials into 2 strings
-            // var token=LoginServices.TryLogin()
+//            //TODO:get the signing credentials into 2 strings
+//            // var token=LoginServices.TryLogin()
 
-            var claims = new List<Claim>();
-            claims.Add(new Claim("LoginToke" , "{}"))
-            //create token
-            var jToken = new JwtSecurityToken(
-                issuer: "smesk.in",
-                audience: "readers",
-                expires: DateTime.Now.AddHours(1),
-                signingCredentials :signingCredentials,
-                claims:
-                );
+//            var claims = new List<Claim>();
+//            claims.Add(new Claim("LoginToke" , "{}"))
+//            //create token
+//            var jToken = new JwtSecurityToken(
+//                issuer: "smesk.in",
+//                audience: "readers",
+//                expires: DateTime.Now.AddHours(1),
+//                signingCredentials :signingCredentials,
+//                claims:
+//                );
 
 
-            return Ok(new JwtSecurityTokenHandler().WriteToken(jToken));
-        }
+//            return Ok(new JwtSecurityTokenHandler().WriteToken(jToken));
+//        }
 
-    }
-}
+//    }
+//}

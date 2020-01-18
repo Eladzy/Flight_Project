@@ -6,24 +6,143 @@ using System.Threading.Tasks;
 using System.Windows.Threading;
 using Prism;
 using Prism.Commands;
+using System.ComponentModel;
+using System.Configuration;
 
 namespace FlightDataBaseFiller//inotifypropertychanged
 {
-    public class ViewModel
+    public class ViewModel:IDataErrorInfo
     {
         Dispatcher dispatcher { get; set; }
+        private int numCustomers;
+        public int NumCustomers {
+            get
+            {
+                return numCustomers;
+            }
+            set
+            {
+                numCustomers = Math.Abs(value);
+            } 
+        }
 
-        public int NumCustomers { get; set; }
+        private int numAirlines;
+        public int NumAirlines
+        {
+            get
+            {
+                return numAirlines;
+            }
+            set
+            {
+                numAirlines = Math.Abs(value);
+            }
+        }
 
-        public int NumAirlines { get; set; }
 
-        public int NumCountries { get; set; }
+        private int numCountries;
+        public int NumCountries
+        {
+            get
+            {
+                return numCountries;
+            }
+            set
+            {
+                numCountries = Math.Abs(value);
+            }
+        }
 
-        public int NumFlights { get; set; }
+        private int numFlights;
+        public int NumFlights
+        {
+            get
+            {
+                return numFlights;
+            }
+            set
+            {
+                numFlights = Math.Abs(value);
+            }
+        }
 
-        public int TicketsPerCustomer { get; set; }
+        private int ticketsPerCustomer;
+        public int TicketsPerCustomer
+        {
+            get
+            {
+                return ticketsPerCustomer;
+            }
+            set
+            {
+                ticketsPerCustomer = Math.Abs(value);
+            }
+        }
 
         public DelegateCommand Command { get; set; }
+
+        public string Error
+        {
+            get
+            {
+                return string.Empty;
+            }
+        }
+
+        public string this[string propertyName]
+        {
+            get
+            {
+                return GetErrorForProperty(propertyName);
+            }
+        }
+
+        private string GetErrorForProperty(string propertyName)
+        {
+           
+            switch (propertyName)
+            {
+                case ("NumCustomers") :
+                    if (NumCustomers * TicketsPerCustomer > NumFlights * NumAirlines* int.Parse(ConfigurationManager.AppSettings["TicketsPerFlight"]))
+                    {
+                        return "Tickets and customers ratio exceeds the amount of available tickets";
+                    }
+                    //else if (NumCustomers == 0)
+                    //{
+                    //    return "Amount of customers must be filled";
+                    //}
+                    return string.Empty;
+                case ("NumAirlines"):
+                    //if (NumAirlines == 0)
+                    //{
+                    //    return "Select amount of airline companies";
+                    //}
+                    //else if()
+                    return string.Empty;
+                    
+                case ("NumCountries"):
+                    if (numCountries == 0)
+                        return "Select any amount of countries";
+                        return string.Empty;
+                case ("NumFlights"):
+                    if (NumCustomers * TicketsPerCustomer > NumFlights * NumAirlines * NumAirlines * Int32.Parse(ConfigurationManager.AppSettings["TicketsPerFlight"]))
+                    {
+                        return "Tickets and customers ratio exceeds the amount of available tickets";
+                    }
+                    //if (NumFlights == 0)
+                    //    return "Select amount of flights";
+                    else return string.Empty;
+                case ("TicketsPerCustomer"):
+                    if (NumCustomers * TicketsPerCustomer > NumFlights * NumAirlines * NumAirlines * Int32.Parse(ConfigurationManager.AppSettings["TicketsPerFlight"]))
+                    {
+                        return "Tickets and customers ratio exceeds the amount of available tickets";
+                    }
+                    return string.Empty;
+                default: return string.Empty; ;
+            }
+           
+        }
+
         private DispatcherTimer Timer=new DispatcherTimer();
         public ViewModel()
         {  
@@ -46,7 +165,7 @@ namespace FlightDataBaseFiller//inotifypropertychanged
         private void VerifyValues(object sender, EventArgs e)
         {
            //make sure the number of bought tickets does not exceed the overall tickets
-           FormValueValidation(this.NumAirlines,this.NumCountries,this.NumCustomers,this.NumFlights,this.TicketsPerCustomer) bool?
+           //FormValueValidation(this.NumAirlines,this.NumCountries,this.NumCustomers,this.NumFlights,this.TicketsPerCustomer) bool?
            
         }
     }

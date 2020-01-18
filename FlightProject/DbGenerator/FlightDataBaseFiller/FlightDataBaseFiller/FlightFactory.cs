@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FlightManagerProject;
+using System.Configuration;
 
 namespace FlightDataBaseFiller
 {
     class FlightFactory
     {
         private long ID;
-        private int RemainingTickets=250;
+        private int RemainingTickets=Int32.Parse(ConfigurationManager.AppSettings["TicketsPerFlight"]);
         private DateTime DepartureTime;
         private DateTime LandTime;
        

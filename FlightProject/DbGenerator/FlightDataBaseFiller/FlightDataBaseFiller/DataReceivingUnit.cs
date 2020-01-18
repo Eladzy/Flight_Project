@@ -32,11 +32,13 @@ namespace FlightDataBaseFiller
         {
             GetRestCountries restCountries = new GetRestCountries();
             List<Country> filteredCountries = new List<Country>();
-            List<Country> filteredCountries1 = restCountries.Countries.ToList();
+            List<Country> countries = restCountries.Countries.ToList();
             Random rnd = new Random();
             for (int i = 0; i < NumberOfCountries; i++)
             {
-                filteredCountries.Add(restCountries.Countries[rnd.Next(0, restCountries.Countries.Count)]);
+                int index = rnd.Next(0, countries.Count);
+                filteredCountries.Add(countries[index]);
+                countries.RemoveAt(index);
             }
             
             return filteredCountries;
@@ -90,9 +92,12 @@ namespace FlightDataBaseFiller
             }
             return flights;
          }
-        public void GenerateData()
+        public void GenerateData()//todo
         {
             List<Country> countries = GetCountries();
+            List<Customer> customers = GetCustomers();
+            List<AirLine> airlines = GetAirLines();
+            List<Flight> flights = GetFlights(airlines,countries);
         }
     }
 
