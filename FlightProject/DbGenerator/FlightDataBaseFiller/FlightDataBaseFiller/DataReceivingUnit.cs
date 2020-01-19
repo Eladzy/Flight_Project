@@ -95,13 +95,40 @@ namespace FlightDataBaseFiller
 
         private List<Ticket> GetTickets(List<Customer> customers, List<Flight> flights)
         {
+            List<Ticket> tickets = new List<Ticket>();
+            Random rnd = new Random();
             foreach(Customer customer in customers)
             {
-                for (int i = 0; i < flights.Count; i++)
+               
+                for (int i = 0; i < NumberOfTicketsPerCustomer; i++)
                 {
+                    int flightIndex = rnd.Next(0, flights.Count);
+                    try
+                    {
+                       tickets.Add(TicketFactory.GenerateTicket(customer, flights[flightIndex]));
+                    }
+                    catch (ExceptionTicketSoldOut e)
+                    {
+                        ErrorLogger.Logger(e);
 
+                        flights.RemoveAt(flightIndex);
+                        i++;
+                    }
+                    catch (ExceptionFlightNotFound e)
+                    {
+                        ErrorLogger.Logger(e);
+
+                        flights.RemoveAt(flightIndex);
+                        i++;
+                    }
+                    catch (Exception e)
+                    {
+                        ErrorLogger.Logger(e);
+                        throw e;
+                    }
                 }
             }
+            return tickets;
         }
 
         public void GenerateData()//todo

@@ -92,6 +92,7 @@
     <Compile Include="FormValueValidation.cs" />
     <Compile Include="GeneralDataGenerator.cs" />
     <Compile Include="GetRestCountries.cs" />
+    <Compile Include="ProgressUpdate.cs" />
     <Compile Include="TicketBuy.cs" />
     <Compile Include="TicketFactory.cs" />
     <Compile Include="ViewModel\PopulateValuesUnit.cs" />

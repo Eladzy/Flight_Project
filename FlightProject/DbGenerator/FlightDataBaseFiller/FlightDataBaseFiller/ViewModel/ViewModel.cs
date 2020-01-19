@@ -16,7 +16,7 @@ namespace FlightDataBaseFiller//inotifypropertychanged
     {
         Dispatcher dispatcher { get; set; }
 
-        public ObservableCollection<string> Status = new ObservableCollection<string>();
+        public  ObservableCollection<string> Status = new ObservableCollection<string>();
 
         private int numCustomers;
         public int NumCustomers {
