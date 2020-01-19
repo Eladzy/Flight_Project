@@ -138,7 +138,7 @@ namespace FlightDataBaseFiller
             List<AirLine> airlines = GetAirLines();
             List<Flight> flights = GetFlights(airlines,countries);
             List<Ticket> tickets = GetTickets(customers, flights);
-            //purchase
+          
           //send to db
         }
     }
