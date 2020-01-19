@@ -99,7 +99,7 @@ namespace FlightDataBaseFiller
             Random rnd = new Random();
             foreach(Customer customer in customers)
             {
-               
+                
                 for (int i = 0; i < NumberOfTicketsPerCustomer; i++)
                 {
                     int flightIndex = rnd.Next(0, flights.Count);
@@ -137,6 +137,7 @@ namespace FlightDataBaseFiller
             List<Customer> customers = GetCustomers();
             List<AirLine> airlines = GetAirLines();
             List<Flight> flights = GetFlights(airlines,countries);
+            List<Ticket> tickets = GetTickets(customers, flights);
             //purchase
           //send to db
         }
