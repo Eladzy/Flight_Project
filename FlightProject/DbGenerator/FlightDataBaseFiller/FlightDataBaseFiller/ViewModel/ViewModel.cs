@@ -8,12 +8,16 @@ using Prism;
 using Prism.Commands;
 using System.ComponentModel;
 using System.Configuration;
+using System.Collections.ObjectModel;
 
 namespace FlightDataBaseFiller//inotifypropertychanged
 {
     public class ViewModel:IDataErrorInfo
     {
         Dispatcher dispatcher { get; set; }
+
+        public ObservableCollection<string> Status = new ObservableCollection<string>();
+
         private int numCustomers;
         public int NumCustomers {
             get
