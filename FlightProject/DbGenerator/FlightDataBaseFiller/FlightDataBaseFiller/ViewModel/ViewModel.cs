@@ -14,7 +14,7 @@ namespace FlightDataBaseFiller//inotifypropertychanged
 {
     public class ViewModel:IDataErrorInfo
     {
-        Dispatcher dispatcher { get; set; }
+        Dispatcher ViewModelDispatcher { get; set; }
 
         public  ObservableCollection<string> Status = new ObservableCollection<string>();
 

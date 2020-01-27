@@ -8,7 +8,7 @@ namespace FlightManagerProject
 {
     public class LoggedInCustomerFacade : AnonymousFacade,ILoggedInCustomerFacade
     {
-        CustomerMsSqlDao customerDao = new CustomerMsSqlDao();
+
         TicketsMsSqlDao ticketsDao = new TicketsMsSqlDao();
         FlightsMsSqlDao flightsDao = new FlightsMsSqlDao();
         /// <summary>
