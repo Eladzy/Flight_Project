@@ -7,8 +7,11 @@ using FlightManagerProject;
 
 namespace FlightDataBaseFiller
 {
-    class DataSendUnit
+    public static class DataSendUnit
     {
-        //might want to add admin log on
+         public static void AddData()
+         {
+
+         }
     }
 }

@@ -16,6 +16,11 @@ namespace FlightDataBaseFiller//inotifypropertychanged
     {
         Dispatcher ViewModelDispatcher { get; set; }
 
+        public Dictionary<string, string> ErrorCollection = new Dictionary<string, string> 
+        {
+            {"NumCustomers","" },{"NumAirlines",""},{"NumFlights",""},{"NumCountries",""},{"TicketsPerCustomer",""}
+        };
+
         public  ObservableCollection<string> Status = new ObservableCollection<string>();
 
         private int numCustomers;
@@ -103,45 +108,73 @@ namespace FlightDataBaseFiller//inotifypropertychanged
 
         private string GetErrorForProperty(string propertyName)
         {
-           
+            string result = null;
             switch (propertyName)
             {
                 case ("NumCustomers") :
                     if (NumCustomers * TicketsPerCustomer > NumFlights * NumAirlines* int.Parse(ConfigurationManager.AppSettings["TicketsPerFlight"]))
                     {
-                        return "Tickets and customers ratio exceeds the amount of available tickets";
+                        result = "Tickets and customers ratio exceeds the amount of available tickets";
+                        ErrorCollection[propertyName] = result;
+                        return result;
                     }
                     //else if (NumCustomers == 0)
                     //{
                     //    return "Amount of customers must be filled";
                     //}
-                    return string.Empty;
+                    result=string.Empty;
+                    ErrorCollection[propertyName]= result;
+                    return result;
                 case ("NumAirlines"):
                     //if (NumAirlines == 0)
                     //{
                     //    return "Select amount of airline companies";
                     //}
                     //else if()
-                    return string.Empty;
-                    
+                    result = string.Empty;
+                    ErrorCollection[propertyName] = result;
+                    return result;
+
                 case ("NumCountries"):
                     if (numCountries == 0)
-                        return "Select any amount of countries";
-                        return string.Empty;
+                    {
+                        result= "Select any amount of countries";
+
+                        ErrorCollection[propertyName] = result;
+                        return result; 
+                    }
+                    else if(numCountries > 249)
+                    {
+                        result = "Maximum amount of countries is 249 ";
+
+                        ErrorCollection[propertyName] = result;
+                        return result;
+                    }
+                      
+                    result = string.Empty;
+                    ErrorCollection[propertyName] = result;
+                    return result; ;
                 case ("NumFlights"):
                     if (NumCustomers * TicketsPerCustomer > NumFlights * NumAirlines * NumAirlines * Int32.Parse(ConfigurationManager.AppSettings["TicketsPerFlight"]))
                     {
-                        return "Tickets and customers ratio exceeds the amount of available tickets";
+                        result = "Tickets and customers ratio exceeds the amount of available tickets";
+                        ErrorCollection[propertyName] = result;
+                        return result;
                     }
-                    //if (NumFlights == 0)
-                    //    return "Select amount of flights";
-                    else return string.Empty;
+                   
+                    result = string.Empty;
+                    ErrorCollection[propertyName] = result;
+                    return result;
                 case ("TicketsPerCustomer"):
                     if (NumCustomers * TicketsPerCustomer > NumFlights * NumAirlines * NumAirlines * Int32.Parse(ConfigurationManager.AppSettings["TicketsPerFlight"]))
                     {
-                        return "Tickets and customers ratio exceeds the amount of available tickets";
+                        result = "Tickets and customers ratio exceeds the amount of available tickets";
+                        ErrorCollection[propertyName] = result;
+                        return result; 
                     }
-                    return string.Empty;
+                    result = string.Empty;
+                    ErrorCollection[propertyName] = result;
+                    return result;
                 default: return string.Empty; ;
             }
            

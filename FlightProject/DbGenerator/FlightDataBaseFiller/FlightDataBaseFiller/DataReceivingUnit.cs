@@ -34,6 +34,7 @@ namespace FlightDataBaseFiller
             List<Country> filteredCountries = new List<Country>();
             List<Country> countries = restCountries.Countries.ToList();
             Random rnd = new Random();
+           NumberOfCountries=NumberOfCountries <= 249 ? NumberOfCountries : 249;
             for (int i = 0; i < NumberOfCountries; i++)
             {
                 int index = rnd.Next(0, countries.Count);
@@ -138,7 +139,7 @@ namespace FlightDataBaseFiller
             List<AirLine> airlines = GetAirLines();
             List<Flight> flights = GetFlights(airlines,countries);
             List<Ticket> tickets = GetTickets(customers, flights);
-          
+            
           //send to db
         }
     }
