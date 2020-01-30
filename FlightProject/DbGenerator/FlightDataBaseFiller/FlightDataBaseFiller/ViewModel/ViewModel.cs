@@ -10,16 +10,27 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Collections.ObjectModel;
 
-namespace FlightDataBaseFiller//inotifypropertychanged
+namespace FlightDataBaseFiller
 {
-    public class ViewModel:IDataErrorInfo
+    public class ViewModel:IDataErrorInfo,INotifyPropertyChanged
     {
         Dispatcher ViewModelDispatcher { get; set; }
 
-        public Dictionary<string, string> ErrorCollection = new Dictionary<string, string> 
-        {
-            {"NumCustomers","" },{"NumAirlines",""},{"NumFlights",""},{"NumCountries",""},{"TicketsPerCustomer",""}
-        };
+        //private Dictionary<string, string> errorCollection
+        //{
+        //    get
+        //    {
+        //        return ErrorCollection;
+        //    }
+        //    set
+        //    {
+        //        ErrorCollection = value;
+        //        NotifyPropertyChanged("ErrorCollection");
+        //    }
+        //}
+
+        public Dictionary<string, string> ErrorCollection { get; set; }
+       
 
         public  ObservableCollection<string> Status = new ObservableCollection<string>();
 
@@ -32,6 +43,7 @@ namespace FlightDataBaseFiller//inotifypropertychanged
             set
             {
                 numCustomers = Math.Abs(value);
+                NotifyPropertyChanged("numCustomers");
             } 
         }
 
@@ -112,30 +124,33 @@ namespace FlightDataBaseFiller//inotifypropertychanged
             switch (propertyName)
             {
                 case ("NumCustomers") :
+                    if (!ErrorCollection.ContainsKey(propertyName))
+                    {
+                        ErrorCollection.Add(propertyName, "");
+                    }
                     if (NumCustomers * TicketsPerCustomer > NumFlights * NumAirlines* int.Parse(ConfigurationManager.AppSettings["TicketsPerFlight"]))
                     {
                         result = "Tickets and customers ratio exceeds the amount of available tickets";
                         ErrorCollection[propertyName] = result;
                         return result;
-                    }
-                    //else if (NumCustomers == 0)
-                    //{
-                    //    return "Amount of customers must be filled";
-                    //}
+                    }                
                     result=string.Empty;
                     ErrorCollection[propertyName]= result;
                     return result;
                 case ("NumAirlines"):
-                    //if (NumAirlines == 0)
-                    //{
-                    //    return "Select amount of airline companies";
-                    //}
-                    //else if()
+                    if (!ErrorCollection.ContainsKey(propertyName))
+                    {
+                        ErrorCollection.Add(propertyName, "");
+                    }               
                     result = string.Empty;
                     ErrorCollection[propertyName] = result;
                     return result;
 
                 case ("NumCountries"):
+                    if (!ErrorCollection.ContainsKey(propertyName))
+                    {
+                        ErrorCollection.Add(propertyName, "");
+                    }
                     if (numCountries == 0)
                     {
                         result= "Select any amount of countries";
@@ -155,6 +170,10 @@ namespace FlightDataBaseFiller//inotifypropertychanged
                     ErrorCollection[propertyName] = result;
                     return result; ;
                 case ("NumFlights"):
+                    if (!ErrorCollection.ContainsKey(propertyName))
+                    {
+                        ErrorCollection.Add(propertyName, "");
+                    }
                     if (NumCustomers * TicketsPerCustomer > NumFlights * NumAirlines * NumAirlines * Int32.Parse(ConfigurationManager.AppSettings["TicketsPerFlight"]))
                     {
                         result = "Tickets and customers ratio exceeds the amount of available tickets";
@@ -166,6 +185,10 @@ namespace FlightDataBaseFiller//inotifypropertychanged
                     ErrorCollection[propertyName] = result;
                     return result;
                 case ("TicketsPerCustomer"):
+                    if (!ErrorCollection.ContainsKey(propertyName))
+                    {
+                        ErrorCollection.Add(propertyName, "");
+                    }
                     if (NumCustomers * TicketsPerCustomer > NumFlights * NumAirlines * NumAirlines * Int32.Parse(ConfigurationManager.AppSettings["TicketsPerFlight"]))
                     {
                         result = "Tickets and customers ratio exceeds the amount of available tickets";
@@ -181,8 +204,15 @@ namespace FlightDataBaseFiller//inotifypropertychanged
         }
 
         private DispatcherTimer Timer=new DispatcherTimer();
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public ViewModel()
-        {  
+        {
+            this.ErrorCollection = new Dictionary<string, string>
+            {
+                  {"NumCustomers","" },{"NumAirlines",""},{"NumFlights",""},{"NumCountries",""},{"TicketsPerCustomer",""}
+            };            
             this.Timer.Interval = TimeSpan.FromMilliseconds(500);
             this.Timer.Tick += VerifyValues;
             this.Timer.Start();
@@ -205,5 +235,14 @@ namespace FlightDataBaseFiller//inotifypropertychanged
            //FormValueValidation(this.NumAirlines,this.NumCountries,this.NumCustomers,this.NumFlights,this.TicketsPerCustomer) bool?
            
         }
+
+        private void NotifyPropertyChanged( String propertyName = "ErrorCollection")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
     }
 }

@@ -21,15 +21,21 @@
         <TextBlock Text="Airline Companies" Grid.Row="1" Margin="30,10"/>
         <TextBox x:Name="airlineBox" Text="{Binding NumAirlines,Mode=TwoWay, ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Margin="15,10" Height="15" Width="70"/>
         <TextBlock Text="Customers" Grid.Row="2" Margin="30,10"/>
-        <TextBox x:Name="customerBox" Text="{Binding NumCustomers,Mode=TwoWay, ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Margin="15,10" Height="15" Width="70"/>
+        <TextBox x:Name="customerBox" Text="{Binding NumCustomers,Mode=TwoWay, ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Margin="15,10" Height="15" Width="70" ToolTip="{Binding ErrorCollection[NumCustomers],UpdateSourceTrigger=PropertyChanged}"/>
+
         <TextBlock Text="Flights Per Companies" Grid.Row="3" Margin="30,10"/>
         <TextBox x:Name="flightsPerBox" Text="{Binding NumFlights, Mode=TwoWay,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Margin="15,10" Height="15" Width="70"/>
         <TextBlock Text="Tickets Per Customer"  Grid.Row="4" Margin="30,10"/>
-        <TextBox x:Name="ticketsPerBox" Text="{Binding TicketsPerCustomer,Mode=TwoWay, ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Margin="15,10" Height="15" Width="70"/>
+        <TextBox x:Name="ticketsPerBox" Text="{Binding TicketsPerCustomer,Mode=TwoWay, ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}"  Grid.Row="4" Margin="15,10" Height="15" Width="70"/>
         <TextBlock Text="Countries" Grid.Row="5" Margin="30,10"/>
         <TextBox x:Name="countriesBox" Text="{Binding NumCountries,Mode=TwoWay,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" Margin="15,10" Height="15" Width="70"/>
         <TextBlock x:Name="progressBlk" Grid.Row="6" VerticalAlignment="Bottom" Text="placeholder" Margin="100,10" FontSize="20"/>
         <ProgressBar x:Name="generalProgress" HorizontalAlignment="Center" Grid.Row="7" Height="20" Width="550"/>
         <ListBox Name="infoLstBox" HorizontalAlignment="Center" ItemsSource="{Binding Status,Mode=TwoWay}" Grid.Row="8" MinWidth="500" Height="120" MaxHeight="120" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+        <TextBlock x:Name="customerErrorBlk" HorizontalAlignment="Left" Margin="429,16,0,0" TextWrapping="Wrap" Text="{Binding ErrorCollection[NumCustomers],UpdateSourceTrigger=PropertyChanged}" FontSize="8" Foreground="Red"  VerticalAlignment="Top" Grid.Row="2"/>
+        <TextBlock x:Name="airlineErrorBlk" HorizontalAlignment="Left" Margin="429,15,0,0" TextWrapping="Wrap" Text="{Binding ErrorCollection[NumAirlines],UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Grid.Row="1" FontSize="8" Foreground="Red"/>
+        <TextBlock x:Name="flightErrorBlk" HorizontalAlignment="Left" Margin="429,18,0,0" TextWrapping="Wrap"  Text="{Binding ErrorCollection[NumFlights],UpdateSourceTrigger=PropertyChanged}" FontSize="8" Foreground="Red" VerticalAlignment="Top" Grid.Row="3"/>
+        <TextBlock x:Name="ticketsErrorBlk" HorizontalAlignment="Left" Margin="429,19,0,0" TextWrapping="Wrap"  Text="{Binding ErrorCollection[TicketsPerCustomer],UpdateSourceTrigger=PropertyChanged}" FontSize="8" Foreground="Red" VerticalAlignment="Top" Grid.Row="4"/>
+        <TextBlock x:Name="countriesErrorBlk" HorizontalAlignment="Left" Margin="429,15,0,0" TextWrapping="Wrap"  Text="{Binding ErrorCollection[NumCountries],UpdateSourceTrigger=PropertyChanged}" FontSize="8" Foreground="Red" VerticalAlignment="Top" Grid.Row="5"/>
     </Grid>
 </Window>
