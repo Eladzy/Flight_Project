@@ -40,7 +40,8 @@ namespace FlightsWebApp.Controllers
             {
                 if (tokenResult.User.User_Name == username && tokenResult.User.Password == password)
                 {
-                   // Thread.CurrentPrincipal
+                    actionContext.Request.Properties["tokenResult"]=tokenResult;
+                    return;
                 }
             }
             //stops the request

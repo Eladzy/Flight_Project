@@ -6,35 +6,37 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using FlightManagerProject;
+using FlightsWebApp.Controllers;
 
 namespace FlightProjectWebServices.Controllers
 {
+    [BasicAuthCustomerAttribute]
     public class CustomerController : ApiController
     {
-        private Customer c = new Customer
-        {
-            First_Name = "customerName",
-            User_Name = "CustomerUserName",
-            Last_Name = "lastName",
-            Password = "password",
-            Address = "address",
-            Phone_Number = "1234567890",
-            Credit_Card_Number = "1234567890123456",
-        };
+        //private Customer c = new Customer
+        //{
+        //    First_Name = "customerName",
+        //    User_Name = "CustomerUserName",
+        //    Last_Name = "lastName",
+        //    Password = "password",
+        //    Address = "address",
+        //    Phone_Number = "1234567890",
+        //    Credit_Card_Number = "1234567890123456",
+        //};
         private LoginToken<Customer> _token;
         private LoggedInCustomerFacade _facade;
         public CustomerController()
         {
             _token = new LoginToken<Customer>();
-            _token.User = c;
+            Request.Properties.TryGetValue("tokenResult", out object tokenResult);
+            _token = (LoginToken<Customer>)tokenResult;
             try
-            {
+            {               
                 _facade = (LoggedInCustomerFacade)FlightCenter.GetInstance().GetFacade(_token);
             }
             catch (Exception e)
             {
                 ErrorLogger.Logger(e);
-
             }
         }
 
