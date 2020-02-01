@@ -8,7 +8,7 @@ using System.Web.Http.Description;
 using FlightManagerProject;
 using FlightsWebApp.Controllers;
 
-namespace FlightProjectWebServices.Controllers
+namespace FlightProjectWebServices.Controllers//test pending
 {
     [BasicAuthCustomerAttribute]
     public class CustomerController : ApiController
