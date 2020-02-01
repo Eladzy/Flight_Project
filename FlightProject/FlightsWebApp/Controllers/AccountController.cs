@@ -36,7 +36,7 @@ namespace FlightsWebApp.Controllers
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
         }
-
+      
         public ApplicationUserManager UserManager
         {
             get

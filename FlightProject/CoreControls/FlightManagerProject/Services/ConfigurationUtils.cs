@@ -18,7 +18,7 @@ namespace FlightManagerProject
         public static int updateHour = 12;
         public static int interval=250;
         public static string errorLog = @"Resources\ErrorLog.txt";
-        
+      
         
        
     }
