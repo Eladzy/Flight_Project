@@ -234,7 +234,9 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AirLineController.cs" />
     <Compile Include="Controllers\AnnonymousController.cs" />
+    <Compile Include="Controllers\AuthAttributes\BasicAuthAirlineAttribute.cs" />
     <Compile Include="Controllers\AuthAttributes\BasicAuthCustomerAttribute.cs" />
+    <Compile Include="Controllers\AuthAttributes\IBasicAuthIUserAttribute.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PageController.cs" />

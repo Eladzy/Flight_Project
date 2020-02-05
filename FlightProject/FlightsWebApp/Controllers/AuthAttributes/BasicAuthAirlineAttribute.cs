@@ -1,20 +1,17 @@
-﻿using System;
+﻿using FlightManagerProject;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Threading;
 using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
-using FlightManagerProject;
 
-namespace FlightsWebApp.Controllers
+namespace FlightsWebApp.Controllers.AuthAttributes
 {
-    public class BasicAuthCustomerAttribute : AuthorizationFilterAttribute, IBasicAuthIUserAttribute
+    public class BasicAuthAirlineAttribute : AuthorizationFilterAttribute,IBasicAuthIUserAttribute
     {
-
-
         public override void OnAuthorization(HttpActionContext actionContext)
         {
             //null check
@@ -33,7 +30,7 @@ namespace FlightsWebApp.Controllers
 
             string username = credentialsArray[0];
             string password = credentialsArray[1];
-            //ILoginTokenBase tokenResult;
+            
 
             LoginToken<Customer> tokenResult;
             LoginService loginService = new LoginService();
@@ -52,6 +49,5 @@ namespace FlightsWebApp.Controllers
             actionContext.Request.CreateResponse(System.Net.HttpStatusCode.Unauthorized, "Unauthorized");
             return;
         }
-
     }
 }

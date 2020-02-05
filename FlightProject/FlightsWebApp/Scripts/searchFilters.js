@@ -1,11 +1,12 @@
 ﻿const flights = [];
-function pageLoad() {
+jQuery(document).ready(function () {
+    console.log("loading table")
     $tableFlights = $("#flightsTable")
     $.ajax({
         url: "/api/flights"
-    }).then(fillTable(flights)).catch((err) => { console.log(err) })
-};
-function fillTable(flights) {
+    }).then(fillTable()).catch((err) => { console.log(err) })
+})
+function fillTable() {
     $.each(flights, (i, flight) => {
         flight = new Flight(flight.Id, flight.AirLine_Id, flight.Origin_Country_Code, flight.Destination_Country_Code, flight.Landing_Time, flight.Departure_Time, undefined)
         console.log(flight + "\n +++debug " + typeof (flight) + " +++debug")
