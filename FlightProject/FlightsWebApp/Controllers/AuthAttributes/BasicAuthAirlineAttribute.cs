@@ -32,9 +32,9 @@ namespace FlightsWebApp.Controllers.AuthAttributes
             string password = credentialsArray[1];
             
 
-            LoginToken<Customer> tokenResult;
+            LoginToken<AirLine> tokenResult;
             LoginService loginService = new LoginService();
-            if (loginService.TryCustomerLogin(username, password, out tokenResult))
+            if (loginService.TryAirLineLogin(username, password, out tokenResult))
             {
                 if (tokenResult.User.User_Name == username && tokenResult.User.Password == password)
                 {

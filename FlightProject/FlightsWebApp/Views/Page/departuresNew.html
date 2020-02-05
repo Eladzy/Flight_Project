@@ -8,13 +8,13 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="../../Scripts/Classes.js"></script>
-    <!-- <script src="../../Scripts/searchFilters.js"></script>-->
+     <script src="../../Scripts/searchFilters.js"></script>
     <script src="../../Scripts/populatecountriesScript.js"></script>
     <title>departuresNew</title>
 </head>
 <body>
     
-        <article class="depTable-table">
+        <article class="depTable-table" >
             <div class="container"  >
                 <div class="table-responsive" style="margin-left: 250px">
                     <table style=" background-color: navy;color:azure; margin-top: 200px;" id="flightsTable" class="table table-bordered ">
@@ -63,7 +63,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <button type="button" class="form-control" onclick="">Search</button>
+                                <button type="button" id="searchBtn" class="form-control" onclick="">Search</button>
                             </div>
                         </form>
                     </div>
@@ -72,37 +72,5 @@
             </div>
 
         </article>
-    
-    <script>
-        const flights = {}
-        $(document).ready(() => {
-
-            $tableFlights = $("#flightsTable")
-            $.ajax({
-                url: "/api/flights"
-            })
-                .then((flights) => {
-                    console.log(flights)
-                    $.each(flights, (i, flight) => {
-                        flight = new Flight(flight.Id, flight.AirLine_Id, flight.Origin_Country_Code, flight.Destination_Country_Code, flight.Landing_Time, flight.Departure_Time, undefined)
-                        console.log(flight + "\n +++debug " + typeof (flight) + " +++debug")
-
-                        $tableFlights.append("<tr>" +
-
-                            "<td>" + flight.AirLine_Id + "</td>" +
-                            "<td>" + flight.Origin_Country_Code + "</td>" +
-                            "<td>" + flight.Destination_Country_Code + "</td>" +
-                            "<td>" + flight.Departure_Time + "</td>" +
-                            "<td>" + flight.Landing_Time + "</td>" +
-                            "<td>" + flight.status + "</td>" +
-                            "</tr>")
-                    }
-                    )
-                }
-                )
-                .catch((err) => { console.log(err) })
-        })
-
-    </script>
 </body>
 </html>
