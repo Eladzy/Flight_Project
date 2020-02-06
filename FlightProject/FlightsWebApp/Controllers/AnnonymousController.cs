@@ -32,7 +32,7 @@ namespace FlightProjectWebServices.Controllers
 
         [ResponseType(typeof(IEnumerable<AirLine>))]
         [HttpGet]
-        [Route("api/airlines/{airLines}")]
+        [Route("api/airlines")]
         public IHttpActionResult GetAllAirlineCompanies()
         {
             List<AirLine> airLines = instance.GetFacade(token).GetAllAirlineCompanies().ToList();

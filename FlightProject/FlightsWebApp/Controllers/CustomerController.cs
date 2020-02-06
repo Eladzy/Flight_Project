@@ -24,26 +24,34 @@ namespace FlightProjectWebServices.Controllers//test pending
         //    Credit_Card_Number = "1234567890123456",
         //};
         private LoginToken<Customer> _token;
-        private LoggedInCustomerFacade _facade;
-        public CustomerController()
+        private LoggedInCustomerFacade _facade
+        {
+            get
+            {
+                return GetTokenFacade();
+            }
+        }
+        public LoggedInCustomerFacade GetTokenFacade()
         {
             _token = new LoginToken<Customer>();
+            LoggedInCustomerFacade facade=null;
             Request.Properties.TryGetValue("tokenResult", out object tokenResult);
             _token = (LoginToken<Customer>)tokenResult;
             try
             {               
-                _facade = (LoggedInCustomerFacade)FlightCenter.GetInstance().GetFacade(_token);
+                facade = (LoggedInCustomerFacade)FlightCenter.GetInstance().GetFacade(_token);
             }
             catch (Exception e)
             {
                 ErrorLogger.Logger(e);
             }
+            return facade;
         }
 
         [HttpGet]
         [ResponseType(typeof(IEnumerable<Flight>))]
         [Route("api/customer/allmyflights")]
-        IHttpActionResult GetAllMyFlights()
+        public IHttpActionResult GetAllMyFlights()
         {
             List<Flight> flights = null;
             try
@@ -67,7 +75,7 @@ namespace FlightProjectWebServices.Controllers//test pending
         [HttpPost]
         [ResponseType(typeof(Ticket))]
         [Route("api/customer/purchase/{flight}")]
-        IHttpActionResult PurchaseTicket([FromBody]Flight flight)
+        public IHttpActionResult PurchaseTicket([FromBody]Flight flight)
         {
             Ticket ticket = new Ticket(); ;
             try
@@ -107,7 +115,7 @@ namespace FlightProjectWebServices.Controllers//test pending
         [HttpDelete]
         [ResponseType(typeof(Ticket))]
         [Route("api/customer/cancelticket/{ticket}")]
-        IHttpActionResult CancelTicket([FromBody]Ticket ticket)
+        public IHttpActionResult CancelTicket([FromBody]Ticket ticket)
         {
             if (ticket.Customer_Id != _token.User.Id)
             {

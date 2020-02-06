@@ -8,9 +8,13 @@ namespace FlightManagerProject
 {
     public class LoggedInAirLineFacade :AnonymousFacade, ILoggedInAirLineFacade
     {
-       private AirLineMsSqlDao airLineDao = new AirLineMsSqlDao();
-       private FlightsMsSqlDao flightsDao = new FlightsMsSqlDao();
-       private TicketsMsSqlDao ticketsDao = new TicketsMsSqlDao();
+      
+        public LoggedInAirLineFacade()
+        {
+            _airlineDAO = new AirLineMsSqlDao();
+            _flightDAO= new FlightsMsSqlDao();
+            _ticketDAO= new TicketsMsSqlDao();
+        }
 
       /// <summary>
       /// cancel the designated flight after clearing all the tickets
@@ -22,14 +26,14 @@ namespace FlightManagerProject
 
             if (token.User.Id == flight.AirLine_Id)
             {
-                foreach (Ticket ticket in ticketsDao.GetAll().Where(t=>t.Flight_Id==flight.Id))
+                foreach (Ticket ticket in _ticketDAO.GetAll().Where(t=>t.Flight_Id==flight.Id))
                 {
                     if (flight.Id == ticket.Flight_Id)
                     {
-                        ticketsDao.Remove(ticket);
+                        _ticketDAO.Remove(ticket);
                     }
                 }
-                flightsDao.Remove(flight);
+                _flightDAO.Remove(flight);
             }
         }
         /// <summary>
@@ -52,7 +56,7 @@ namespace FlightManagerProject
                     
 
                 };
-                airLineDao.Update(airLine);
+                _airlineDAO.Update(airLine);
             }
             else
             {
@@ -67,7 +71,7 @@ namespace FlightManagerProject
         public void CreateFlight(LoginToken<AirLine> token, Flight flight)
         {
             if(flight.AirLine_Id==token.User.Id)
-            flightsDao.Add(flight);
+            _flightDAO.Add(flight);
         }
         /// <summary>
         /// returns a list of the same airline
@@ -77,7 +81,7 @@ namespace FlightManagerProject
         public IList<Flight> GetAllFlights(LoginToken<AirLine> token)
         {
 
-            List<Flight> flights = flightsDao.GetAll().Where(f => f.AirLine_Id == token.User.Id).ToList();
+            List<Flight> flights = _flightDAO.GetAll().Where(f => f.AirLine_Id == token.User.Id).ToList();
             return flights;
         }
         /// <summary>
@@ -92,7 +96,7 @@ namespace FlightManagerProject
             
             foreach (Flight flight in flights)
             {
-                tickets.AddRange(ticketsDao.GetAll().Where(t => t.Flight_Id == flight.Id));
+                tickets.AddRange(_ticketDAO.GetAll().Where(t => t.Flight_Id == flight.Id));
             }
             return tickets;
         }
@@ -105,7 +109,7 @@ namespace FlightManagerProject
         {
             if (token.User.Id == airline.Id)
             {
-                airLineDao.Update(airline);
+                _airlineDAO.Update(airline);
             }
             throw new ExceptionUserNotFound();
             
@@ -119,7 +123,7 @@ namespace FlightManagerProject
         {
             if (flight.AirLine_Id == token.User.Id)
             {
-                flightsDao.Update(flight);
+               _flightDAO.Update(flight);
             }
             else
                 throw new ExceptionFlightNotFound();

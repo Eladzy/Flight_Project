@@ -7,27 +7,49 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using FlightManagerProject;
+using FlightsWebApp.Controllers.AuthAttributes;
 
 namespace FlightProjectWebServices.Controllers
 {
+    [BasicAuthAirlineAttribute]
     public class AirLineController : ApiController//TODO: rethink if the id null check is neccessery or even logical
     {
-        private AirLine AirlineCompany = new AirLine//temporary token
-        {
-            Id = 1,
-            AirLine_Name = "usaAirline",
-            User_Name = "asd",
-            Password = "1234",
-            CountryCode = 1
-        };
+        //private AirLine AirlineCompany = new AirLine//temporary token
+        //{
+        //    Id = 1,
+        //    AirLine_Name = "usaAirline",
+        //    User_Name = "asd",
+        //    Password = "1234",
+        //    CountryCode = 1
+        //};
 
 
-        private LoggedInAirLineFacade Facade { get; set; }
-        private LoginToken<AirLine> token = new LoginToken<AirLine>();
-        public AirLineController()
+        private LoggedInAirLineFacade Facade 
         {
-            token.User = AirlineCompany;
-            this.Facade = (LoggedInAirLineFacade)FlightCenter.GetInstance().GetFacade(token);
+            get
+            {
+                return GetTokenFacade();
+            }
+        }
+
+        private LoginToken<AirLine> Token;
+       
+        private LoggedInAirLineFacade GetTokenFacade()
+        {
+            LoggedInAirLineFacade facade;
+            try
+            {
+                ActionContext.Request.Properties.TryGetValue("tokenResult", out object tokenResult);
+                Token = (LoginToken<AirLine>)tokenResult;
+                facade = (LoggedInAirLineFacade)FlightCenter.GetInstance().GetFacade(Token);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+           
+            return facade;
         }
 
 
@@ -35,12 +57,12 @@ namespace FlightProjectWebServices.Controllers
         [HttpGet]
         [ResponseType(typeof(List<Ticket>))]
         [Route("api/airline/getalltickets")]
-        IHttpActionResult GetAllTickets()
+        public IHttpActionResult GetAllTickets()
         {
             List<Ticket> tickets;
             try
             {
-                tickets = this.Facade.GetAllTickets(token).ToList();
+                tickets = this.Facade.GetAllTickets(Token).ToList();
                 if (tickets.Count == 0 || tickets == null)
                     return StatusCode(HttpStatusCode.NoContent);
                 return Ok(tickets);
@@ -63,12 +85,12 @@ namespace FlightProjectWebServices.Controllers
         [HttpGet]
         [ResponseType(typeof(List<Flight>))]
         [Route("api/airline/getflights")]
-        IHttpActionResult GetAllFlights()
+        public IHttpActionResult GetAllFlights()
         {
             List<Flight> flights;
             try
             {
-                flights = this.Facade.GetAllFlights(token).ToList();
+                flights = this.Facade.GetAllFlights(Token).ToList();
                 if (flights.Count == 0 || flights == null)
                     return StatusCode(HttpStatusCode.NoContent);
                 return Ok(flights);
@@ -91,13 +113,13 @@ namespace FlightProjectWebServices.Controllers
         [HttpDelete]
         [ResponseType(typeof(Flight))]
         [Route("api/airline/remove/{flight}")]
-        IHttpActionResult CancelFlight([FromBody]Flight flight)
+        public IHttpActionResult CancelFlight([FromBody]Flight flight)
         {
             if (flight.Id == 0 || flight == null)
                 return NotFound();
             try
             {
-                this.Facade.CancelFlight(token, flight);
+                this.Facade.CancelFlight(Token, flight);
                 return Ok(flight);
             }
             catch (ExceptionFlightNotFound e)
@@ -123,13 +145,13 @@ namespace FlightProjectWebServices.Controllers
 
         [HttpPost]
         [ResponseType(typeof(Flight))]
-        [Route("api/airline/createflight/{flight}")]
-        IHttpActionResult CreateFlight([FromBody]Flight flight)
+        [Route("api/airline/createflight")]
+        public IHttpActionResult CreateFlight([FromBody]Flight flight)
         {
 
             try
             {
-                this.Facade.CreateFlight(token, flight);
+                this.Facade.CreateFlight(Token, flight);
                 return Ok(flight);
             }
             catch (SqlException e)
@@ -150,15 +172,15 @@ namespace FlightProjectWebServices.Controllers
         [HttpPut]
         [ResponseType(typeof(Flight))]
         [Route("api/airline/updateflight/{flight}")]
-        IHttpActionResult UpdateFlight([FromBody]Flight flight)
+        public IHttpActionResult UpdateFlight([FromBody]Flight flight)
         {
-            if (flight.AirLine_Id != token.User.Id)
+            if (flight.AirLine_Id != Token.User.Id)
             {
                 return StatusCode(HttpStatusCode.BadRequest);
             }
             try
             {
-                this.Facade.UpdateFlight(token, flight);
+                this.Facade.UpdateFlight(Token, flight);
                 return Ok(flight);
             }
             catch (ExceptionFlightNotFound e)
@@ -182,21 +204,22 @@ namespace FlightProjectWebServices.Controllers
 
         [HttpPut]
         [Route("api/airline/changemypassword/{oldPassword}/{newPassword}")]
-        IHttpActionResult ChangeMyPassword([FromBody]string oldPassword, [FromBody] string newPassword)
+        public IHttpActionResult ChangeMyPassword([FromBody]string oldPassword, [FromBody] string newPassword)
         {
             throw new NotImplementedException();//TODO check regex
         }
+
         [HttpPut]
         [Route("api/airline/updateself/{airline}")]
-        IHttpActionResult MofidyAirlineDetails([FromBody]AirLine airline)
+        public IHttpActionResult MofidyAirlineDetails([FromBody]AirLine airline)
         {
-            if (airline != token.User)
+            if (airline != Token.User)
             {
                 return StatusCode(HttpStatusCode.Forbidden);
             }
             try
             {
-                this.Facade.MofidyAirlineDetails(token, airline);
+                this.Facade.MofidyAirlineDetails(Token, airline);
                 return Ok(airline);
             }
             catch (ExceptionUserNotFound e)

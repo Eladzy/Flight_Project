@@ -41,9 +41,7 @@ namespace FlightsWebApp.Controllers.AuthAttributes
                     actionContext.Request.Properties["tokenResult"] = tokenResult;
                     return;
                 }
-            }
-
-            //tokenResult = loginService.TryLogin(username, password); how to make the casting?
+            }          
 
             // stops the request
             actionContext.Request.CreateResponse(System.Net.HttpStatusCode.Unauthorized, "Unauthorized");

@@ -8,6 +8,11 @@ namespace FlightManagerProject
 {
     public class LoggedInAdminFacade : AnonymousFacade, ILoggedInAdminFacade
     {
+        public LoggedInAdminFacade()
+        {//check
+            _airlineDAO = new AirLineMsSqlDao();
+            _customerDAO = new CustomerMsSqlDao();  
+        }
         public void CreateNewAirline(LoginToken<Administrator> token, AirLine airline)
         {
             if (token.User is Administrator)

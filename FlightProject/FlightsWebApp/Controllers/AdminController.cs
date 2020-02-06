@@ -13,7 +13,7 @@ namespace FlightProjectWebServices.Controllers
     {
         static Administrator administrator = new Administrator();
 
-        private LoggedInAdminFacade Facade { get; set; }
+        private LoggedInAdminFacade Facade;
         static LoginToken<Administrator> token = new LoginToken<Administrator>
         {
             User = administrator
@@ -82,9 +82,9 @@ namespace FlightProjectWebServices.Controllers
         }
         [HttpPost]
         [Route("api/admin/createnewcustomer/{customer}")]
-        IHttpActionResult CreateNewCustomer([FromBody]Customer customer)
+        public IHttpActionResult CreateNewCustomer([FromBody]Customer customer)
         {
-            if (customer == null || customer.Id == 0)
+            if (customer == null )
             {
                 return BadRequest();
             }
@@ -100,7 +100,7 @@ namespace FlightProjectWebServices.Controllers
             }
             return Ok();
         }
-        IHttpActionResult UpdateCustomerDetails([FromBody]Customer customer)
+        public IHttpActionResult UpdateCustomerDetails([FromBody]Customer customer)
         {
             if (customer == null || customer.Id == 0)
             {

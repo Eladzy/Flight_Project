@@ -1,0 +1,62 @@
+==========Error Log==========
+=====2/6/2020 11:14:15 PM=====
+Error Message: Object reference not set to an instance of an object.
+Stack Trace:    at FlightManagerProject.LoggedInAdminFacade.CreateNewCustomer(LoginToken`1 token, Customer customer) in D:\git\Flight_Project\FlightProject\CoreControls\FlightManagerProject\Facade\LoggedInAdminFacade.cs:line 23
+   at FlightProjectWebServices.Controllers.AdminController.CreateNewCustomer(Customer customer) in D:\git\Flight_Project\FlightProject\FlightsWebApp\Controllers\AdminController.cs:line 93
+==========End==========
+==========Error Log==========
+=====2/6/2020 11:14:57 PM=====
+Error Message: Object reference not set to an instance of an object.
+Stack Trace:    at FlightManagerProject.LoggedInAdminFacade.CreateNewCustomer(LoginToken`1 token, Customer customer) in D:\git\Flight_Project\FlightProject\CoreControls\FlightManagerProject\Facade\LoggedInAdminFacade.cs:line 23
+   at FlightProjectWebServices.Controllers.AdminController.CreateNewCustomer(Customer customer) in D:\git\Flight_Project\FlightProject\FlightsWebApp\Controllers\AdminController.cs:line 93
+==========End==========
+==========Error Log==========
+=====2/6/2020 11:58:08 PM=====
+Error Message: Object reference not set to an instance of an object.
+Stack Trace:    at FlightProjectWebServices.Controllers.AirLineController.CreateFlight(Flight flight) in D:\git\Flight_Project\FlightProject\FlightsWebApp\Controllers\AirLineController.cs:line 146
+==========End==========
+==========Error Log==========
+=====2/6/2020 11:58:48 PM=====
+Error Message: Object reference not set to an instance of an object.
+Stack Trace:    at FlightProjectWebServices.Controllers.AirLineController.CreateFlight(Flight flight) in D:\git\Flight_Project\FlightProject\FlightsWebApp\Controllers\AirLineController.cs:line 146
+==========End==========
+==========Error Log==========
+=====2/6/2020 11:58:55 PM=====
+Error Message: Object reference not set to an instance of an object.
+Stack Trace:    at FlightProjectWebServices.Controllers.AirLineController.CreateFlight(Flight flight) in D:\git\Flight_Project\FlightProject\FlightsWebApp\Controllers\AirLineController.cs:line 146
+==========End==========
+==========Error Log==========
+=====2/6/2020 11:59:09 PM=====
+Error Message: Object reference not set to an instance of an object.
+Stack Trace:    at FlightProjectWebServices.Controllers.AirLineController.CreateFlight(Flight flight) in D:\git\Flight_Project\FlightProject\FlightsWebApp\Controllers\AirLineController.cs:line 146
+==========End==========
+==========Error Log==========
+=====2/7/2020 12:01:37 AM=====
+Error Message: Object reference not set to an instance of an object.
+Stack Trace:    at FlightProjectWebServices.Controllers.AirLineController.CreateFlight(Flight flight) in D:\git\Flight_Project\FlightProject\FlightsWebApp\Controllers\AirLineController.cs:line 146
+==========End==========
+==========Error Log==========
+=====2/7/2020 12:01:46 AM=====
+Error Message: Object reference not set to an instance of an object.
+Stack Trace:    at FlightProjectWebServices.Controllers.AirLineController.CreateFlight(Flight flight) in D:\git\Flight_Project\FlightProject\FlightsWebApp\Controllers\AirLineController.cs:line 146
+==========End==========
+==========Error Log==========
+=====2/7/2020 12:01:53 AM=====
+Error Message: Object reference not set to an instance of an object.
+Stack Trace:    at FlightProjectWebServices.Controllers.AirLineController.CreateFlight(Flight flight) in D:\git\Flight_Project\FlightProject\FlightsWebApp\Controllers\AirLineController.cs:line 146
+==========End==========
+==========Error Log==========
+=====2/7/2020 12:03:31 AM=====
+Error Message: Object reference not set to an instance of an object.
+Stack Trace:    at FlightProjectWebServices.Controllers.AirLineController.CreateFlight(Flight flight) in D:\git\Flight_Project\FlightProject\FlightsWebApp\Controllers\AirLineController.cs:line 146
+==========End==========
+==========Error Log==========
+=====2/7/2020 12:05:07 AM=====
+Error Message: Object reference not set to an instance of an object.
+Stack Trace:    at FlightProjectWebServices.Controllers.AirLineController.CreateFlight(Flight flight) in D:\git\Flight_Project\FlightProject\FlightsWebApp\Controllers\AirLineController.cs:line 146
+==========End==========
+==========Error Log==========
+=====2/7/2020 12:06:17 AM=====
+Error Message: Object reference not set to an instance of an object.
+Stack Trace:    at FlightProjectWebServices.Controllers.AirLineController.CreateFlight(Flight flight) in D:\git\Flight_Project\FlightProject\FlightsWebApp\Controllers\AirLineController.cs:line 146
+==========End==========

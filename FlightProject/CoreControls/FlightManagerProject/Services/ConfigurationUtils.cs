@@ -17,7 +17,7 @@ namespace FlightManagerProject
         public static string adminPassword = "9999";
         public static int updateHour = 12;
         public static int interval=250;
-        public static string errorLog = @"Resources\ErrorLog.txt";
+        public static string errorLog = @"D:\git\Flight_Project\FlightProject\CoreControls\FlightManagerProject\Resurces/ErrorLogger.txt";
       
         
        
