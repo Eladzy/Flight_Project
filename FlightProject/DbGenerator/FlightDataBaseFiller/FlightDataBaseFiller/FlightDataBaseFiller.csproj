@@ -88,7 +88,6 @@
     <Compile Include="CustomerFactory.cs" />
     <Compile Include="DataReceivingUnit.cs" />
     <Compile Include="DataSendUnit.cs" />
-    <Compile Include="DelagatingCommand.cs" />
     <Compile Include="FlightFactory.cs" />
     <Compile Include="FormValueValidation.cs" />
     <Compile Include="GeneralDataGenerator.cs" />
