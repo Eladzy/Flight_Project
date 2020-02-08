@@ -14,7 +14,7 @@ namespace FlightDataBaseFiller
         public int NumberOfFlights { get; set; }
         public int NumberOfCountries { get; set; }
         public int NumberOfTicketsPerCustomer { get; set; }
-
+        //private Action<List<Customer>, List<AirLine>, List<Country>, List<Flight>, List<Ticket>> SendData = DataSendUnit.AddData;
 
         
 
@@ -132,13 +132,26 @@ namespace FlightDataBaseFiller
             return tickets;
         }
 
-        public void GenerateData()//todo
+        public async void GenerateDataAsync()//todo
         {
-            List<Country> countries = GetCountries();
-            List<Customer> customers = GetCustomers();
-            List<AirLine> airlines = GetAirLines();
-            List<Flight> flights = GetFlights(airlines,countries);
-            List<Ticket> tickets = GetTickets(customers, flights);
+            List<Country> countries=new List<Country>();
+            List<Customer> customers=new List<Customer>();
+            List<AirLine> airlines=new List<AirLine>();
+            List<Flight> flights=new List<Flight>();
+            List<Ticket> tickets=new List<Ticket>();
+            await Task.Run(() =>
+            {
+                countries = GetCountries();
+                customers = GetCustomers();
+                airlines = GetAirLines();
+                flights = GetFlights(airlines, countries);
+                tickets = GetTickets(customers, flights);
+                //Action<List<Customer>, List<AirLine>, List<Country>, List<Flight>, List<Ticket>> a;
+                //a=DataSendUnit.AddData;
+
+            }).ContinueWith((Task t)=> { DataSendUnit.AddData(customers, airlines, countries, flights, tickets);});
+            
+           
             
           //send to db
         }
