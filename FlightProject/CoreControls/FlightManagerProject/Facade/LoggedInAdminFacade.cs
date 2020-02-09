@@ -11,7 +11,8 @@ namespace FlightManagerProject
         public LoggedInAdminFacade()
         {//check
             _airlineDAO = new AirLineMsSqlDao();
-            _customerDAO = new CustomerMsSqlDao();  
+            _customerDAO = new CustomerMsSqlDao();
+            _countryDAO = new CountryMsSqlDao();
         }
         public void CreateNewAirline(LoginToken<Administrator> token, AirLine airline)
         {
@@ -58,6 +59,13 @@ namespace FlightManagerProject
             if (token.User is Administrator)
             {
                 _customerDAO.Update(customer);
+            }
+        }
+        public void AddCountry(LoginToken<Administrator> token, Country country)
+        {
+            if (token.User is Administrator)
+            {
+                _countryDAO.Add(country);
             }
         }
     }

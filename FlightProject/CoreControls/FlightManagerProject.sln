@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightProjectTeting.UnitTes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightProjectWebServices", "..\WebService\FlightProjectWebServices\FlightProjectWebServices\FlightProjectWebServices.csproj", "{8B755540-D046-4BEE-BF61-4CBD0E27C63D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthServer", "..\AuthService\AuthServer\AuthServer.csproj", "{964E5352-4805-4FE6-A490-2B6225D126CF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightDataBaseFiller", "..\DbGenerator\FlightDataBaseFiller\FlightDataBaseFiller\FlightDataBaseFiller.csproj", "{D0C44F96-01C6-461B-A64D-9135FF31A06F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightsWebApp", "..\FlightsWebApp\FlightsWebApp.csproj", "{3650F4BF-B735-4A1F-9D39-4660EC142522}"
@@ -33,10 +31,6 @@ Global
 		{8B755540-D046-4BEE-BF61-4CBD0E27C63D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B755540-D046-4BEE-BF61-4CBD0E27C63D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B755540-D046-4BEE-BF61-4CBD0E27C63D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{964E5352-4805-4FE6-A490-2B6225D126CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{964E5352-4805-4FE6-A490-2B6225D126CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{964E5352-4805-4FE6-A490-2B6225D126CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{964E5352-4805-4FE6-A490-2B6225D126CF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D0C44F96-01C6-461B-A64D-9135FF31A06F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D0C44F96-01C6-461B-A64D-9135FF31A06F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0C44F96-01C6-461B-A64D-9135FF31A06F}.Release|Any CPU.ActiveCfg = Release|Any CPU

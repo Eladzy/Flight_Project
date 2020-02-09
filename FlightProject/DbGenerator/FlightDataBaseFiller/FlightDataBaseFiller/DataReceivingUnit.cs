@@ -146,10 +146,9 @@ namespace FlightDataBaseFiller
                 airlines = GetAirLines();
                 flights = GetFlights(airlines, countries);
                 tickets = GetTickets(customers, flights);
-                //Action<List<Customer>, List<AirLine>, List<Country>, List<Flight>, List<Ticket>> a;
-                //a=DataSendUnit.AddData;
+                
 
-            }).ContinueWith((Task t)=> { DataSendUnit.AddData(customers, airlines, countries, flights, tickets);});
+            }).ContinueWith((Task t)=> { DataSendUnit.AddData(customers, airlines, countries, flights, tickets).Start();});
             
            
             
