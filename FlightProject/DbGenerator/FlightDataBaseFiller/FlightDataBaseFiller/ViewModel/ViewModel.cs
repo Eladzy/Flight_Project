@@ -12,22 +12,35 @@ using System.Collections.ObjectModel;
 
 namespace FlightDataBaseFiller
 {
-    public class ViewModel:IDataErrorInfo,INotifyPropertyChanged
+    public class ViewModel: IDataErrorInfo,INotifyPropertyChanged
     {
         Dispatcher ViewModelDispatcher { get; set; }
 
-        //private Dictionary<string, string> errorCollection
-        //{
-        //    get
-        //    {
-        //        return ErrorCollection;
-        //    }
-        //    set
-        //    {
-        //        ErrorCollection = value;
-        //        NotifyPropertyChanged("ErrorCollection");
-        //    }
-        //}
+        private bool isEnabled;
+        public bool IsEnabled
+        {
+            get
+            {
+                return isEnabled;
+            }
+            set
+            {
+                isEnabled = value;    
+            }
+        }
+
+        private Dictionary<string, string> errorCollection
+        {
+            get
+            {
+                return ErrorCollection;
+            }
+            set
+            {
+                ErrorCollection = value;
+                NotifyPropertyChanged("ErrorCollection");
+            }
+        }
 
         public Dictionary<string, string> ErrorCollection { get; set; }
        
@@ -216,23 +229,21 @@ namespace FlightDataBaseFiller
             this.Timer.Interval = TimeSpan.FromMilliseconds(500);
             this.Timer.Tick += VerifyValues;
             this.Timer.Start();
-            Command = new DelegateCommand(ExecuteCommand, CanExecuteCommand);
+            Command = new DelegateCommand(ExecuteCommand).ObservesProperty(()=>IsEnabled);
         }
 
         private void ExecuteCommand()
         {
-           // throw new NotImplementedException();
+            DataReceivingUnit receivingUnit = new DataReceivingUnit(NumCustomers,NumAirlines,NumFlights,NumCountries,TicketsPerCustomer);
+            receivingUnit.GenerateDataAsync();
         }
 
-        private bool CanExecuteCommand()
-        {
-            return false;
-        }
 
         private void VerifyValues(object sender, EventArgs e)
         {
-           //make sure the number of bought tickets does not exceed the overall tickets
-           //FormValueValidation(this.NumAirlines,this.NumCountries,this.NumCustomers,this.NumFlights,this.TicketsPerCustomer) bool?
+            //make sure the number of bought tickets does not exceed the overall tickets
+            //FormValueValidation(this.NumAirlines,this.NumCountries,this.NumCustomers,this.NumFlights,this.TicketsPerCustomer) bool?
+            IsEnabled = ErrorCollection.All(pair => string.IsNullOrEmpty(pair.Value));
            
         }
 

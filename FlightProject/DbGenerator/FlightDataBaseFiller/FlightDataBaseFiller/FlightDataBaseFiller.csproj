@@ -95,7 +95,6 @@
     <Compile Include="ProgressUpdate.cs" />
     <Compile Include="TicketBuy.cs" />
     <Compile Include="TicketFactory.cs" />
-    <Compile Include="ViewModel\PopulateValuesUnit.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

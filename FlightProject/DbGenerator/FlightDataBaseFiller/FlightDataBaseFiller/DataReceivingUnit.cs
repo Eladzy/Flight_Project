@@ -132,7 +132,7 @@ namespace FlightDataBaseFiller
             return tickets;
         }
 
-        public async void GenerateDataAsync()//todo
+        public async void GenerateDataAsync()
         {
             List<Country> countries=new List<Country>();
             List<Customer> customers=new List<Customer>();

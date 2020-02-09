@@ -12,24 +12,28 @@ namespace FlightDataBaseFiller
 {
     class GetRestCountries
     {
-        readonly static string Url = "https://restcountries.eu/rest/v2"; 
+        readonly static string Url = "https://restcountries.eu/rest/v2/all?fields=name;";
 
+        private List<Country> _countries;
         public List<Country> Countries
         {
             get
             {
-                GetData().GetAwaiter();
-                return Countries;
+                //  Countries.Clear();             
+                return _countries;
             }
-          private  set { Countries = value; }
+          private  set { _countries = value; }
+        }
+
+        public GetRestCountries()
+        {
+            GetData();
         }
 
 
-
-
-        public async Task<List<Country>> GetData()
+        private async void GetData()
         {
-            this.Countries.Clear();
+           
             int counter = 0;
             List<Country> countries = new List<Country>();
             HttpClient client = new HttpClient
@@ -57,7 +61,7 @@ namespace FlightDataBaseFiller
                 }
             }
 
-            return countries;//might cause race condition?
+            this.Countries=countries;//might cause race condition?
 
         }
 
