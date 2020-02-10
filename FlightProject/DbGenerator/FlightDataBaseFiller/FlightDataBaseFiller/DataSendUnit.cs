@@ -22,19 +22,15 @@ namespace FlightDataBaseFiller
             };
             Facade = (LoggedInAdminFacade)FlightCenter.GetInstance().GetFacade(Token);
        }
-         public static Task AddData(List<Customer> customers, List<AirLine> airLines, List<Country> countries, List<Flight> flights, List<Ticket> tickets)
+         public static Task AddData(List<Customer> customers, List<AirLine> airLines, List<Country> countries, List<Flight> flights, int ticketsPerCustomer)
          {
             Task t = new Task(() => {
-                //Addcountries();
-                //AddAirlines();
-                //AddFlights();
+                Addcountries(countries);
+                AddAirlines(airLines);
+                AddCustomers(customers);
+                AddFlights(flights,airLines);
             });
-            Task t1 = new Task(() => { });
-            //todo Cancel customer auto-increment ID
-            //Task StartAddToDb = new Task(() => {
-            //    Debug.WriteLine("++++++++++++++++++++++add to db will be here!++++++++++++++++"); 
-            //});
-            //StartAddToDb.Start();
+           
             return t;
          }
         private static void Addcountries(List<Country>countries)
@@ -49,13 +45,56 @@ namespace FlightDataBaseFiller
         {
             airLines.ForEach(a => Facade.CreateNewAirline(Token, a));
         }
-        private static void AddFlights(List<Flight>flights)
+        private static void AddFlights(List<Flight>flights, List<AirLine> airLines)
         {
+            foreach(AirLine airLine in airLines)
+            {
+                LoginToken<AirLine> airlineToken = new LoginToken<AirLine>
+                {
+                    User = airLine
+                };
+                var airlineFacade = (LoggedInAirLineFacade)FlightCenter.GetInstance().GetFacade(airlineToken);
+                List<Flight> filteredFlights = flights.Where(f => f.Id == airLine.Id).ToList();
+                filteredFlights.ForEach(f => airlineFacade.CreateFlight(airlineToken, f));
+            }
             
         }
-        private static void BuyTickets()
+        private static void BuyTickets(int ticketsPerCustomer,List<Customer>customers,List<Flight>flights)
         {
+            List<Ticket> tickets = new List<Ticket>();
+            Random rnd = new Random();
+            foreach (Customer customer in customers)
+            {
 
+                for (int i = 0; i <ticketsPerCustomer; i++)
+                {
+                    int flightIndex = rnd.Next(0, flights.Count);
+                    try
+                    {
+                        tickets.Add(TicketFactory.GenerateTicket(customer, flights[flightIndex]));
+                    }
+                    catch (ExceptionTicketSoldOut e)
+                    {
+                        ErrorLogger.Logger(e);
+
+                        flights.RemoveAt(flightIndex);
+                        i++;
+                    }
+                    catch (ExceptionFlightNotFound e)
+                    {
+                        ErrorLogger.Logger(e);
+
+                        flights.RemoveAt(flightIndex);
+                        i++;
+                    }
+                    catch (Exception e)
+                    {
+                        ErrorLogger.Logger(e);
+                        throw e;
+                    }
+                }
+            }
+          
         }
         
     }
