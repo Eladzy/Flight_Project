@@ -31,7 +31,8 @@ namespace FlightDataBaseFiller
                 AddAirlines(airLines);
                 AddCustomers(customers);
                 AddFlights(flights, airLines);
-            })/*.ContinueWith((Task tak) => BuyTickets(ticketsPerCustomer, customers, flights)/*.Start()*/;
+                BuyTickets(ticketsPerCustomer, customers, flights);
+            });
            
             return t;
          }
