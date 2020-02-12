@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,14 +46,14 @@ namespace FlightDataBaseFiller
             return filteredCountries;
         }
 
-        private List<AirLine> GetAirLines()
+        private List<AirLine> GetAirLines(List<Country>countries)
         {
-            AirlineFactory GetAirline = new AirlineFactory();
-            List<Country> countries = GetCountries();
+            Random rnd = new Random();
+            AirlineFactory GetAirline = new AirlineFactory();          
             List<AirLine> airLines = new List<AirLine>();
-            foreach (Country country in countries)
+            for (int i= 0; i <NumberOfAirlines;i++)
             {
-               airLines.Add(GetAirline.Generate(country));
+               airLines.Add(GetAirline.Generate(countries[rnd.Next(1,countries.Count)]));
             }
             return airLines;
         }
@@ -94,43 +95,7 @@ namespace FlightDataBaseFiller
             return flights;
          }
 
-        private List<Ticket> GetTickets(List<Customer> customers, List<Flight> flights)
-        {
-            List<Ticket> tickets = new List<Ticket>();
-            Random rnd = new Random();
-            foreach(Customer customer in customers)
-            {
-                
-                for (int i = 0; i < NumberOfTicketsPerCustomer; i++)
-                {
-                    int flightIndex = rnd.Next(0, flights.Count);
-                    try
-                    {
-                       tickets.Add(TicketFactory.GenerateTicket(customer, flights[flightIndex]));
-                    }
-                    catch (ExceptionTicketSoldOut e)
-                    {
-                        ErrorLogger.Logger(e);
-
-                        flights.RemoveAt(flightIndex);
-                        i++;
-                    }
-                    catch (ExceptionFlightNotFound e)
-                    {
-                        ErrorLogger.Logger(e);
-
-                        flights.RemoveAt(flightIndex);
-                        i++;
-                    }
-                    catch (Exception e)
-                    {
-                        ErrorLogger.Logger(e);
-                        throw e;
-                    }
-                }
-            }
-            return tickets;
-        }
+       
 
         public async void GenerateDataAsync()
         {
@@ -138,17 +103,17 @@ namespace FlightDataBaseFiller
             List<Customer> customers=new List<Customer>();
             List<AirLine> airlines=new List<AirLine>();
             List<Flight> flights=new List<Flight>();
-            List<Ticket> tickets=new List<Ticket>();
+            //List<Ticket> tickets=new List<Ticket>();
             await Task.Run(() =>
             {
                 countries = GetCountries();
                 customers = GetCustomers();
-                airlines = GetAirLines();
+                airlines = GetAirLines(countries);
                 flights = GetFlights(airlines, countries);
-                tickets = GetTickets(customers, flights);
+                Debug.WriteLine("datarecieving task");
                 
 
-            }).ContinueWith((Task t)=> { DataSendUnit.AddData(customers, airlines, countries, flights, tickets).Start();});
+            }).ContinueWith((Task t)=> DataSendUnit.AddData(customers, airlines, countries, flights,NumberOfTicketsPerCustomer).Start());
             
            
             

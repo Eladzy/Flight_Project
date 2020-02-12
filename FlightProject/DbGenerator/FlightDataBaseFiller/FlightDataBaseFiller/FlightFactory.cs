@@ -20,7 +20,7 @@ namespace FlightDataBaseFiller
 
         private void Init(AirLine airline)
         {
-            this.ID = long.Parse(airline.Id.ToString().Substring(0, 10) + GeneralDataGenerator.NumericGenerator(5));
+            this.ID = long.Parse( GeneralDataGenerator.NumericGenerator(18));
             Random rnd = new Random();
             this.DepartureTime = DateTime.Now.AddDays(rnd.Next(0, 5)).AddHours(rnd.Next(0, 10));
             this.LandTime = this.DepartureTime.AddHours(rnd.Next(0, 5));

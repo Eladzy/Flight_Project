@@ -19,8 +19,7 @@ namespace FlightDataBaseFiller
         {
 
 
-            this.AlId = long.Parse(DateTime.Now.Year.ToString() + GeneralDataGenerator.NumericGenerator(4).ToString() + DateTime.Now.Day.ToString() +
-            DateTime.Now.Month.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + GeneralDataGenerator.NumericGenerator(3));
+            this.AlId = long.Parse(GeneralDataGenerator.NumericGenerator(18));
 
             this.AlCountryCode = country.Id;
 

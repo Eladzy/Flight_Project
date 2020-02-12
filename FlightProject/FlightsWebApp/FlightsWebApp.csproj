@@ -299,6 +299,7 @@
     <Content Include="Scripts\searchFilters.js" />
     <Content Include="Views\Page\departuresNew.html" />
     <Content Include="Views\Page\departurespage.html" />
+    <Content Include="Scripts\PopulateAirlines.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

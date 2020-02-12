@@ -30,7 +30,7 @@ namespace FlightProjectWebServices.Controllers
             return Ok(flights);
         }
 
-        [ResponseType(typeof(IEnumerable<AirLine>))]
+        [ResponseType(typeof(IEnumerable<AirLine>))]//add filter that censores username&password
         [HttpGet]
         [Route("api/airlines")]
         public IHttpActionResult GetAllAirlineCompanies()

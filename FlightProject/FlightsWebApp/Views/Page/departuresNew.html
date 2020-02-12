@@ -8,16 +8,17 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="../../Scripts/Classes.js"></script>
-     <script src="../../Scripts/searchFilters.js"></script>
+    <script src="../../Scripts/searchFilters.js"></script>
     <script src="../../Scripts/populatecountriesScript.js"></script>
+    <script src="../../Scripts/PopulateAirlines.js"></script>
     <title>departuresNew</title>
 </head>
 <body>
     
         <article class="depTable-table" >
             <div class="container"  >
-                <div class="table-responsive" style="margin-left: 250px">
-                    <table style=" background-color: navy;color:azure; margin-top: 200px;" id="flightsTable" class="table table-bordered ">
+                <div class="table-responsive" style="padding: 20px;position:absolute">
+                    <table style=" background-color: navy;color:azure; margin-top: 150px;" id="flightsTable" class="table table-bordered ">
                         <tr>
                             <th>Airline company id</th>
                             <th>Origin Country</th>
@@ -31,10 +32,10 @@
             </div>
         </article>
         <article class="depSearch-form">
-            <div style="width: 200px; float:left; margin-left: 0px;height: 100%; " class="container">
+            <div style="width: 200px; float:left; margin-left: 0px;height: 100%;margin-top:100px;position:absolute; " class="container">
                 <div class="row">
-                    <div class="col-sm-4"></div>
-                    <div class="col-sm-4" style="width: 200px;">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2" style="width: 200px;">
                         <form style="background-color: darkturquoise;padding: 20px;">
                             <div class="form-group">
                                 <label for="originSelect" class="form-control">Origin</label>
@@ -68,7 +69,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="col-sm-4"></div>
+                <div class="col-sm-2"></div>
             </div>
 
         </article>

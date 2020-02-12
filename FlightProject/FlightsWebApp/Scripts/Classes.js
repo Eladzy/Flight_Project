@@ -9,6 +9,13 @@ class Flight {
         if (status == undefined) {
             this.status = "Landing..."
         }
+    }
+}
 
+class Airline {
+    constructor(id, name, countryId) {
+        this.Id = id
+        this.AirLine_Name = name
+        this.CountryCode =countryId
     }
 }

@@ -13,6 +13,7 @@ namespace FlightProjectTeting.UnitTest
         FlightCenter flightCenter = FlightCenter.GetInstance();
         Customer customer = new Customer
         {
+            Id=232323,
             First_Name = "facadeTest",
             Last_Name = "1tr",
             User_Name="customerFacade",
@@ -104,6 +105,7 @@ namespace FlightProjectTeting.UnitTest
         {
             Customer c = new Customer
             {
+                Id=354545,
                 First_Name = "canceltest",
                 Last_Name = "13asd",
                 User_Name = "canceltest",

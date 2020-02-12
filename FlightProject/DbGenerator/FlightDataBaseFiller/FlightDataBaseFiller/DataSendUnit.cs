@@ -22,14 +22,16 @@ namespace FlightDataBaseFiller
             };
             Facade = (LoggedInAdminFacade)FlightCenter.GetInstance().GetFacade(Token);
        }
-         public static Task AddData(List<Customer> customers, List<AirLine> airLines, List<Country> countries, List<Flight> flights, int ticketsPerCustomer)
-         {
-            Task t = new Task(() => {
+        public static Task AddData(List<Customer> customers, List<AirLine> airLines, List<Country> countries, List<Flight> flights, int ticketsPerCustomer)
+        {
+            Task t = new Task(() =>
+            {
+                Debug.WriteLine("1st add data task");
                 Addcountries(countries);
                 AddAirlines(airLines);
                 AddCustomers(customers);
-                AddFlights(flights,airLines);
-            });
+                AddFlights(flights, airLines);
+            })/*.ContinueWith((Task tak) => BuyTickets(ticketsPerCustomer, customers, flights)/*.Start()*/;
            
             return t;
          }
@@ -59,42 +61,46 @@ namespace FlightDataBaseFiller
             }
             
         }
-        private static void BuyTickets(int ticketsPerCustomer,List<Customer>customers,List<Flight>flights)
+        private static Task BuyTickets(int ticketsPerCustomer,List<Customer>customers,List<Flight>flights)
         {
-            List<Ticket> tickets = new List<Ticket>();
-            Random rnd = new Random();
-            foreach (Customer customer in customers)
-            {
-
-                for (int i = 0; i <ticketsPerCustomer; i++)
+            Task t = new Task(() => {
+                Debug.WriteLine("final task");
+                List<Ticket> tickets = new List<Ticket>();
+                Random rnd = new Random();
+                foreach (Customer customer in customers)
                 {
-                    int flightIndex = rnd.Next(0, flights.Count);
-                    try
-                    {
-                        tickets.Add(TicketFactory.GenerateTicket(customer, flights[flightIndex]));
-                    }
-                    catch (ExceptionTicketSoldOut e)
-                    {
-                        ErrorLogger.Logger(e);
 
-                        flights.RemoveAt(flightIndex);
-                        i++;
-                    }
-                    catch (ExceptionFlightNotFound e)
+                    for (int i = 0; i < ticketsPerCustomer; i++)
                     {
-                        ErrorLogger.Logger(e);
+                        int flightIndex = rnd.Next(0, flights.Count);
+                        try
+                        {
+                            tickets.Add(TicketFactory.GenerateTicket(customer, flights[flightIndex]));
+                        }
+                        catch (ExceptionTicketSoldOut e)
+                        {
+                            ErrorLogger.Logger(e);
 
-                        flights.RemoveAt(flightIndex);
-                        i++;
-                    }
-                    catch (Exception e)
-                    {
-                        ErrorLogger.Logger(e);
-                        throw e;
+                            flights.RemoveAt(flightIndex);
+                            i++;
+                        }
+                        catch (ExceptionFlightNotFound e)
+                        {
+                            ErrorLogger.Logger(e);
+
+                            flights.RemoveAt(flightIndex);
+                            i++;
+                        }
+                        catch (Exception e)
+                        {
+                            ErrorLogger.Logger(e);
+                            throw e;
+                        }
                     }
                 }
-            }
-          
+            });
+            return t;
+
         }
         
     }

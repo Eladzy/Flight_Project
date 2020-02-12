@@ -14,6 +14,7 @@ namespace FlightProjectTeting.UnitTest
         AirLineMsSqlDao airLineDao = new AirLineMsSqlDao();
         Customer testCustomer = new Customer
         {
+            Id=54545,
             First_Name = "LogTest",
             Last_Name = "1",
             User_Name="LogC",
