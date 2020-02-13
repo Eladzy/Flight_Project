@@ -57,50 +57,50 @@ namespace FlightDataBaseFiller
                     User = airLine
                 };
                 var airlineFacade = (LoggedInAirLineFacade)FlightCenter.GetInstance().GetFacade(airlineToken);
-                List<Flight> filteredFlights = flights.Where(f => f.Id == airLine.Id).ToList();
-                filteredFlights.ForEach(f => airlineFacade.CreateFlight(airlineToken, f));
+                List<Flight> filteredFlights = flights.Where(f => f.AirLine_Id == airLine.Id).ToList();
+                filteredFlights.ForEach(f => airlineFacade.CreateFlight(airlineToken, f));//keep an eye
             }
             
         }
-        private static Task BuyTickets(int ticketsPerCustomer,List<Customer>customers,List<Flight>flights)
+        private static void BuyTickets(int ticketsPerCustomer,List<Customer>customers,List<Flight>flights)
         {
-            Task t = new Task(() => {
+           
                 Debug.WriteLine("final task");
+                if (customers.Count == 0 || flights.Count == 0)
+                    return;
                 List<Ticket> tickets = new List<Ticket>();
                 Random rnd = new Random();
-                foreach (Customer customer in customers)
+            foreach (Customer customer in customers)
+            {
+
+                for (int i = 0; i < ticketsPerCustomer; i++)
                 {
-
-                    for (int i = 0; i < ticketsPerCustomer; i++)
+                    int flightIndex = rnd.Next(0, flights.Count);
+                    try
                     {
-                        int flightIndex = rnd.Next(0, flights.Count);
-                        try
-                        {
-                            tickets.Add(TicketFactory.GenerateTicket(customer, flights[flightIndex]));
-                        }
-                        catch (ExceptionTicketSoldOut e)
-                        {
-                            ErrorLogger.Logger(e);
+                        tickets.Add(TicketFactory.GenerateTicket(customer, flights[flightIndex]));
+                    }
+                    catch (ExceptionTicketSoldOut e)
+                    {
+                        ErrorLogger.Logger(e);
 
-                            flights.RemoveAt(flightIndex);
-                            i++;
-                        }
-                        catch (ExceptionFlightNotFound e)
-                        {
-                            ErrorLogger.Logger(e);
+                        flights.RemoveAt(flightIndex);
+                        i++;
+                    }
+                    catch (ExceptionFlightNotFound e)
+                    {
+                        ErrorLogger.Logger(e);
 
-                            flights.RemoveAt(flightIndex);
-                            i++;
-                        }
-                        catch (Exception e)
-                        {
-                            ErrorLogger.Logger(e);
-                            throw e;
-                        }
+                        flights.RemoveAt(flightIndex);
+                        i++;
+                    }
+                    catch (Exception e)
+                    {
+                        ErrorLogger.Logger(e);
+                        throw e;
                     }
                 }
-            });
-            return t;
+            }
 
         }
         

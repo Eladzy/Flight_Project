@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using FlightManagerProject;
 namespace FlightDataBaseFiller
@@ -15,7 +16,8 @@ namespace FlightDataBaseFiller
         public int NumberOfFlights { get; set; }
         public int NumberOfCountries { get; set; }
         public int NumberOfTicketsPerCustomer { get; set; }
-        //private Action<List<Customer>, List<AirLine>, List<Country>, List<Flight>, List<Ticket>> SendData = DataSendUnit.AddData;
+        private static object Key = new object();
+      
 
         
 
@@ -48,14 +50,17 @@ namespace FlightDataBaseFiller
 
         private List<AirLine> GetAirLines(List<Country>countries)
         {
-            Random rnd = new Random();
-            AirlineFactory GetAirline = new AirlineFactory();          
-            List<AirLine> airLines = new List<AirLine>();
-            for (int i= 0; i <NumberOfAirlines;i++)
+            lock(Key)
             {
-               airLines.Add(GetAirline.Generate(countries[rnd.Next(1,countries.Count)]));
+                Random rnd = new Random();
+                AirlineFactory GetAirline = new AirlineFactory();          
+                List<AirLine> airLines = new List<AirLine>();
+                for (int i= 0; i <NumberOfAirlines;i++)
+                {
+                  airLines.Add(GetAirline.Generate(countries[rnd.Next(1,countries.Count)]));
+                }
+                return airLines;
             }
-            return airLines;
         }
 
 
@@ -82,7 +87,10 @@ namespace FlightDataBaseFiller
                 {
                     try
                     {
+                        
+                        
                         flights.Add(flightFactory.Generate(airline, countries[rnd.Next(0, countries.Count)], countries[rnd.Next(0, countries.Count)]));
+                        
                     }
                     catch (Exception e)//rethink
                     {
@@ -103,7 +111,7 @@ namespace FlightDataBaseFiller
             List<Customer> customers=new List<Customer>();
             List<AirLine> airlines=new List<AirLine>();
             List<Flight> flights=new List<Flight>();
-            //List<Ticket> tickets=new List<Ticket>();
+            
             await Task.Run(() =>
             {
                 countries = GetCountries();

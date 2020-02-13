@@ -65,6 +65,7 @@ namespace FlightManagerProject
                     Flight_Id = flight.Id,
                     Customer_Id = token.User.Id
                 };
+                ticketsDao.Add(ticket);
                 return ticket;
             }
            ExceptionTicketSoldOut e= new ExceptionTicketSoldOut();

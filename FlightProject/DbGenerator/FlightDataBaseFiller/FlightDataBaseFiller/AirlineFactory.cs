@@ -18,8 +18,7 @@ namespace FlightDataBaseFiller
         private  void Init(Country country)
         {
 
-
-            this.AlId = long.Parse(GeneralDataGenerator.NumericGenerator(18));
+            this.AlId = long.Parse(GeneralDataGenerator.NumericGenerator(18));   
 
             this.AlCountryCode = country.Id;
 

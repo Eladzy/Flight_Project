@@ -18,7 +18,7 @@ namespace FlightDataBaseFiller
 
        
 
-        private void Init(AirLine airline)
+        private void Init()
         {
             this.ID = long.Parse( GeneralDataGenerator.NumericGenerator(18));
             Random rnd = new Random();
@@ -29,7 +29,7 @@ namespace FlightDataBaseFiller
 
         public Flight Generate(AirLine airline, Country c1, Country c2)
         {
-            Init(airline);
+            Init();
             Flight flight = new Flight
             {
                 Id = this.ID,
