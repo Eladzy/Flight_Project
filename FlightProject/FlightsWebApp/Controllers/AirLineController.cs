@@ -14,15 +14,6 @@ namespace FlightProjectWebServices.Controllers
     [BasicAuthAirlineAttribute]
     public class AirLineController : ApiController//TODO: rethink if the id null check is neccessery or even logical
     {
-        //private AirLine AirlineCompany = new AirLine//temporary token
-        //{
-        //    Id = 1,
-        //    AirLine_Name = "usaAirline",
-        //    User_Name = "asd",
-        //    Password = "1234",
-        //    CountryCode = 1
-        //};
-
 
         private LoggedInAirLineFacade Facade 
         {

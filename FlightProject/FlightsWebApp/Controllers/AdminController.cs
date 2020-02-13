@@ -5,23 +5,34 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using FlightManagerProject;
+using FlightsWebApp.Controllers.AuthAttributes;
 
 namespace FlightProjectWebServices.Controllers
 {
-    // [Authorize(Roles = "Administrator")]
+    [BasicAuthAdminLogin]
     public class AdminController : ApiController
     {
-        static Administrator administrator = new Administrator();
 
-        private LoggedInAdminFacade Facade;
-        static LoginToken<Administrator> token = new LoginToken<Administrator>
+        private LoginToken<Administrator> Token;
+        private LoggedInAdminFacade Facade
         {
-            User = administrator
-        };
-        public AdminController()
-        {
-            this.Facade = (LoggedInAdminFacade)FlightCenter.GetInstance().GetFacade(token);
+            get
+            {
+                return GetTokenFacade();
+            }
         }
+
+        private LoggedInAdminFacade GetTokenFacade()
+        {
+            LoggedInAdminFacade facade;
+            ActionContext.Request.Properties.TryGetValue("tokenResult", out object tokenResult);
+            this.Token = (LoginToken<Administrator>)tokenResult;
+            facade = (LoggedInAdminFacade)FlightCenter.GetInstance().GetFacade(Token);
+            return facade;
+
+        }
+       
+   
         [HttpPost]
         [Route("api/admin/newcompany/{airline}")]
         IHttpActionResult CreateNewAirline([FromBody]AirLine airline)
@@ -32,7 +43,7 @@ namespace FlightProjectWebServices.Controllers
             }
             try
             {
-                this.Facade.CreateNewAirline(token, airline);
+                this.Facade.CreateNewAirline(Token, airline);
             }
             catch (Exception e)
             {
@@ -51,7 +62,7 @@ namespace FlightProjectWebServices.Controllers
                 return BadRequest();
             try
             {
-                this.Facade.UpdateAirlineDetails(token, airLine);
+                this.Facade.UpdateAirlineDetails(Token, airLine);
             }
             catch (Exception e)
             {
@@ -70,7 +81,7 @@ namespace FlightProjectWebServices.Controllers
                 return BadRequest();
             try
             {
-                this.Facade.RemoveAirline(token, airline);
+                this.Facade.RemoveAirline(Token, airline);
             }
             catch (Exception e)
             {
@@ -90,7 +101,7 @@ namespace FlightProjectWebServices.Controllers
             }
             try
             {
-                this.Facade.CreateNewCustomer(token, customer);
+                this.Facade.CreateNewCustomer(Token, customer);
             }
             catch (Exception e)
             {
@@ -108,7 +119,7 @@ namespace FlightProjectWebServices.Controllers
             }
             try
             {
-                this.Facade.UpdateCustomerDetails(token, customer);
+                this.Facade.UpdateCustomerDetails(Token, customer);
             }
             catch (Exception e)
             {
@@ -126,7 +137,7 @@ namespace FlightProjectWebServices.Controllers
             }
             try
             {
-                this.Facade.RemoveCustomer(token, customer);
+                this.Facade.RemoveCustomer(Token, customer);
             }
             catch (Exception e)
             {
