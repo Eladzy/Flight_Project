@@ -8,7 +8,7 @@ namespace FlightDataBaseFiller
 {
     public class GeneralDataGenerator
     {
-        private static Random rnd;
+       
         private static object Key = new object();
         private static string Chars
         {
@@ -26,6 +26,7 @@ namespace FlightDataBaseFiller
         }
         public static string Generator(int length)
         {
+            Random rnd = new Random();
             rnd = new Random();
             string dataString=string.Empty;
             for (int i = 0; i < length; i++)
@@ -36,17 +37,16 @@ namespace FlightDataBaseFiller
         }
         public static string NumericGenerator(int length)
         {
-            lock (Key)
-            {
-                
-                rnd = new Random();
+
+                 Random rnd = new Random();
+                 rnd = new Random();
                 string dataString = string.Empty;
                 for (int i = 0; i < length; i++)
                 {
                     dataString += Digits[rnd.Next(0, Digits.Length)];
                 }
                 return dataString;
-            }
+
         }
     }
 }

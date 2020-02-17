@@ -243,7 +243,7 @@ function PopulateCountries(select) {
             var option = document.createElement('option');
             option.text = countries[i];
             console.log(countries[i]);
-            option.value = i;
+            option.value = i+1;
             select.add(option);
         }
     }

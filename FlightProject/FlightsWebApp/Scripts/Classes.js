@@ -7,7 +7,7 @@ class Flight {
         this.Departure_Time = departuretime
         this.Landing_Time = landingtime
         if (status == undefined) {
-            this.status = "Landing..."
+            this.status = Date(departuretime) < Date.now()?"Landing":"Scehduled"
         }
     }
 }

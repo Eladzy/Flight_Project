@@ -82,5 +82,12 @@ namespace FlightManagerProject
             List<Flight> flights = _flightDAO.GetFlightsByOriginCountry(countryCode).ToList();
             return flights;
         }
+
+        public IList<Flight> SearchFlights(long? id = null, long? airlineId = null, int? originCountryId = null, int? destinationCountryId = null, DateTime? departureTime = null, DateTime? landingTime = null)
+        {
+            List<Flight> flights =
+                _flightDAO.SearchFlight(id, airlineId, originCountryId, destinationCountryId, departureTime, landingTime).ToList();
+            return flights;
+        }
      }
 }

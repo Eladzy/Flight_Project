@@ -241,7 +241,6 @@
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PageController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -285,6 +284,7 @@
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Classes.js" />
+    <Content Include="Scripts\DeparturesSearchFilter.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -296,7 +296,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\populatecountriesScript.js" />
-    <Content Include="Scripts\searchFilters.js" />
+    <Content Include="Scripts\DeparturesDataTable.js" />
     <Content Include="Views\Page\departuresNew.html" />
     <Content Include="Views\Page\departurespage.html" />
     <Content Include="Scripts\PopulateAirlines.js" />

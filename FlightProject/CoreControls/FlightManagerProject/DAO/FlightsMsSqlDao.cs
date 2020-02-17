@@ -371,5 +371,48 @@ namespace FlightManagerProject
                 }
             }
         }
+
+
+        public IList<Flight> SearchFlight(long? id=null,long? airlineId=null,int? originCountryId=null,int? destinationCountryId=null,DateTime? departureTime=null,DateTime? landingTime=null)
+        {
+
+            List<Flight> flights = new List<Flight>();
+            string query = "SEARCH_FLIGHT";
+            using(SqlConnection connection=new SqlConnection(connectionString))
+            {
+                using(SqlCommand cmd=new SqlCommand(query,connection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@airlineId", airlineId);
+                    cmd.Parameters.AddWithValue("@origin",originCountryId );
+                    cmd.Parameters.AddWithValue("@destination",destinationCountryId);
+                    cmd.Parameters.AddWithValue("@deaprtureTime",departureTime);
+                    cmd.Parameters.AddWithValue("@landingTime",landingTime);
+
+                    connection.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
+                    while (reader.Read())
+                    {
+                        if (reader.HasRows)
+                        {
+                            Flight flight = new Flight
+                            {
+                                Id=(long)reader["F_ID"],
+                                AirLine_Id=(long)reader["F_AIRLINE_ID"],
+                                Origin_Country_Code=(int)reader["F_ORIGIN_COUNTRYCODE"],
+                                Destination_Country_Code=(int)reader["F_DESTINATION_COUNTRYDOE"],
+                                Departure_Time=(DateTime)reader["F_DEPARTURE_TIME"],
+                                Landing_Time = (DateTime)reader["F_LANDING_TIME"],
+                                Remaining_Tickets=(int)reader["F_REMAINING_TICKETS"]
+                            };
+                            flights.Add(flight);
+                        }
+                    }
+
+                }
+            }
+            return flights;
+        }
     }
 }

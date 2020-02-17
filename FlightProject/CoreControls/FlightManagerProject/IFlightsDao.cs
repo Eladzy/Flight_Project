@@ -14,5 +14,6 @@ namespace FlightManagerProject
         IList<Flight> GetFlightsByDepatrureDate(DateTime departureDate);
         IList<Flight> GetFlightsByLandingDate(DateTime landingDate);
         IList<Flight> GetFlightsByCustomer(Customer customer);
+        IList<Flight> SearchFlight(long? id = null, long? airlineId = null, int? originCountryId = null, int? destinationCountryId = null, DateTime? departureTime = null, DateTime? landingTime = null);
     }
 }
