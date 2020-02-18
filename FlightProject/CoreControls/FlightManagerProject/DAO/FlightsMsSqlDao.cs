@@ -373,11 +373,10 @@ namespace FlightManagerProject
         }
 
 
-        public IList<Flight> SearchFlight(long? id=null,long? airlineId=null,int? originCountryId=null,int? destinationCountryId=null,DateTime? departureTime=null,DateTime? landingTime=null)
+        public IList<Flight> SearchFlight(string query,long? id=null,long? airlineId=null,int? originCountryId=null,int? destinationCountryId=null,DateTime? departureTime=null,DateTime? landingTime=null)
         {
 
             List<Flight> flights = new List<Flight>();
-            string query = "SEARCH_FLIGHT";
             using(SqlConnection connection=new SqlConnection(connectionString))
             {
                 using(SqlCommand cmd=new SqlCommand(query,connection))
@@ -413,6 +412,6 @@ namespace FlightManagerProject
                 }
             }
             return flights;
-        }
+        }    
     }
 }

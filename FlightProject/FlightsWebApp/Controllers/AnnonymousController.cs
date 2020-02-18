@@ -161,12 +161,12 @@ namespace FlightProjectWebServices.Controllers
         [HttpGet]
         [ResponseType(typeof(IEnumerable<Flight>))]//todo
         [Route("api/searchFlight")]
-        IHttpActionResult GetBySearch([FromBody] long? flightId = null, [FromBody]long? airlineId = null, [FromBody]int? originCountryId = null, [FromBody]int? destinationCountryId = null, [FromBody]string depTime = null, [FromBody]string landTime = null)
+        IHttpActionResult GetBySearch([FromBody]string query,[FromBody] long? flightId = null, [FromBody]long? airlineId = null, [FromBody]int? originCountryId = null, [FromBody]int? destinationCountryId = null, [FromBody]string depTime = null, [FromBody]string landTime = null)
         {
             DateTime? departureTime = DateTime.Parse(depTime);
             DateTime? landingTime = DateTime.Parse(depTime);
 
-            List<Flight> flights = instance.GetFacade(token).SearchFlights(flightId, airlineId, originCountryId, destinationCountryId, departureTime, landingTime).ToList();
+            List<Flight> flights = instance.GetFacade(token).SearchFlights(query,flightId, airlineId, originCountryId, destinationCountryId, departureTime, landingTime).ToList();
             return Ok();
         }
     }

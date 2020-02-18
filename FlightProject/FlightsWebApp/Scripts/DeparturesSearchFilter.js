@@ -8,35 +8,44 @@ $(document).ready(() => {
         const origin_country = $("#originSelect").val()
         const dest_country = $("#destSelect").val()
         const flight_radio = $(`input[name=flightType]`).val()
-        
+        const departure_time1 = null
+        const departure_time2 = null
+        const landing_time1 = null
+        const landing_time2 = null
+
+        switch (flight_radio) {
+            case "depChecked":
+                departure_time = new Date()
+                landing_time = new Date()
+                landing_time.setHours(landing_time.getHours()+12)
+                break
+            case "landChecked":
+
+                break
+            default:
+                flights = flights.filter(f => new Date(f.Landing_Time) <= departureTimeFilter && new Date(f.Departure_Time) <= departureTimeFilter)
+        }
         $.ajax({
             dataType: `jason`,
             url: "api/searchFlight",
             type: 'GET',
             data: {
+                query="GET_FLIGHTS_BY_TIMESPAN",
                 flightId = flight_id,
                 airlineId=air_company_id,
                 originCountryId= origin_country,
                 destinationCountryId=dest_country,
-                depTime=null,
-                landTime=null
+                depTime=departure_time,
+                landTime=landing_time
             }
 
-        }).then(flights, function () {
+        }).then(data, function () {
+            flights.append(data)
             console.debug(flights)
             let departureTimeFilter = new Date()
             departureTimeFilter.setHours(departureTimeFilter.getHours() + 12)
           
-            switch (flight_radio) {
-                case "depChecked":
-                    flights = flights.filter(f => new Date(f.Departure_Time) <= departureTimeFilter)
-                    break
-                case "landChecked":
-                    flights = flights.filter(f => new Date(f.Landing_Time) <= departureTimeFilter)
-                    break
-                default:
-                    flights = flights.filter(f => new Date(f.Landing_Time) <= departureTimeFilter && new Date(f.Departure_Time) <= departureTimeFilter)
-            }
+           
 
             $.each(flights, (i, flight) => {
                 flight = new Flight(flight.Id, flight.AirLine_Id, flight.Origin_Country_Code, flight.Destination_Country_Code, flight.Landing_Time, flight.Departure_Time, undefined)
