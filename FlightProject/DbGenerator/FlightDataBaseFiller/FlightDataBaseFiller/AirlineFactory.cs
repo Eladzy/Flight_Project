@@ -9,7 +9,7 @@ namespace FlightDataBaseFiller
 {
     class AirlineFactory//todo after countries
     {      
-        private long AlId;
+       // private long AlId;
         private long AlCountryCode;
         private string AlAirLineName;
         private string AlUserName;
@@ -18,7 +18,7 @@ namespace FlightDataBaseFiller
         private  void Init(Country country)
         {
 
-            this.AlId = Math.Abs((long)Guid.NewGuid().GetHashCode());   
+           // this.AlId = Math.Abs((long)Guid.NewGuid().GetHashCode());   
 
             this.AlCountryCode = country.Id;
 
@@ -35,7 +35,7 @@ namespace FlightDataBaseFiller
 
             AirLine a = new AirLine
             {
-                Id = this.AlId,
+           //     Id = this.AlId,
                 AirLine_Name = this.AlAirLineName,
                 User_Name = this.AlUserName,
                 CountryCode = this.AlCountryCode,

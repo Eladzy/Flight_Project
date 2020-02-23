@@ -83,11 +83,18 @@ namespace FlightManagerProject
             return flights;
         }
 
-        public IList<Flight> SearchFlights(string query,long? id = null, long? airlineId = null, int? originCountryId = null, int? destinationCountryId = null, DateTime? departureTime = null, DateTime? landingTime = null)
+        public IList<Flight> SearchFlights(long? id = null, long? airlineId = null, int? originCountryId = null, int? destinationCountryId = null, DateTime? departureTime = null, DateTime? landingTime = null)
         {
             List<Flight> flights =
-                _flightDAO.SearchFlight(query,id, airlineId, originCountryId, destinationCountryId, departureTime, landingTime).ToList();
+                _flightDAO.SearchFlight(id, airlineId, originCountryId, destinationCountryId, departureTime, landingTime).ToList();
             return flights;
         }
-     }
+
+        public IList<Flight> SearchFlightsByTimeSpan( long? id = null, long? airlineId = null, int? originCountryId = null, int? destinationCountryId = null, DateTime? departureTime1 = null, DateTime? departureTime2 = null, DateTime? landingTime1 = null, DateTime? landingTime2 = null)
+        {
+            List<Flight> flights =
+                _flightDAO.FlightsByTimeSpan( id, airlineId, originCountryId, destinationCountryId, departureTime1,departureTime2, landingTime1,landingTime2).ToList();
+            return flights;
+        }
+    }
 }

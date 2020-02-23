@@ -373,9 +373,9 @@ namespace FlightManagerProject
         }
 
 
-        public IList<Flight> SearchFlight(string query,long? id=null,long? airlineId=null,int? originCountryId=null,int? destinationCountryId=null,DateTime? departureTime=null,DateTime? landingTime=null)
+        public IList<Flight> SearchFlight(long? id=null,long? airlineId=null,int? originCountryId=null,int? destinationCountryId=null,DateTime? departureTime=null,DateTime? landingTime=null)
         {
-
+            string query = "SEARCH_FLIGHT";
             List<Flight> flights = new List<Flight>();
             using(SqlConnection connection=new SqlConnection(connectionString))
             {
@@ -412,6 +412,50 @@ namespace FlightManagerProject
                 }
             }
             return flights;
-        }    
+        }
+
+
+        public IList<Flight> FlightsByTimeSpan( long? id = null, long? airlineId = null, int? originCountryId = null, int? destinationCountryId = null, DateTime? departureTime1 = null, DateTime? departureTime2 = null, DateTime? landingTime1 = null, DateTime? landingTime2 = null)
+        {
+            string query = "GET_FLIGHTS_BY_TIMESPAN";
+            List<Flight> flights = new List<Flight>();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(query, connection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@airlineId", airlineId);
+                    cmd.Parameters.AddWithValue("@origin", originCountryId);
+                    cmd.Parameters.AddWithValue("@destination", destinationCountryId);
+                    cmd.Parameters.AddWithValue("@deaprture1", departureTime1);
+                    cmd.Parameters.AddWithValue("@deaprture2", departureTime2);
+                    cmd.Parameters.AddWithValue("@landing1", landingTime1);
+                    cmd.Parameters.AddWithValue("@landing2", landingTime2);
+
+                    connection.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
+                    while (reader.Read())
+                    {
+                        if (reader.HasRows)
+                        {
+                            Flight flight = new Flight
+                            {
+                                Id = (long)reader["F_ID"],
+                                AirLine_Id = (long)reader["F_AIRLINE_ID"],
+                                Origin_Country_Code = (int)reader["F_ORIGIN_COUNTRYCODE"],
+                                Destination_Country_Code = (int)reader["F_DESTINATION_COUNTRYDOE"],
+                                Departure_Time = (DateTime)reader["F_DEPARTURE_TIME"],
+                                Landing_Time = (DateTime)reader["F_LANDING_TIME"],
+                                Remaining_Tickets = (int)reader["F_REMAINING_TICKETS"]
+                            };
+                            flights.Add(flight);
+                        }
+                    }
+
+                }
+            }
+            return flights;
+        }
     }
 }

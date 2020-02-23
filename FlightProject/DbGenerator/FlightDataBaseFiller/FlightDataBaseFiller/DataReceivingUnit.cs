@@ -76,32 +76,32 @@ namespace FlightDataBaseFiller
         }
 
 
-         private List<Flight> GetFlights(List<AirLine>airlines,List<Country>countries)//to finish
-         {
-            FlightFactory flightFactory = new FlightFactory();
-            Random rnd = new Random();
-            List<Flight> flights = new List<Flight>();
-            foreach (AirLine airline in airlines)
-            {
-                for (int i = 0; i < NumberOfFlights; i++)
-                {
-                    try
-                    {
+         //private List<Flight> GetFlights(List<AirLine>airlines,List<Country>countries)//to finish
+         //{
+         //   FlightFactory flightFactory = new FlightFactory();
+         //   Random rnd = new Random();
+         //   List<Flight> flights = new List<Flight>();
+         //   foreach (AirLine airline in airlines)
+         //   {
+         //       for (int i = 0; i < NumberOfFlights; i++)
+         //       {
+         //           try
+         //           {
                         
                         
-                        flights.Add(flightFactory.Generate(airline, countries[rnd.Next(0, countries.Count)], countries[rnd.Next(0, countries.Count)]));
+         //               flights.Add(flightFactory.Generate(airline, countries[rnd.Next(0, countries.Count)], countries[rnd.Next(0, countries.Count)]));
                         
-                    }
-                    catch (Exception e)//rethink
-                    {
+         //           }
+         //           catch (Exception e)//rethink
+         //           {
 
-                        ErrorLogger.Logger(e);
-                        i--;
-                    }
-                }
-            }
-            return flights;
-         }
+         //               ErrorLogger.Logger(e);
+         //               i--;
+         //           }
+         //       }
+         //   }
+         //   return flights;
+         //}
 
        
 
@@ -117,11 +117,11 @@ namespace FlightDataBaseFiller
                 countries = GetCountries();
                 customers = GetCustomers();
                 airlines = GetAirLines(countries);
-                flights = GetFlights(airlines, countries);
+             //   flights = GetFlights(airlines, countries);
                 Debug.WriteLine("datarecieving task");
                 
 
-            }).ContinueWith((Task t)=> DataSendUnit.AddData(customers, airlines, countries, flights,NumberOfTicketsPerCustomer).Start());
+            }).ContinueWith((Task t)=> DataSendUnit.AddData(customers, airlines, countries,NumberOfFlights,NumberOfTicketsPerCustomer).Start());
             
            
             

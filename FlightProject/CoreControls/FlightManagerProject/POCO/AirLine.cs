@@ -20,7 +20,13 @@ namespace FlightManagerProject
 
         }
 
-        
+        public AirLine( string airLine_Name, string user_Name, string password, long countryCode)
+        { 
+            AirLine_Name = airLine_Name;
+            User_Name = user_Name;
+            Password = password;
+            CountryCode = countryCode;
+        }
 
         public AirLine(long id, string airLine_Name, string user_Name, string password, long countryCode)
         {

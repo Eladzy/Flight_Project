@@ -27,7 +27,6 @@ namespace FlightDataBaseFiller
         public static string Generator(int length)
         {
             Random rnd = new Random();
-            rnd = new Random();
             string dataString=string.Empty;
             for (int i = 0; i < length; i++)
             {
@@ -38,15 +37,16 @@ namespace FlightDataBaseFiller
         public static string NumericGenerator(int length)
         {
 
-                 Random rnd = new Random();
-                 rnd = new Random();
+            lock (Key)
+            {
                 string dataString = string.Empty;
                 for (int i = 0; i < length; i++)
                 {
+                    Random rnd = new Random();
                     dataString += Digits[rnd.Next(0, Digits.Length)];
                 }
                 return dataString;
-
+            }
         }
     }
 }

@@ -10,6 +10,8 @@ namespace FlightDataBaseFiller
 {
     public static class DataSendUnit
     {
+        
+
         private static LoginToken<Administrator> Token;
         private static LoggedInAdminFacade Facade;
        static DataSendUnit()
@@ -22,7 +24,7 @@ namespace FlightDataBaseFiller
             };
             Facade = (LoggedInAdminFacade)FlightCenter.GetInstance().GetFacade(Token);
        }
-        public static Task AddData(List<Customer> customers, List<AirLine> airLines, List<Country> countries, List<Flight> flights, int ticketsPerCustomer)
+        public static Task AddData(List<Customer> customers, List<AirLine> airLines, List<Country> countries, int numberOfFlights, int ticketsPerCustomer)
         {
             Task t = new Task(() =>
             {
@@ -30,47 +32,63 @@ namespace FlightDataBaseFiller
                 Addcountries(countries);
                 AddAirlines(airLines);
                 AddCustomers(customers);
-                AddFlights(flights, airLines);
+                AddFlights(countries, airLines,numberOfFlights);
                 BuyTickets(ticketsPerCustomer, customers, flights);
             });
            
             return t;
          }
-        private static void Addcountries(List<Country>countries)
+        private static void Addcountries(List<Country>countries)//ok
         {
             countries.ForEach(c => Facade.AddCountry(Token, c));
         }
-        private static void AddCustomers(List<Customer>customers)
+        private static void AddCustomers(List<Customer>customers)//ok
         {
             customers.ForEach(c => Facade.CreateNewCustomer(Token, c));
         }
         private static void AddAirlines(List<AirLine>airLines)
         {
-            airLines.ForEach(a => Facade.CreateNewAirline(Token, a));
+            airLines.ForEach(a => Facade.CreateNewAirline(Token, a));//ok
         }
-        private static void AddFlights(List<Flight>flights, List<AirLine> airLines)
+
+
+        private static void AddFlights(List<Country>countries, List<AirLine> airLines,int numberOfFlights)
         {
-            foreach(AirLine airLine in airLines)
+            FlightFactory flightFactory = new FlightFactory();
+            Random rnd = new Random();
+            List<AirLine> airlinesTemp = new List<AirLine>();
+            airLines.ForEach(a =>airLines.Add( Facade.GetAirlineByUser(Token,a.User_Name)));
+            foreach (AirLine airline in airlinesTemp)
             {
                 LoginToken<AirLine> airlineToken = new LoginToken<AirLine>
                 {
-                    User = airLine
+                   User = airline
                 };
                 var airlineFacade = (LoggedInAirLineFacade)FlightCenter.GetInstance().GetFacade(airlineToken);
-                List<Flight> filteredFlights = flights.Where(f => f.AirLine_Id == airLine.Id).ToList();
-                filteredFlights.ForEach(f => airlineFacade.CreateFlight(airlineToken, f));//keep an eye
+                for (int i = 0; i < numberOfFlights; i++)
+                {
+                    try
+                    {
+                        airlineFacade.CreateFlight(airlineToken, flightFactory.Generate(airline, countries[rnd.Next(0, countries.Count)], countries[rnd.Next(0, countries.Count)]));
+                    }
+                    catch (Exception e)//rethink
+                    {
+
+                        ErrorLogger.Logger(e);
+                        i--;
+                    }
+                }
             }
-            
         }
         private static void BuyTickets(int ticketsPerCustomer,List<Customer>customers,List<Flight>flights)
         {
-           
-                Debug.WriteLine("final task");
+            List<Customer> customersTemp = new List<Customer>();
+            customers.ForEach(c => customersTemp.Add(Facade.GetCustomerByUser(Token,c.User_Name)));
                 if (customers.Count == 0 || flights.Count == 0)
                     return;
-                List<Ticket> tickets = new List<Ticket>();
+               List<Ticket> tickets = new List<Ticket>();
                 Random rnd = new Random();
-            foreach (Customer customer in customers)
+            foreach (Customer customer in customersTemp)
             {
 
                 for (int i = 0; i < ticketsPerCustomer; i++)

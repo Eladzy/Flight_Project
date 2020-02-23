@@ -143,7 +143,7 @@ namespace FlightProjectWebServices.Controllers
         [Route("api/getflightsbydeparture/{ladingDate}")]
         IHttpActionResult GetFlightsByLandingDate([FromBody]DateTime landingDate)
         {
-            List<Flight> flights;
+            List<Flight> flights = new List<Flight>() ;
             try
             {
                 flights = instance.GetFacade(token).GetFlightsByLandingDate(landingDate).ToList();
@@ -151,8 +151,9 @@ namespace FlightProjectWebServices.Controllers
             catch (Exception e)
             {
                 ErrorLogger.Logger(e);
-                return StatusCode(HttpStatusCode.NoContent);//is it ok?
+                return InternalServerError();
             }
+               
             if (flights == null || flights.Count == 0)
                 return StatusCode(HttpStatusCode.NoContent);//is it ok?
             return Ok(flights);
@@ -161,13 +162,46 @@ namespace FlightProjectWebServices.Controllers
         [HttpGet]
         [ResponseType(typeof(IEnumerable<Flight>))]//todo
         [Route("api/searchFlight")]
-        IHttpActionResult GetBySearch([FromBody]string query,[FromBody] long? flightId = null, [FromBody]long? airlineId = null, [FromBody]int? originCountryId = null, [FromBody]int? destinationCountryId = null, [FromBody]string depTime = null, [FromBody]string landTime = null)
+        IHttpActionResult GetBySearch([FromBody] long? flightId = null, [FromBody]long? airlineId = null, [FromBody]int? originCountryId = null, [FromBody]int? destinationCountryId = null, [FromBody]string depTime = null, [FromBody]string landTime = null)
         {
             DateTime? departureTime = DateTime.Parse(depTime);
-            DateTime? landingTime = DateTime.Parse(depTime);
+            DateTime? landingTime = DateTime.Parse(landTime);
+            try
+            {
+                List<Flight> flights = instance.GetFacade(token).SearchFlights( flightId, airlineId, originCountryId, destinationCountryId, departureTime, landingTime).ToList();
+                if (flights.Count == 0)
+                    return StatusCode(HttpStatusCode.NoContent);
+                return Ok(flights);
+            }
+            catch (Exception e)
+            {
+                ErrorLogger.Logger(e);
+                return InternalServerError();
+            }
+        }
 
-            List<Flight> flights = instance.GetFacade(token).SearchFlights(query,flightId, airlineId, originCountryId, destinationCountryId, departureTime, landingTime).ToList();
-            return Ok();
+
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<Flight>))]//todo
+        [Route("api/searchFlightRange")]
+        IHttpActionResult GetByTimeRange([FromBody] long? flightId = null, [FromBody]long? airlineId = null, [FromBody]int? originCountryId = null, [FromBody]int? destinationCountryId = null, [FromBody]string depTime1 = null, [FromBody]string depTime2 = null, [FromBody]string landTime1 = null, [FromBody]string landTime2 = null)
+        {
+            DateTime? departureTime1 = DateTime.Parse(depTime1);
+            DateTime? departureTime2 = DateTime.Parse(depTime2);
+            DateTime? landingTime1 = DateTime.Parse(landTime1);
+            DateTime? landingTime2 = DateTime.Parse(landTime2);
+            try
+            {
+                List<Flight> flights = instance.GetFacade(token).SearchFlightsByTimeSpan(flightId, airlineId, originCountryId, destinationCountryId, departureTime1, departureTime2, landingTime1, landingTime2).ToList();
+                if (flights.Count == 0)
+                    return StatusCode(HttpStatusCode.NoContent);
+                return Ok(flights);
+            }
+            catch (Exception e)
+            {
+                ErrorLogger.Logger(e);
+                return InternalServerError();
+            }
         }
     }
 }

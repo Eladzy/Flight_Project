@@ -68,5 +68,23 @@ namespace FlightManagerProject
                 _countryDAO.Add(country);
             }
         }
+        public AirLine GetAirlineByUser(LoginToken<Administrator> token, string username)
+        {
+          
+            try
+            {
+                return _airlineDAO.GetAirLineByUserName(username);
+            }
+            catch (ExceptionFlightNotFound e)
+            {
+                ErrorLogger.Logger(e);
+                throw e;
+            }
+          
+        }
+        public Customer GetCustomerByUser(LoginToken<Administrator> token, string username)
+        {
+           return _customerDAO.GetCustomerByUserName(username);
+        }
     }
 }

@@ -15,28 +15,37 @@ $(document).ready(() => {
 
         switch (flight_radio) {
             case "depChecked":
-                departure_time = new Date()
-                landing_time = new Date()
-                landing_time.setHours(landing_time.getHours()+12)
+                departure_time1 = new Date()
+                departure_time2 = new Date()
+                departure_time2 = _time2.setHours(landing_time.getHours()+ 12)
                 break
             case "landChecked":
-
+                landing_time1 = new Date()
+                landing_time2 = new Date()
+                landing_time2.setHours(landing_time.getHours() + 12)
                 break
             default:
-                flights = flights.filter(f => new Date(f.Landing_Time) <= departureTimeFilter && new Date(f.Departure_Time) <= departureTimeFilter)
+                departure_time1 = new Date()
+                departure_time2 = new Date()
+                departure_time2 = _time2.setHours(landing_time.getHours() + 12)
+                landing_time1 = new Date()
+                landing_time2 = new Date()
+                landing_time2.setHours(landing_time.getHours() + 12)
+                break
         }
         $.ajax({
             dataType: `jason`,
-            url: "api/searchFlight",
+            url: "api/searchFlightRange",
             type: 'GET',
             data: {
-                query="GET_FLIGHTS_BY_TIMESPAN",
                 flightId = flight_id,
                 airlineId=air_company_id,
                 originCountryId= origin_country,
                 destinationCountryId=dest_country,
-                depTime=departure_time,
-                landTime=landing_time
+                depTime1=departure_time1,
+                depTime2=departure_time2,
+                landTime1=landing_time1,
+                landTime2=landing_time2
             }
 
         }).then(data, function () {
