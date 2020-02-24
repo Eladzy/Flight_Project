@@ -40,9 +40,9 @@ namespace FlightDataBaseFiller
             lock (Key)
             {
                 string dataString = string.Empty;
+                    Random rnd = new Random();
                 for (int i = 0; i < length; i++)
                 {
-                    Random rnd = new Random();
                     dataString += Digits[rnd.Next(0, Digits.Length)];
                 }
                 return dataString;

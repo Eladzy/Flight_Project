@@ -32,7 +32,7 @@ namespace FlightDataBaseFiller
                 Addcountries(countries);
                 AddAirlines(airLines);
                 AddCustomers(customers);
-                AddFlights(countries, airLines,numberOfFlights);
+                List<Flight> flights=AddFlights(countries, airLines,numberOfFlights);
                 BuyTickets(ticketsPerCustomer, customers, flights);
             });
            
@@ -52,12 +52,21 @@ namespace FlightDataBaseFiller
         }
 
 
-        private static void AddFlights(List<Country>countries, List<AirLine> airLines,int numberOfFlights)
+        private static List<Flight> AddFlights(List<Country>countries, List<AirLine> airLines,int numberOfFlights)
         {
             FlightFactory flightFactory = new FlightFactory();
             Random rnd = new Random();
             List<AirLine> airlinesTemp = new List<AirLine>();
-            airLines.ForEach(a =>airLines.Add( Facade.GetAirlineByUser(Token,a.User_Name)));
+            List<Flight> flights = new List<Flight>();
+            try
+            {
+                airLines.ForEach(a => airlinesTemp.Add(Facade.GetAirlineByUser(Token, a.User_Name)));
+            }
+            catch (Exception e)
+            {
+                ErrorLogger.Logger(e);
+                throw;
+            }
             foreach (AirLine airline in airlinesTemp)
             {
                 LoginToken<AirLine> airlineToken = new LoginToken<AirLine>
@@ -69,7 +78,9 @@ namespace FlightDataBaseFiller
                 {
                     try
                     {
-                        airlineFacade.CreateFlight(airlineToken, flightFactory.Generate(airline, countries[rnd.Next(0, countries.Count)], countries[rnd.Next(0, countries.Count)]));
+                        Flight flight = flightFactory.Generate(airline, countries[rnd.Next(0, countries.Count)], countries[rnd.Next(0, countries.Count)]);
+                        airlineFacade.CreateFlight(airlineToken,flight);
+                        flights.Add(flight);
                     }
                     catch (Exception e)//rethink
                     {
@@ -79,6 +90,7 @@ namespace FlightDataBaseFiller
                     }
                 }
             }
+                return flights;
         }
         private static void BuyTickets(int ticketsPerCustomer,List<Customer>customers,List<Flight>flights)
         {

@@ -66,6 +66,8 @@ namespace FlightManagerProject
                     Customer_Id = token.User.Id
                 };
                 ticketsDao.Add(ticket);
+                flight.Remaining_Tickets--;
+                flightsDao.Update(flight);
                 return ticket;
             }
            ExceptionTicketSoldOut e= new ExceptionTicketSoldOut();
@@ -73,5 +75,7 @@ namespace FlightManagerProject
             throw e;
             
         }
+
+        
     }
 }

@@ -10,7 +10,7 @@ namespace FlightDataBaseFiller
 {
     class FlightFactory
     {
-        private long ID;
+      //  private long ID;
         private int RemainingTickets=Int32.Parse(ConfigurationManager.AppSettings["TicketsPerFlight"]);
         private DateTime DepartureTime;
         private DateTime LandTime;
@@ -20,10 +20,10 @@ namespace FlightDataBaseFiller
 
         private void Init()
         {
-            this.ID = long.Parse(GeneralDataGenerator.NumericGenerator(18));
+           // this.ID = long.Parse(GeneralDataGenerator.NumericGenerator(18));
             Random rnd = new Random();
             this.DepartureTime = DateTime.Now.AddDays(rnd.Next(0, 5)).AddHours(rnd.Next(0, 10));
-            this.LandTime = this.DepartureTime.AddHours(rnd.Next(0, 5));
+            this.LandTime = this.DepartureTime.AddHours(rnd.Next(1, 10));
             
         }
 
@@ -34,7 +34,7 @@ namespace FlightDataBaseFiller
                 Init();
                 Flight flight = new Flight
                 {
-                    Id = this.ID,
+                    Id = Guid.NewGuid().GetHashCode(),
                     AirLine_Id = airline.Id,
                     Origin_Country_Code = c1.Id,
                     Destination_Country_Code = c2.Id,
