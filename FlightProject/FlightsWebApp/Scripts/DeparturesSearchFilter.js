@@ -1,36 +1,42 @@
-﻿const flights = []
+﻿//var flights = []
+//console.debug(flights)
+//console.debug(this.flights+"12345")
 $(document).ready(() => {
-    $(`#searchBtn`).click(function () {
-        console.debug("clicked")
-        console.debug("search called")
-        const flight_id = $("#flightid").val()
-        const air_company_id = $("#airlineSelect").val().split(':')[0]
-        const origin_country = $("#originSelect").val()
-        const dest_country = $("#destSelect").val()
-        const flight_radio = $(`input[name=flightType]`).val()
-        const departure_time1 = null
-        const departure_time2 = null
-        const landing_time1 = null
-        const landing_time2 = null
-
+    $(`#searchBtn`).click(function (ev) {
+        ev.preventDefault();
+        console.debug("clicked");
+        console.debug("search called");
+        const flight_id = $("#flightid").val();
+        const air_company_id = $("#airlineSelect").val().split(':')[0];
+        const origin_country = $("#originSelect").val();
+        const dest_country = $("#destSelect").val();
+        const flight_radio = $(`input[name=flightType]`).val();
+        let departure_time1 = null;
+        let departure_time2 = null;
+        let landing_time1 = null;
+        let landing_time2 = null;
+        //let table_filters = [];
+        //table_filters = [flight_id, air_comapny_id, origin_country, dest_country, flight_radio, departure_time1, departure_time2, landing_time1, landing_time2];
+        //table_filters = table_filters.map(f => f == undefined? f = null : f) $.is
+        
         switch (flight_radio) {
             case "depChecked":
                 departure_time1 = new Date()
                 departure_time2 = new Date()
-                departure_time2 = _time2.setHours(landing_time.getHours()+ 12)
+                departure_time2 = departure_time2.setHours(departure_time1.getHours() + 12)
                 break
             case "landChecked":
                 landing_time1 = new Date()
                 landing_time2 = new Date()
-                landing_time2.setHours(landing_time.getHours() + 12)
+                landing_time2.setHours(landing_time1.getHours() + 12)
                 break
             default:
                 departure_time1 = new Date()
                 departure_time2 = new Date()
-                departure_time2 = _time2.setHours(landing_time.getHours() + 12)
                 landing_time1 = new Date()
                 landing_time2 = new Date()
-                landing_time2.setHours(landing_time.getHours() + 12)
+                departure_time2 = departure_time2.setHours(departure_time1.getHours() + 12)
+                landing_time2= landing_time2.setHours(landing_time1.getHours() + 12)
                 break
         }
         $.ajax({
@@ -38,18 +44,19 @@ $(document).ready(() => {
             url: "api/searchFlightRange",
             type: 'GET',
             data: {
-                flightId = flight_id,
-                airlineId=air_company_id,
-                originCountryId= origin_country,
-                destinationCountryId=dest_country,
-                depTime1=departure_time1,
-                depTime2=departure_time2,
-                landTime1=landing_time1,
-                landTime2=landing_time2
+                Id :null ,//flight_id,
+                AirLine_Id: air_company_id,
+                Origin_Country_Code: origin_country,
+                Destination_Country_Code: dest_country,
+                depTime1: departure_time1,
+                depTime2: departure_time2,
+                landTime1: landing_time1,
+                landTime2: landing_time2
             }
 
-        }).then(data, function () {
+        }).then( function (data) {
             flights.append(data)
+            console.debug("search ajax success")
             console.debug(flights)
             let departureTimeFilter = new Date()
             departureTimeFilter.setHours(departureTimeFilter.getHours() + 12)
@@ -57,6 +64,7 @@ $(document).ready(() => {
            
 
             $.each(flights, (i, flight) => {
+                
                 flight = new Flight(flight.Id, flight.AirLine_Id, flight.Origin_Country_Code, flight.Destination_Country_Code, flight.Landing_Time, flight.Departure_Time, undefined)
                 console.debug(flight + "\n +++debug " + typeof (flight) + " +++debug")
                 $tableFlights.append("<tr>" +

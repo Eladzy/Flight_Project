@@ -46,7 +46,7 @@ namespace FlightProjectWebServices.Controllers
         [HttpGet]
         [ResponseType(typeof(Dictionary<Flight, int>))]
         [Route("api/flightsbyvacancy")]
-        IHttpActionResult GetAllFlightsVacancy()
+        public IHttpActionResult GetAllFlightsVacancy()
         {
             Dictionary<Flight, int> flights = instance.GetFacade(token).GetAllFlightsVacancy();
             if (flights.Count == 0)
@@ -58,7 +58,7 @@ namespace FlightProjectWebServices.Controllers
         [HttpGet]
         [ResponseType(typeof(Flight))]
         [Route("api/getflightbyid/{id}")]
-        IHttpActionResult GetFlightById([FromBody]long id)
+        public IHttpActionResult GetFlightById([FromBody]long id)
         {
             Flight flight;
             try
@@ -79,7 +79,7 @@ namespace FlightProjectWebServices.Controllers
         [HttpGet]
         [ResponseType(typeof(IEnumerable<Flight>))]
         [Route("api/getflightsbyorigin/{countryCode}")]
-        IHttpActionResult GetFlightsByOriginCountry([FromBody]int countryCode)
+        public IHttpActionResult GetFlightsByOriginCountry([FromBody]int countryCode)
         {
             List<Flight> flights;
             try
@@ -101,7 +101,7 @@ namespace FlightProjectWebServices.Controllers
         [HttpGet]
         [ResponseType(typeof(IEnumerable<Flight>))]
         [Route("api/getflightsbydestination/{countryCode}")]
-        IHttpActionResult GetFlightsByDestinationCountry([FromBody]int countryCode)
+         public IHttpActionResult GetFlightsByDestinationCountry([FromBody]int countryCode)
         {
             List<Flight> flights;
             try
@@ -120,7 +120,7 @@ namespace FlightProjectWebServices.Controllers
         [HttpGet]
         [ResponseType(typeof(IEnumerable<Flight>))]
         [Route("api/getflightsbydeparture/{departureDate}")]
-        IHttpActionResult GetFlightsByDepatrureDate([FromBody]DateTime departureDate)
+        public IHttpActionResult GetFlightsByDepatrureDate([FromBody]DateTime departureDate)
         {
             List<Flight> flights;
             try
@@ -141,7 +141,7 @@ namespace FlightProjectWebServices.Controllers
         [HttpGet]
         [ResponseType(typeof(IEnumerable<Flight>))]
         [Route("api/getflightsbydeparture/{ladingDate}")]
-        IHttpActionResult GetFlightsByLandingDate([FromBody]DateTime landingDate)
+        public IHttpActionResult GetFlightsByLandingDate([FromBody]DateTime landingDate)
         {
             List<Flight> flights = new List<Flight>() ;
             try
@@ -162,7 +162,7 @@ namespace FlightProjectWebServices.Controllers
         [HttpGet]
         [ResponseType(typeof(IEnumerable<Flight>))]//todo
         [Route("api/searchFlight")]
-        IHttpActionResult GetBySearch([FromBody] long? flightId = null, [FromBody]long? airlineId = null, [FromBody]int? originCountryId = null, [FromBody]int? destinationCountryId = null, [FromBody]string depTime = null, [FromBody]string landTime = null)
+        public IHttpActionResult GetBySearch([FromBody] long? flightId = null, [FromBody]long? airlineId = null, [FromBody]int? originCountryId = null, [FromBody]int? destinationCountryId = null, [FromBody]string depTime = null, [FromBody]string landTime = null)
         {
             DateTime? departureTime = DateTime.Parse(depTime);
             DateTime? landingTime = DateTime.Parse(landTime);
@@ -184,7 +184,7 @@ namespace FlightProjectWebServices.Controllers
         [HttpGet]
         [ResponseType(typeof(IEnumerable<Flight>))]//todo
         [Route("api/searchFlightRange")]
-        IHttpActionResult GetByTimeRange([FromBody] long? flightId = null, [FromBody]long? airlineId = null, [FromBody]int? originCountryId = null, [FromBody]int? destinationCountryId = null, [FromBody]string depTime1 = null, [FromBody]string depTime2 = null, [FromBody]string landTime1 = null, [FromBody]string landTime2 = null)
+        public IHttpActionResult GetByTimeRange([FromBody] long? flightId = null, [FromBody]long? airlineId = null, [FromBody]int? originCountryId = null, [FromBody]int? destinationCountryId = null, [FromBody]string depTime1 = null, [FromBody]string depTime2 = null, [FromBody]string landTime1 = null, [FromBody]string landTime2 = null)
         {
             DateTime? departureTime1 = DateTime.Parse(depTime1);
             DateTime? departureTime2 = DateTime.Parse(depTime2);

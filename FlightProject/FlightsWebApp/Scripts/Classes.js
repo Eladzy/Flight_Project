@@ -11,7 +11,12 @@ class Flight {
         }
     }
 }
-
+class Country {
+    constructor(id, name) {
+        this.Id = id
+        this.Name=name
+    }
+}
 class Airline {
     constructor(id, name, countryId) {
         this.Id = id
