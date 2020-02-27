@@ -424,12 +424,12 @@ namespace FlightManagerProject
                 using (SqlCommand cmd = new SqlCommand(query, connection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@flightId", id);
                     cmd.Parameters.AddWithValue("@airlineId", airlineId);
                     cmd.Parameters.AddWithValue("@origin", originCountryId);
                     cmd.Parameters.AddWithValue("@destination", destinationCountryId);
-                    cmd.Parameters.AddWithValue("@deaprture1", departureTime1);
-                    cmd.Parameters.AddWithValue("@deaprture2", departureTime2);
+                    cmd.Parameters.AddWithValue("@departure1", departureTime1);
+                    cmd.Parameters.AddWithValue("@departure2", departureTime2);
                     cmd.Parameters.AddWithValue("@landing1", landingTime1);
                     cmd.Parameters.AddWithValue("@landing2", landingTime2);
 

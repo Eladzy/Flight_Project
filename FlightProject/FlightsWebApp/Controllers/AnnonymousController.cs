@@ -184,12 +184,20 @@ namespace FlightProjectWebServices.Controllers
         [HttpGet]
         [ResponseType(typeof(IEnumerable<Flight>))]//todo
         [Route("api/searchFlightRange")]
-        public IHttpActionResult GetByTimeRange([FromBody] long? flightId = null, [FromBody]long? airlineId = null, [FromBody]int? originCountryId = null, [FromBody]int? destinationCountryId = null, [FromBody]string depTime1 = null, [FromBody]string depTime2 = null, [FromBody]string landTime1 = null, [FromBody]string landTime2 = null)
+        public IHttpActionResult GetByTimeRange(long? flightId = null, long? airlineId = null, int? originCountryId = null, int? destinationCountryId = null, string depTime1 = null, string depTime2 = null, string landTime1 = null, string landTime2 = null)
         {
-            DateTime? departureTime1 = DateTime.Parse(depTime1);
-            DateTime? departureTime2 = DateTime.Parse(depTime2);
-            DateTime? landingTime1 = DateTime.Parse(landTime1);
-            DateTime? landingTime2 = DateTime.Parse(landTime2);
+            DateTime? departureTime1 = null;
+            DateTime? departureTime2 = null;
+            DateTime? landingTime1 = null;
+            DateTime ? landingTime2 = null;
+            if (depTime1 != null)
+              departureTime1 =  DateTime.Parse(depTime1);
+            if (depTime2 != null)
+                departureTime2 = DateTime.Parse(depTime2);
+            if (landTime1 != null)
+                landingTime1 = DateTime.Parse(landTime1);
+            if (landTime2 != null)
+                landingTime2 = DateTime.Parse(landTime2);
             try
             {
                 List<Flight> flights = instance.GetFacade(token).SearchFlightsByTimeSpan(flightId, airlineId, originCountryId, destinationCountryId, departureTime1, departureTime2, landingTime1, landingTime2).ToList();

@@ -27,25 +27,3 @@ jQuery(document).ready(function () {
                 "</tr>")
         })
     }
-
-
-//$(document).ready(() => {
-//    $(`#searchBtn`).click(function () {
-//        let filteredFlights =flights;
-       
-//        console.debug("search called");
-//        console.debug(flights)
-//        const flight_id = $("#flightid").val();
-//        const air_company_id = $("#airlineSelect").val().split(':')[0];
-//        const origin_country = $("#originSelect").val();
-//        const dest_country = $("#destSelect").val();
-//        const flight_radio = $(`input[name=flightType]`).val();
-//        console.log(filteredFlights);
-//        filteredFlights = flight_id != undefined || flight_id != "" ? filteredFlights.filter(f => f.Id == flight_id) : filteredFlights;
-//        filteredFlights = air_company_id != undefined || air_company_id != "" ? filteredFlights.filter(f => f.a == air_company_id) : filteredFlights;
-//        filteredFlights = origin_country != undefined || origin_country != "" || origin_country != 0
-//            ?filteredFlights.filter(f => f.Origin_Country_Code == origin_country) : filteredFlights;
-//        filteredFlights = dest_country != undefined || dest_country != "" || dest_country != 0
-//            ?filteredFlights.filter(f => f.Destination_Country_Code == dest_country) : filteredFlights;
-//    });
-//});

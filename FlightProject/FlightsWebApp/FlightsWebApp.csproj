@@ -297,8 +297,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\populatecountriesScript.js" />
     <Content Include="Scripts\DeparturesDataTable.js" />
-    <Content Include="Views\Page\departuresNew.html" />
-    <Content Include="Views\Page\departurespage.html" />
+    <Content Include="Views\Page\departuresPage.html" />
     <Content Include="Scripts\PopulateAirlines.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

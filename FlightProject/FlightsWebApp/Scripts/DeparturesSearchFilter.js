@@ -15,15 +15,12 @@ $(document).ready(() => {
         let departure_time2 = null;
         let landing_time1 = null;
         let landing_time2 = null;
-        //let table_filters = [];
-        //table_filters = [flight_id, air_comapny_id, origin_country, dest_country, flight_radio, departure_time1, departure_time2, landing_time1, landing_time2];
-        //table_filters = table_filters.map(f => f == undefined? f = null : f) $.is
-        
+      
         switch (flight_radio) {
             case "depChecked":
                 departure_time1 = new Date()
                 departure_time2 = new Date()
-                departure_time2 = departure_time2.setHours(departure_time1.getHours() + 12)
+                departure_time2 = departure_time2.setHours(departure_time1.getHours() + 12)  
                 break
             case "landChecked":
                 landing_time1 = new Date()
@@ -35,23 +32,27 @@ $(document).ready(() => {
                 departure_time2 = new Date()
                 landing_time1 = new Date()
                 landing_time2 = new Date()
-                departure_time2 = departure_time2.setHours(departure_time1.getHours() + 12)
-                landing_time2= landing_time2.setHours(landing_time1.getHours() + 12)
+                 departure_time2.setHours(departure_time1.getHours() + 12)
+                 landing_time2.setHours(landing_time1.getHours() + 12)
                 break
         }
+        //departure_time1.toISOString();
+        //departure_time2.toISOString();
+        //landing_time1.toISOString();
+        //landing_time2.toISOString();
         $.ajax({
-            dataType: `jason`,
-            url: "api/searchFlightRange",
+            dataType: 'jason',
+            url: "/api/searchFlightRange",
             type: 'GET',
             data: {
-                Id :null ,//flight_id,
-                AirLine_Id: air_company_id,
-                Origin_Country_Code: origin_country,
-                Destination_Country_Code: dest_country,
-                depTime1: departure_time1,
-                depTime2: departure_time2,
-                landTime1: landing_time1,
-                landTime2: landing_time2
+                "flightId" :null ,
+               "airlineId": air_company_id,
+               "originCountryId": origin_country,
+                "destinationCountryId": dest_country,
+               "depTime1": departure_time1,
+                "depTime2": departure_time2,
+                "landTime1": landing_time1,
+                "landTime2": landing_time2
             }
 
         }).then( function (data) {
