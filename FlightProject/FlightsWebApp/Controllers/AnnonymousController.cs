@@ -186,18 +186,18 @@ namespace FlightProjectWebServices.Controllers
         [Route("api/searchFlightRange")]
         public IHttpActionResult GetByTimeRange(long? flightId = null, long? airlineId = null, int? originCountryId = null, int? destinationCountryId = null, string depTime1 = null, string depTime2 = null, string landTime1 = null, string landTime2 = null)
         {
-            DateTime? departureTime1 = null;
+            DateTime? departureTime1= null;
             DateTime? departureTime2 = null;
             DateTime? landingTime1 = null;
-            DateTime ? landingTime2 = null;
+            DateTime? landingTime2 = null;
             if (depTime1 != null)
-              departureTime1 =  DateTime.Parse(depTime1);
+              departureTime1 =  Convert.ToDateTime(depTime1);
             if (depTime2 != null)
-                departureTime2 = DateTime.Parse(depTime2);
+                departureTime2 = Convert.ToDateTime(depTime2);
             if (landTime1 != null)
-                landingTime1 = DateTime.Parse(landTime1);
+                landingTime1 = Convert.ToDateTime(landTime1);
             if (landTime2 != null)
-                landingTime2 = DateTime.Parse(landTime2);
+                landingTime2 = Convert.ToDateTime(landTime2);
             try
             {
                 List<Flight> flights = instance.GetFacade(token).SearchFlightsByTimeSpan(flightId, airlineId, originCountryId, destinationCountryId, departureTime1, departureTime2, landingTime1, landingTime2).ToList();

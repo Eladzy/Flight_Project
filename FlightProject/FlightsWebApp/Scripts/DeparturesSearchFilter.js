@@ -1,6 +1,4 @@
-﻿//var flights = []
-//console.debug(flights)
-//console.debug(this.flights+"12345")
+﻿
 $(document).ready(() => {
     $(`#searchBtn`).click(function (ev) {
         ev.preventDefault();
@@ -15,31 +13,33 @@ $(document).ready(() => {
         let departure_time2 = null;
         let landing_time1 = null;
         let landing_time2 = null;
-      
+
         switch (flight_radio) {
-            case "depChecked":
-                departure_time1 = new Date()
-                departure_time2 = new Date()
-                departure_time2 = departure_time2.setHours(departure_time1.getHours() + 12)  
-                break
+            case "departChecked":
+                departure_time1 = new Date();
+                departure_time2 = new Date();
+                departure_time2.setHours(departure_time1.getHours()+12);
+                break;
             case "landChecked":
-                landing_time1 = new Date()
-                landing_time2 = new Date()
-                landing_time2.setHours(landing_time1.getHours() + 12)
+                landing_time1 = new Date();
+                landing_time2 = new Date();
+                landing_time2.setHours(landing_time1.getHours() + 12);
                 break
             default:
-                departure_time1 = new Date()
-                departure_time2 = new Date()
-                landing_time1 = new Date()
-                landing_time2 = new Date()
-                 departure_time2.setHours(departure_time1.getHours() + 12)
-                 landing_time2.setHours(landing_time1.getHours() + 12)
+                departure_time1 = new Date();
+                departure_time2 = new Date();
+                landing_time1 = new Date();
+                landing_time2 = new Date();
+                departure_time2.setHours(departure_time1.getHours() + 12);
+                landing_time2.setHours(landing_time1.getHours() + 12);
+
                 break
         }
-        //departure_time1.toISOString();
-        //departure_time2.toISOString();
-        //landing_time1.toISOString();
-        //landing_time2.toISOString();
+        departure_time1 = departure_time1==null?null: departure_time1.toISOString();
+        departure_time2 = departure_time2 == null ? null : departure_time2.toISOString();
+        landing_time1 = landing_time1==null?null: landing_time1.toISOString();
+        landing_time2 = landing_time2 == null ? null : landing_time2.toISOString();
+          
         $.ajax({
             dataType: 'jason',
             url: "/api/searchFlightRange",
@@ -80,9 +80,3 @@ $(document).ready(() => {
         }).catch((err) => { console.error(err) })
     });
 });
-            //filteredFlights = flight_id != undefined || flight_id != "" ? filteredFlights.filter(f => f.Id == flight_id) : filteredFlights;
-            //filteredFlights = air_company_id != undefined || air_company_id != "" ? filteredFlights.filter(f => f.a == air_company_id) : filteredFlights;
-            //filteredFlights = origin_country != undefined || origin_country != "" || origin_country != 0
-            //    ? filteredFlights.filter(f => f.Origin_Country_Code == origin_country) : filteredFlights;
-            //filteredFlights = dest_country != undefined || dest_country != "" || dest_country != 0
-            //    ? filteredFlights.filter(f => f.Destination_Country_Code == dest_country) : filteredFlights;
