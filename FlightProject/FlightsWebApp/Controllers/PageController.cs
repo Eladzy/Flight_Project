@@ -13,9 +13,6 @@ namespace FlightProjectWebServices.Controllers
         {
             return new FilePathResult("~/Views/Page/departurespage.html", "text/html");
         }
-        //public ActionResult DeparturesNew()
-        //{
-        //    return new FilePathResult("~/Views/Page/departuresNew.html", "text/html");
-        //}
+       
     }
 }

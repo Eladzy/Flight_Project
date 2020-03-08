@@ -10,7 +10,6 @@ namespace FlightDataBaseFiller
 {
     public static class DataSendUnit
     {
-        
 
         private static LoginToken<Administrator> Token;
         private static LoggedInAdminFacade Facade;
