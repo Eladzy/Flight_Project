@@ -81,20 +81,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AirlineDictionary.cs" />
-    <Compile Include="AirlineFactory.cs" />
-    <Compile Include="CountriesGenerate.cs" />
-    <Compile Include="CustomerDictionaries.cs" />
-    <Compile Include="CustomerFactory.cs" />
     <Compile Include="DataReceivingUnit.cs" />
     <Compile Include="DataSendUnit.cs" />
-    <Compile Include="FlightFactory.cs" />
-    <Compile Include="FormValueValidation.cs" />
-    <Compile Include="GeneralDataGenerator.cs" />
-    <Compile Include="GetRestCountries.cs" />
-    <Compile Include="ProgressUpdate.cs" />
-    <Compile Include="TicketBuy.cs" />
-    <Compile Include="TicketFactory.cs" />
+    <Compile Include="Model\AirlineDictionary.cs" />
+    <Compile Include="Model\AirlineFactory.cs" />
+    <Compile Include="Model\CountriesGenerate.cs" />
+    <Compile Include="Model\CustomerDictionaries.cs" />
+    <Compile Include="Model\CustomerFactory.cs" />
+    <Compile Include="Model\FlightFactory.cs" />
+    <Compile Include="Model\FormValueValidation.cs" />
+    <Compile Include="Model\GeneralDataGenerator.cs" />
+    <Compile Include="Model\GetRestCountries.cs" />
+    <Compile Include="Model\TicketBuy.cs" />
+    <Compile Include="Model\TicketFactory.cs" />
+    <Compile Include="ViewModel\ProgressUpdate.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
