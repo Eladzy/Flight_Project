@@ -5,21 +5,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
+using FlightManagerProject.DAO;
 
 namespace FlightManagerProject
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class FlightsMsSqlDao : IFlightsDao
     {
         
-        static string connectionString = ConfigurationUtils.connectionString;
+
         /// <summary>
         /// adds a new flight to the DB
         /// </summary>
         /// <param name="t"></param>
         public void Add(Flight t)
         {
-            string query = "ADD_FLIGHT";
-            using(SqlConnection connection=new SqlConnection(connectionString))
+            string query = StProceduresConsts.ADD_FLIGHT_STORED_PROCEDURE_NAME;
+
+            using (SqlConnection connection=new SqlConnection(ConfigurationUtils.connectionString))
             {
                 using(SqlCommand cmd=new SqlCommand(query, connection))
                 {
@@ -46,7 +51,7 @@ namespace FlightManagerProject
            
             string query = "GET_FLIGHT";
             Flight flight = new Flight();
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(ConfigurationUtils.connectionString))
             {
                 using(SqlCommand cmd=new SqlCommand(query, connection))
                 {
@@ -85,9 +90,9 @@ namespace FlightManagerProject
         /// <returns></returns>
         public IList<Flight> GetAll()
         {
-            string query = "GET_ALL_FLIGHTS";
+            string query = "GET_ALL_FLIGHTS"; // .........
             List<Flight> flights = new List<Flight>();
-            using(SqlConnection connection=new SqlConnection(connectionString))
+            using(SqlConnection connection=new SqlConnection(ConfigurationUtils.connectionString))
             {
                 using(SqlCommand cmd=new SqlCommand(query, connection))
                 {
@@ -136,7 +141,7 @@ namespace FlightManagerProject
         {
             string query = "GET_FLIGHTS_BY_CUSTOMER";
             List<Flight> flights = new List<Flight>();
-            using(SqlConnection connection=new SqlConnection(connectionString))
+            using(SqlConnection connection=new SqlConnection(ConfigurationUtils.connectionString))
             {
                 using(SqlCommand cmd=new SqlCommand(query, connection))
                 {
@@ -178,7 +183,7 @@ namespace FlightManagerProject
         {
             string query = "GET_FLIGHTS_BYDEPARTURE";
             List<Flight> flights = new List<Flight>();
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(ConfigurationUtils.connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(query, connection))
                 {
@@ -217,7 +222,7 @@ namespace FlightManagerProject
         {
             string query = "GET_FLIGHTS_BY_DESTINATION_COUNTRY";
             List<Flight> flights = new List<Flight>();
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(ConfigurationUtils.connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(query, connection))
                 {
@@ -256,7 +261,7 @@ namespace FlightManagerProject
         {
             string query = "GET_FLIGHTS_BYLAND";
             List<Flight> flights = new List<Flight>();
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(ConfigurationUtils.connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(query, connection))
                 {
@@ -295,7 +300,7 @@ namespace FlightManagerProject
         {
             string query = "GET_FLIGHTS_BY_ORIGIN_COUNTRY";
             List<Flight> flights = new List<Flight>();
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(ConfigurationUtils.connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(query, connection))
                 {
@@ -336,7 +341,7 @@ namespace FlightManagerProject
                 throw new ArgumentNullException();
             }
             string query = "REMOVE_FLIGHT";
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(ConfigurationUtils.connectionString))
             {
                 using(SqlCommand cmd=new SqlCommand(query, connection))
                 {
@@ -354,7 +359,7 @@ namespace FlightManagerProject
         public void Update(Flight t)
         {
             string query = "UPDATE_FLIGHT";
-            using(SqlConnection connection=new SqlConnection(connectionString))
+            using(SqlConnection connection=new SqlConnection(ConfigurationUtils.connectionString))
             {
                 using(SqlCommand cmd=new SqlCommand(query, connection))
                 {
@@ -377,7 +382,7 @@ namespace FlightManagerProject
         {
             string query = "SEARCH_FLIGHT";
             List<Flight> flights = new List<Flight>();
-            using(SqlConnection connection=new SqlConnection(connectionString))
+            using(SqlConnection connection=new SqlConnection(ConfigurationUtils.connectionString))
             {
                 using(SqlCommand cmd=new SqlCommand(query,connection))
                 {
@@ -419,7 +424,7 @@ namespace FlightManagerProject
         {
             string query = "GET_FLIGHTS_BY_TIMESPAN";
             List<Flight> flights = new List<Flight>();
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(ConfigurationUtils.connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(query, connection))
                 {

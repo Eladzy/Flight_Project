@@ -34,8 +34,9 @@ namespace FlightManagerProject
                     cmd.Parameters.AddWithValue("@phoneNumber", customer.Phone_Number.ToString());
                     cmd.Parameters.AddWithValue("@creditCard", customer.Credit_Card_Number.ToString());
                     connection.Open();
-                    cmd.ExecuteNonQuery();
-                    
+                    //cmd.ExecuteNonQuery();
+                    customer.Id = (long)cmd.ExecuteScalar();
+
                 }
             }
        }

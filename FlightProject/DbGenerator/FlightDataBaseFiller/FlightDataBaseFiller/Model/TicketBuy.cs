@@ -51,7 +51,7 @@ namespace FlightDataBaseFiller
                             ErrorLogger.Logger(e);
                             ticketsPerCustomer++;
                         }
-                        catch(ExceptionTicketNotFound e)
+                        catch(TicketNotFoundException  e)
                         {
                             ErrorLogger.Logger(e);
                             ticketsPerCustomer++;

@@ -119,7 +119,7 @@ namespace FlightProjectWebServices.Controllers//test pending
         {
             if (ticket.Customer_Id != _token.User.Id)
             {
-                ExceptionTicketNotFound ex = new ExceptionTicketNotFound("Ticket Either Not Found Or Not Belond To The User");
+                TicketNotFoundException  ex = new TicketNotFoundException ("Ticket Either Not Found Or Not Belond To The User");
                 ErrorLogger.Logger(ex);
                 return StatusCode(HttpStatusCode.Forbidden);
             }
@@ -134,7 +134,7 @@ namespace FlightProjectWebServices.Controllers//test pending
                 ErrorLogger.Logger(e);
                 return InternalServerError(e);
             }
-            catch (ExceptionTicketNotFound e)
+            catch (TicketNotFoundException  e)
             {
                 ErrorLogger.Logger(e);
                 return NotFound();

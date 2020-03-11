@@ -81,15 +81,20 @@ namespace FlightProjectWebServices.Controllers
         [Route("api/getflightsbyorigin/{countryCode}")]
         public IHttpActionResult GetFlightsByOriginCountry([FromBody]int countryCode)
         {
-            List<Flight> flights;
+            List<Flight> flights = null;
             try
             {
                 flights = instance.GetFacade(token).GetFlightsByOriginCountry(countryCode).ToList();
             }
+            catch(TicketNotFoundException e)
+            {
+                return Content(HttpStatusCode.BadRequest, e.Message);
+            }
             catch (Exception e)
             {
                 ErrorLogger.Logger(e);
-                return StatusCode(HttpStatusCode.NoContent);//is it ok?
+                //return StatusCode(HttpStatusCode.BadRequest);//is it ok?
+                return StatusCode(HttpStatusCode.InternalServerError);
             }
             if (flights == null || flights.Count == 0)
                 return StatusCode(HttpStatusCode.NoContent);//is it ok?

@@ -21,7 +21,7 @@ namespace FlightManagerProject
         {
             if(ticket.Customer_Id!=token.User.Id||ticket==null)
             {
-                Exception e=new ExceptionTicketNotFound("Ticket is either not belong to user or not found");
+                Exception e=new TicketNotFoundException ("Ticket is either not belong to user or not found");
                 ErrorLogger.Logger(e);
                 throw e;
             }

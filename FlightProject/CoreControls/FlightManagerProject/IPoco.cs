@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace FlightManagerProject
 {
+    /// <summary>
+    /// marker interface
+    /// </summary>
     public interface IPoco
     {
-        //marker interface
+        
     }
 }

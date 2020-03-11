@@ -13,14 +13,14 @@ namespace FlightManagerProject
         /// Logs Error messages and stack trace+timestamp
         /// </summary>
 
-        private static string Path = ConfigurationUtils.errorLog;
-       
+        private static readonly string Path = ConfigurationUtils.errorLog;
+        private static readonly object key = new object();
+
         public static void Logger(Exception e)//TODO improve to a daily report
         {
-            
-            Task.Run(() =>
+
+            lock (key)
             {
-                
                 if (!File.Exists(Path))
                 {
                     File.Create(Path);
@@ -33,7 +33,7 @@ namespace FlightManagerProject
                     writer.WriteLine("Stack Trace: " + e.StackTrace);
                     writer.WriteLine("==========End==========");
                 }
-            });
+            }
         }
     }
 }

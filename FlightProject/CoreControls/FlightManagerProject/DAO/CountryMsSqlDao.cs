@@ -50,7 +50,7 @@ namespace FlightManagerProject
                     SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
                     while (reader.Read())
                     {
-                        if (reader.HasRows)
+                        if (reader.HasRows) // is this neccesray ?
                         {
                             country = new Country
                             {
@@ -61,7 +61,7 @@ namespace FlightManagerProject
                         }
                         else
                         {
-                            throw new ExceptionCountryNotFound("Country Not Found");
+                            throw new ExceptionCountryNotFound($"Country not found in Get (country) by id. id = {id}");
                         }
                     }
                 }

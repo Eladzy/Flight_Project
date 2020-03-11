@@ -62,7 +62,7 @@ namespace FlightManagerProject
                         }
                         else
                         {
-                            throw new ExceptionTicketNotFound();
+                            throw new TicketNotFoundException ();
                         }
                     }
 

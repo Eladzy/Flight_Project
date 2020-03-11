@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace FlightManagerProject
 {
+    /// <summary>
+    /// marker interface
+    /// will be used for customer, airline, admin
+    /// </summary>
     public interface IUser
     {
-        //marker interface
+        
     }
 }

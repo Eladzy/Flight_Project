@@ -16,10 +16,19 @@ namespace FlightManagerProject
         }
         public void CreateNewAirline(LoginToken<Administrator> token, AirLine airline)
         {
+            // get airline by name
+            // if found
+            //    throw new CompanyAlreadyExistException(...)
+
+            // else
+            
+            // this is redundant check, since the type T will always be Administrator
             if (token.User is Administrator)
             {
                 _airlineDAO.Add(airline);
             }
+           // else
+               // throw new WrongTokenException("user is not admin")
         }
 
         public void CreateNewCustomer(LoginToken<Administrator> token, Customer customer)

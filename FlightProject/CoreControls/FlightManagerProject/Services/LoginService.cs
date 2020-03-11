@@ -12,10 +12,11 @@ namespace FlightManagerProject
     {//ask if i can make that static
        private  AirLineMsSqlDao AirlineDao =new AirLineMsSqlDao();
        private  CustomerMsSqlDao CustomerDao = new CustomerMsSqlDao();
-        
 
-        public ILoginTokenBase TryLogin(string username, string password) 
+
+        public ILoginTokenBase TryLogin(string username, string password) //, out FacadeBase facade) 
         {
+           // facade = null;
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
                 return null;   
             LoginToken<Administrator> admin;
@@ -23,6 +24,7 @@ namespace FlightManagerProject
             LoginToken<Customer> customer;
             if (TryAdminLogin(username, password, out admin))
             {
+                //facade = new LoggedInAdminFacade();
                 return admin;
             }
             if(TryAirLineLogin(username,password,out airline))
@@ -58,7 +60,7 @@ namespace FlightManagerProject
                 {
                     token = null;
                     return false;
-                    throw new ExceptionWrongPassword("Wrong Password");
+                    throw new ExceptionWrongPassword($"Wrong Password for user {username}");
                 }
             }
             token = null;

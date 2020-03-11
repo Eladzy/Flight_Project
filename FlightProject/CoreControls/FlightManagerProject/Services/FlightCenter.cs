@@ -9,7 +9,7 @@ namespace FlightManagerProject
     public class FlightCenter
     {
         private static FlightCenter _instance;
-        private static object key = new object();
+        private static readonly object key = new object();
         private static Task UpdateHistory;
         private static System.Timers.Timer timer;
         /// <summary>
@@ -19,7 +19,7 @@ namespace FlightManagerProject
         {
             timer = new System.Timers.Timer
             {
-                Interval = ConfigurationUtils.interval
+                Interval = ConfigurationUtils.CLEAN_DB_INTERVAL
             };
             timer.Elapsed += CheckTime;
         }
@@ -70,7 +70,7 @@ namespace FlightManagerProject
                     }
                 }
            }
-            return _instance;
+           return _instance;
         }
 
         /// <summary>
@@ -80,14 +80,16 @@ namespace FlightManagerProject
         /// <param name="args"></param>
         private void CheckTime(object sender,EventArgs args)
         {
-            if (DateTime.Now.Hour == ConfigurationUtils.updateHour)
-            {
-                UpdateHistory = Task.Run(() =>
-                {
-                   DailyCLeanUpTool.GetInstance().MoveToHistory();
-                });
+            DailyCLeanUpTool.GetInstance().MoveToHistory();
+
+            //if (DateTime.Now.Hour == ConfigurationUtils.updateHour)
+            //{
+            //    UpdateHistory = Task.Run(() =>
+            //    {
+            //       DailyCLeanUpTool.GetInstance().MoveToHistory();
+            //    });
                
-            }
+            //}
              
         }
     }

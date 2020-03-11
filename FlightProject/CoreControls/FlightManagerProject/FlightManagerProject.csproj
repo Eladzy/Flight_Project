@@ -47,10 +47,11 @@
     <Compile Include="DAO\CountryMsSqlDao.cs" />
     <Compile Include="DAO\CustomerMsSqlDao.cs" />
     <Compile Include="DAO\FlightsMsSqlDao.cs" />
+    <Compile Include="DAO\StProceduresConsts.cs" />
     <Compile Include="DAO\TicketsMsSqlDao.cs" />
     <Compile Include="Exceptions\ExceptionCountryNotFound.cs" />
     <Compile Include="Exceptions\ExceptionFlightNotFound.cs" />
-    <Compile Include="Exceptions\ExceptionTicketNotFound.cs" />
+    <Compile Include="Exceptions\TicketNotFoundxception .cs" />
     <Compile Include="Exceptions\ExceptionTicketSoldOut.cs" />
     <Compile Include="Exceptions\ExceptionUserNotFound.cs" />
     <Compile Include="Exceptions\ExceptionWrongPassword.cs" />
