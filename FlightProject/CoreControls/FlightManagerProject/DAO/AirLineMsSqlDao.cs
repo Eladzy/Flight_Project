@@ -43,7 +43,8 @@ namespace FlightManagerProject
                         cmd.Parameters.AddWithValue("@password", t.Password.ToString());
                         cmd.Parameters.AddWithValue("@countryCode", t.CountryCode.ToString());
                         connection.Open();
-                        cmd.ExecuteNonQuery();
+                        t.Id=(long)cmd.ExecuteScalar();
+
                     }
                 }
             }
