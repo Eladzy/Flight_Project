@@ -5,7 +5,7 @@ using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 using FlightManagerProject;
-
+using Newtonsoft.Json.Linq;
 
 namespace FlightProjectWebServices.Controllers
 {
@@ -17,17 +17,21 @@ namespace FlightProjectWebServices.Controllers
         };
         FlightCenter instance = FlightCenter.GetInstance();
 
-        [ResponseType(typeof(IEnumerable<Flight>))]
+        [ResponseType(typeof(IEnumerable<JObject>))]
         [HttpGet]
         [Route("api/flights")]
         public IHttpActionResult GetAllFlights()
         {
             List<Flight> flights = instance.GetFacade(token).GetAllFlights().ToList();
+            List<JObject> jFlights = new List<JObject>();
             if (flights.Count == 0)
+                return StatusCode(HttpStatusCode.NoContent);
+            //testing
+            foreach (Flight flight in flights)
             {
-                return NotFound();
+                jFlights.Add(flight.ToJsonPresentable());
             }
-            return Ok(flights);
+            return Ok(jFlights);
         }
 
         [ResponseType(typeof(IEnumerable<AirLine>))]//add filter that censores username&password
@@ -37,7 +41,7 @@ namespace FlightProjectWebServices.Controllers
         {
             List<AirLine> airLines = instance.GetFacade(token).GetAllAirlineCompanies().ToList();
             if (airLines.Count == 0)
-                return NotFound();
+                return StatusCode(HttpStatusCode.NoContent);          
             return Ok(airLines);
 
         }
@@ -49,14 +53,13 @@ namespace FlightProjectWebServices.Controllers
         public IHttpActionResult GetAllFlightsVacancy()
         {
             Dictionary<Flight, int> flights = instance.GetFacade(token).GetAllFlightsVacancy();
-            if (flights.Count == 0)
-            {
+            if (flights.Count == 0)          
                 return NotFound();
-            }
+            
             return Ok(flights);
         }
         [HttpGet]
-        [ResponseType(typeof(Flight))]
+        [ResponseType(typeof(string))]
         [Route("api/getflightbyid/{id}")]
         public IHttpActionResult GetFlightById([FromBody]long id)
         {
@@ -71,7 +74,7 @@ namespace FlightProjectWebServices.Controllers
             }
             if (flight == null)
                 return NotFound();
-            return Ok(flight);
+            return Ok(flight.ToJsonPresentable());
 
         }
 

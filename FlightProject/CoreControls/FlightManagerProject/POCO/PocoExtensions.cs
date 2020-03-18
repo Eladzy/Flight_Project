@@ -14,25 +14,35 @@ namespace FlightManagerProject
         private static AirLineMsSqlDao _airlineDao = new AirLineMsSqlDao();
         private static CountryMsSqlDao _countryDao = new CountryMsSqlDao();
 
-        public static string ToJsonPresentable(this Flight f)
+        public static JObject ToJsonPresentable(this Flight f)
         {
-            JArray jArray = new JArray();
-            JValue id = new JValue(f.Id);
-            JValue airlineName = new JValue(_airlineDao.Get(f.AirLine_Id).AirLine_Name);
-            JValue origin = new JValue(_countryDao.Get(f.Origin_Country_Code).Country_Name);
-            JValue destination = new JValue(_countryDao.Get(f.Destination_Country_Code).Country_Name);
-            JValue vacancy = new JValue(f.Remaining_Tickets);
-            JValue departureTime = new JValue(f.Departure_Time);
-            JValue arrivalTime = new JValue(f.Landing_Time);
-            jArray.Add(id);
-            jArray.Add(airlineName);
-            jArray.Add(origin);
-            jArray.Add(destination);
-            jArray.Add(departureTime);
-            jArray.Add(arrivalTime);
-            jArray.Add(vacancy);
-            string jObject = jArray.ToString();
-            return jObject;
+            //JArray jArray = new JArray();
+            //JValue id = new JValue(f.Id);
+            //JValue airlineName = new JValue(_airlineDao.Get(f.AirLine_Id).AirLine_Name);
+            //JValue origin = new JValue(_countryDao.Get(f.Origin_Country_Code).Country_Name);
+            //JValue destination = new JValue(_countryDao.Get(f.Destination_Country_Code).Country_Name);
+            //JValue vacancy = new JValue(f.Remaining_Tickets);
+            //JValue departureTime = new JValue(f.Departure_Time);
+            //JValue arrivalTime = new JValue(f.Landing_Time);
+            //jArray.Add(id);
+            //jArray.Add(airlineName);
+            //jArray.Add(origin);
+            //jArray.Add(destination);
+            //jArray.Add(departureTime);
+            //jArray.Add(arrivalTime);
+            //jArray.Add(vacancy);
+            //string jObject = jArray.ToString();
+            JObject flight =
+                new JObject(
+                    new JProperty("id",f.Id.ToString()),
+                    new JProperty("airlineName", _airlineDao.Get(f.AirLine_Id).AirLine_Name),
+                    new JProperty("origin", _countryDao.Get(f.Origin_Country_Code).Country_Name),
+                    new JProperty("destination", _countryDao.Get(f.Destination_Country_Code).Country_Name),
+                    new JProperty("departureTime", f.Departure_Time),
+                    new JProperty("arrivalTime", f.Landing_Time),
+                    new JProperty("vacancy", f.Remaining_Tickets)
+                );;
+            return flight;
         }
 
 
@@ -42,6 +52,8 @@ namespace FlightManagerProject
             //JValue id = new JValue(a.Id);
             JValue name = new JValue(a.AirLine_Name);
             JValue countryName = new JValue(_countryDao.Get(a.CountryCode).Country_Name);
+            jArray.Add(name);
+            jArray.Add(countryName);
             string jObject = jArray.ToString();
             return jObject;
         }

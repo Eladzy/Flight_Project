@@ -11,6 +11,19 @@ class Flight {
         }
     }
 }
+class jFlight {
+    constructor(id, airlineName, origin, destination, landingtime, departuretime, status) {
+        this.Id = id
+        this.AirLineName = airlineName
+        this.Origin_Country_Name = origin
+        this.Destination_Country_Name = destination
+        this.DepartureTime = departuretime
+        this.LandingTime = landingtime
+        if (status == undefined) {
+            this.status = Date(departuretime) < Date.now() ? "Landing" : "Scehduled"
+        }
+    }
+}
 class Country {
     constructor(id, name) {
         this.Id = id
