@@ -96,5 +96,9 @@ namespace FlightManagerProject
                 _flightDAO.FlightsByTimeSpan( id, airlineId, originCountryId, destinationCountryId, departureTime1,departureTime2, landingTime1,landingTime2).ToList();
             return flights;
         }
+        public IList<Newtonsoft.Json.Linq.JObject> GetAvailableFlightsJson()
+        {
+            return _flightDAO.GetAvailableFlightsJson();
+        }
     }
 }

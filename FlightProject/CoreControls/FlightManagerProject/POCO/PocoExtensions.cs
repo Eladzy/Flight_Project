@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-//using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace FlightManagerProject
@@ -16,22 +11,7 @@ namespace FlightManagerProject
 
         public static JObject ToJsonPresentable(this Flight f)
         {
-            //JArray jArray = new JArray();
-            //JValue id = new JValue(f.Id);
-            //JValue airlineName = new JValue(_airlineDao.Get(f.AirLine_Id).AirLine_Name);
-            //JValue origin = new JValue(_countryDao.Get(f.Origin_Country_Code).Country_Name);
-            //JValue destination = new JValue(_countryDao.Get(f.Destination_Country_Code).Country_Name);
-            //JValue vacancy = new JValue(f.Remaining_Tickets);
-            //JValue departureTime = new JValue(f.Departure_Time);
-            //JValue arrivalTime = new JValue(f.Landing_Time);
-            //jArray.Add(id);
-            //jArray.Add(airlineName);
-            //jArray.Add(origin);
-            //jArray.Add(destination);
-            //jArray.Add(departureTime);
-            //jArray.Add(arrivalTime);
-            //jArray.Add(vacancy);
-            //string jObject = jArray.ToString();
+            
             JObject flight =
                 new JObject(
                     new JProperty("id",f.Id.ToString()),
@@ -41,21 +21,18 @@ namespace FlightManagerProject
                     new JProperty("departureTime", f.Departure_Time),
                     new JProperty("arrivalTime", f.Landing_Time),
                     new JProperty("vacancy", f.Remaining_Tickets)
-                );;
+                );
             return flight;
         }
 
 
-        public static string ToJsonPresentable(this AirLine a)
+        public static JObject ToJsonPresentable(this AirLine a)
         {
-            JArray jArray = new JArray();
-            //JValue id = new JValue(a.Id);
-            JValue name = new JValue(a.AirLine_Name);
-            JValue countryName = new JValue(_countryDao.Get(a.CountryCode).Country_Name);
-            jArray.Add(name);
-            jArray.Add(countryName);
-            string jObject = jArray.ToString();
-            return jObject;
+            JObject airline = new JObject(
+                new JProperty("name",a.AirLine_Name),
+                new JProperty("countryName", _countryDao.Get(a.CountryCode).Country_Name)
+                );
+            return airline;
         }
     }
 }

@@ -37,14 +37,15 @@ namespace FlightManagerProject
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-                      //  cmd.Parameters.AddWithValue("@id", t.Id.ToString());
                         cmd.Parameters.AddWithValue("@name", t.AirLine_Name.ToString());
                         cmd.Parameters.AddWithValue("@userName", t.User_Name.ToString());
                         cmd.Parameters.AddWithValue("@password", t.Password.ToString());
                         cmd.Parameters.AddWithValue("@countryCode", t.CountryCode.ToString());
                         connection.Open();
-                        t.Id=(long)cmd.ExecuteScalar();
-
+                        var scalar = cmd.ExecuteScalar();
+                        if (scalar != null)
+                            t.Id = (long)scalar;
+                            
                     }
                 }
             }

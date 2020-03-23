@@ -23,15 +23,15 @@ namespace FlightProjectWebServices.Controllers
         public IHttpActionResult GetAllFlights()
         {
             List<Flight> flights = instance.GetFacade(token).GetAllFlights().ToList();
-            List<JObject> jFlights = new List<JObject>();
+            //List<JObject> jFlights = new List<JObject>();
             if (flights.Count == 0)
                 return StatusCode(HttpStatusCode.NoContent);
             //testing
-            foreach (Flight flight in flights)
-            {
-                jFlights.Add(flight.ToJsonPresentable());
-            }
-            return Ok(jFlights);
+            //foreach (Flight flight in flights)
+            //{
+            //    jFlights.Add(flight.ToJsonPresentable());
+            //}
+            return Ok(flights);
         }
 
         [ResponseType(typeof(IEnumerable<AirLine>))]//add filter that censores username&password
@@ -219,5 +219,28 @@ namespace FlightProjectWebServices.Controllers
                 return InternalServerError();
             }
         }
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<JObject>))]
+        [Route("api/GetAvailableFlights")]
+        public  IHttpActionResult GetAvailableFlightsJson()
+        {
+            List<JObject> flights = new List<JObject>();
+            try
+            {
+                 flights = instance.GetFacade(token).GetAvailableFlightsJson().ToList();
+            }
+            catch (System.Data.SqlClient.SqlException e)
+            {
+                ErrorLogger.Logger(e);
+                return StatusCode(HttpStatusCode.InternalServerError);
+            }
+            catch(Exception e)
+            {
+                ErrorLogger.Logger(e);
+                return StatusCode(HttpStatusCode.InternalServerError);
+            }     
+            return Ok(flights);
+        }
     }
+
 }

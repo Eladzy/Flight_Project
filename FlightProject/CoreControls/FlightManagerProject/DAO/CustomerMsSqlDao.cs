@@ -25,7 +25,6 @@ namespace FlightManagerProject
                 using(SqlCommand cmd=new SqlCommand(query, connection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                //    cmd.Parameters.AddWithValue("@id", customer.Id);
                     cmd.Parameters.AddWithValue("@firstName", customer.First_Name.ToString());
                     cmd.Parameters.AddWithValue("@lastName", customer.Last_Name.ToString());
                     cmd.Parameters.AddWithValue("@userName", customer.User_Name.ToString());
@@ -34,8 +33,9 @@ namespace FlightManagerProject
                     cmd.Parameters.AddWithValue("@phoneNumber", customer.Phone_Number.ToString());
                     cmd.Parameters.AddWithValue("@creditCard", customer.Credit_Card_Number.ToString());
                     connection.Open();
-                    //cmd.ExecuteNonQuery();
-                    customer.Id = (long)cmd.ExecuteScalar();
+                    var scalar = cmd.ExecuteScalar();
+                    if (scalar != null)
+                        customer.Id = (long)scalar;
 
                 }
             }

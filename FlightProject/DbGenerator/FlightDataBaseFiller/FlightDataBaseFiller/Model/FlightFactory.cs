@@ -20,8 +20,12 @@ namespace FlightDataBaseFiller
         private void Init()
         {
             Random rnd = new Random();
-            this.DepartureTime = DateTime.Now.AddDays(rnd.Next(0, 5)).AddHours(rnd.Next(0, 10));
-            this.LandTime = this.DepartureTime.AddHours(rnd.Next(1, 10));
+            lock (Key)
+            {
+                this.DepartureTime = DateTime.Now.AddDays(rnd.Next(0, 5)).AddHours(rnd.Next(0, 10));
+                this.LandTime = this.DepartureTime.AddHours(rnd.Next(1, 10));
+                rnd = null;
+            }
             
         }
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 using FlightManagerProject.DAO;
+using Newtonsoft.Json.Linq;
 
 namespace FlightManagerProject
 {
@@ -461,6 +462,37 @@ namespace FlightManagerProject
                 }
             }
             return flights;
+        }
+
+
+        public IList<JObject> GetAvailableFlightsJson()
+        {
+            string query = StProceduresConsts.GET_AVAILABLE_FLIGHTS;
+            IList<JObject> flightsJson = new List<JObject>();
+            using(SqlConnection connection=new SqlConnection(ConfigurationUtils.connectionString))
+            {
+                using (SqlCommand cmd=new SqlCommand(query, connection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    connection.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        JObject flight = new JObject(
+                              new JProperty("id", reader["F_ID"]),
+                              new JProperty("airlineName", reader["AL_NAME"]),
+                              new JProperty("origin", reader["ORIGIN"]),
+                              new JProperty("destination", reader["DESTINATION"]),
+                              new JProperty("departureTime", reader["F_DEPARTURE_TIME"]),
+                              new JProperty("arrivalTime", reader["F_LANDING_TIME"]),
+                              new JProperty("vacancy", reader["F_REMAINING_TICKETS"])
+                            );
+                        flightsJson.Add(flight);
+                        
+                    }
+                }
+            }
+            return flightsJson;
         }
     }
 }
