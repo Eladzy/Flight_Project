@@ -9,7 +9,6 @@ namespace FlightDataBaseFiller
 {
     class CustomerFactory
     {
-        //private long ID;
         private string FirstName;
         private string LastName;
         private string UserName;
@@ -21,7 +20,6 @@ namespace FlightDataBaseFiller
 
         public void Init()
         {
-          //  this.ID = long.Parse(GeneralDataGenerator.NumericGenerator(18));
             this.FirstName = CustomerDictionaries.GetPrivateName();
             this.LastName = CustomerDictionaries.GetLastName();
             this.UserName = FirstName + LastName + GeneralDataGenerator.Generator(6);
