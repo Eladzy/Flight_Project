@@ -9,6 +9,7 @@ using Newtonsoft.Json.Linq;
 
 namespace FlightProjectWebServices.Controllers
 {
+    [AllowAnonymous]
     public class AnnonymousController : ApiController
     {
         LoginToken<IUser> token = new LoginToken<IUser>
