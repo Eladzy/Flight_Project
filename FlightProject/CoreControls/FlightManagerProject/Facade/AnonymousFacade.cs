@@ -102,5 +102,9 @@ namespace FlightManagerProject
         {
             return _flightDAO.GetAvailableFlightsJson();
         }
+        public IList<Newtonsoft.Json.Linq.JObject> GetAirlinesJson()
+        {
+            return _airlineDAO.GetAirlinesJson();
+        }
     }
 }

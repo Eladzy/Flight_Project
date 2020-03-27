@@ -9,7 +9,7 @@ using Newtonsoft.Json.Linq;
 
 namespace FlightManagerProject
 {
-    public class AirLineMsSqlDao:IAirLineDao
+    public class AirLineMsSqlDao : IAirLineDao, IAirLineMsSqlDao
     {
         static string connectionString = ConfigurationUtils.connectionString;
 
@@ -29,7 +29,7 @@ namespace FlightManagerProject
         {
             if (t == null)
                 throw new ArgumentNullException();
-            
+
             string query = "ADD_AIRLINE";
             try
             {
@@ -46,11 +46,11 @@ namespace FlightManagerProject
                         var scalar = cmd.ExecuteScalar();
                         if (scalar != null)
                             t.Id = (long)scalar;
-                            
+
                     }
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 ErrorLogger.Logger(e);
                 throw e;
@@ -67,7 +67,7 @@ namespace FlightManagerProject
         {
             AirLine airLine = new AirLine();
             string query = "GET_AIRLINE";
-            using(SqlConnection connection=new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(query, connection))
                 {
@@ -81,10 +81,10 @@ namespace FlightManagerProject
                         {
                             airLine = new AirLine
                             {
-                                AirLine_Name=(string)reader["AL_NAME"],
-                                User_Name=(string)reader["AL_USERNAME"],
-                                Password=(string)reader["AL_PASSWORD"],
-                                CountryCode=(long)reader["AL_COUNTRYCODE"]
+                                AirLine_Name = (string)reader["AL_NAME"],
+                                User_Name = (string)reader["AL_USERNAME"],
+                                Password = (string)reader["AL_PASSWORD"],
+                                CountryCode = (long)reader["AL_COUNTRYCODE"]
                             };
                             return airLine;
                         }
@@ -113,9 +113,9 @@ namespace FlightManagerProject
             string query = "GET_AIRLINE_BYUSER";
             AirLine airLine = new AirLine();
 
-            using(SqlConnection connection=new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using(SqlCommand cmd=new SqlCommand(query, connection))
+                using (SqlCommand cmd = new SqlCommand(query, connection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@user", username);
@@ -130,10 +130,10 @@ namespace FlightManagerProject
                                 Id = (long)reader["AL_ID"],
                                 AirLine_Name = (string)reader["AL_NAME"],
                                 User_Name = username,
-                                Password=(string)reader["AL_PASSWORD"],
-                                CountryCode=(long)reader["AL_COUNTRYCODE"]                                
+                                Password = (string)reader["AL_PASSWORD"],
+                                CountryCode = (long)reader["AL_COUNTRYCODE"]
                             };
-                           
+
                         }
                         else
                         {
@@ -156,7 +156,7 @@ namespace FlightManagerProject
             string query = "GET_ALL_AIRLINES";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using(SqlCommand cmd=new SqlCommand(query, connection))
+                using (SqlCommand cmd = new SqlCommand(query, connection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     connection.Open();
@@ -193,7 +193,7 @@ namespace FlightManagerProject
             List<AirLine> airLines = new List<AirLine>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using(SqlCommand cmd=new SqlCommand(query, connection))
+                using (SqlCommand cmd = new SqlCommand(query, connection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@countryCode", countryId.ToString());
@@ -289,8 +289,8 @@ namespace FlightManagerProject
                         {
                             JObject airline = new JObject(
                               new JProperty("id", reader["AL_ID"]),
-                              new JProperty("name",reader["AL_NAME"]),
-                              new JProperty("countryName",reader["COU_COUNTRY_NAME"])
+                              new JProperty("name", reader["AL_NAME"]),
+                              new JProperty("countryName", reader["COU_COUNTRY_NAME"])
                               );
                             airLines.Add(airline);
                         }
@@ -300,5 +300,5 @@ namespace FlightManagerProject
             return airLines;
         }
     }
-    }
+}
 

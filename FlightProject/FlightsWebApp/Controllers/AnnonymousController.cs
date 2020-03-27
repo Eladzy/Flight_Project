@@ -171,7 +171,7 @@ namespace FlightProjectWebServices.Controllers
         [HttpGet]
         [ResponseType(typeof(IEnumerable<JObject>))]//todo
         [Route("api/searchFlight")]
-        public IHttpActionResult GetBySearch([FromBody] long? flightId = null, [FromBody]long? airlineId = null, [FromBody]int? originCountryId = null, [FromBody]int? destinationCountryId = null, [FromBody]string depTime = null, [FromBody]string landTime = null)
+        public IHttpActionResult GetBySearch([FromBody] long? flightId = null, long? airlineId = null, int? originCountryId = null,int? destinationCountryId = null, string depTime = null, string landTime = null)
         {
             DateTime? departureTime = DateTime.Parse(depTime);
             DateTime? landingTime = DateTime.Parse(landTime);
@@ -242,6 +242,30 @@ namespace FlightProjectWebServices.Controllers
             }     
             return Ok(flights);
         }
+
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<JObject>))]
+        [Route("api/GetAirlinesJson")]
+        public IHttpActionResult GetAirlinesJson()
+        {
+            List<JObject> airlinesJson = new List<JObject>();
+            try
+            {
+                airlinesJson = instance.GetFacade(token).GetAirlinesJson().ToList();
+            }
+            catch (System.Data.SqlClient.SqlException e)
+            {
+                ErrorLogger.Logger(e);
+                return StatusCode(HttpStatusCode.InternalServerError);
+            }
+            catch (Exception e)
+            {
+                ErrorLogger.Logger(e);
+                return StatusCode(HttpStatusCode.InternalServerError);
+            }
+            return Ok(airlinesJson);
+        }
+
     }
 
 }
