@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
-using FlightManagerProject.DAO;
 using Newtonsoft.Json.Linq;
 
 namespace FlightManagerProject
@@ -379,10 +378,10 @@ namespace FlightManagerProject
         }
 
 
-        public IList<Flight> SearchFlight(long? id=null,long? airlineId=null,int? originCountryId=null,int? destinationCountryId=null,DateTime? departureTime=null,DateTime? landingTime=null)
+        public IList<JObject> SearchFlight(long? id=null,long? airlineId=null,int? originCountryId=null,int? destinationCountryId=null,DateTime? departureTime=null,DateTime? landingTime=null)
         {
-            string query = "SEARCH_FLIGHT";
-            List<Flight> flights = new List<Flight>();
+            string query = StProceduresConsts.SEARCH_FLIGHT;
+            List<JObject> flights = new List<JObject>();
             using(SqlConnection connection=new SqlConnection(ConfigurationUtils.connectionString))
             {
                 using(SqlCommand cmd=new SqlCommand(query,connection))
@@ -401,16 +400,15 @@ namespace FlightManagerProject
                     {
                         if (reader.HasRows)
                         {
-                            Flight flight = new Flight
-                            {
-                                Id=(long)reader["F_ID"],
-                                AirLine_Id=(long)reader["F_AIRLINE_ID"],
-                                Origin_Country_Code=(int)reader["F_ORIGIN_COUNTRYCODE"],
-                                Destination_Country_Code=(int)reader["F_DESTINATION_COUNTRYDOE"],
-                                Departure_Time=(DateTime)reader["F_DEPARTURE_TIME"],
-                                Landing_Time = (DateTime)reader["F_LANDING_TIME"],
-                                Remaining_Tickets=(int)reader["F_REMAINING_TICKETS"]
-                            };
+                            JObject flight = new JObject(
+                            new JProperty("id", reader["F_ID"]),
+                            new JProperty("airlineName", reader["AL_NAME"]),
+                            new JProperty("origin", reader["ORIGIN"]),
+                            new JProperty("destination", reader["DESTINATION"]),
+                            new JProperty("departureTime", reader["F_DEPARTURE_TIME"]),
+                            new JProperty("arrivalTime", reader["F_LANDING_TIME"]),
+                            new JProperty("vacancy", reader["F_REMAINING_TICKETS"])
+                          );
                             flights.Add(flight);
                         }
                     }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
+using Newtonsoft.Json.Linq;
 
 namespace FlightManagerProject
 {
@@ -270,5 +271,34 @@ namespace FlightManagerProject
             }
         }
 
+
+        public IList<JObject> GetAirlinesJson()
+        {
+            List<JObject> airLines = new List<JObject>();
+            string query = StProceduresConsts.GET_PRESENTABLE_AIRLINES;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(query, connection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    connection.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
+                    while (reader.Read())
+                    {
+                        if (reader.HasRows)
+                        {
+                            JObject airline = new JObject(
+                              new JProperty("id", reader["AL_ID"]),
+                              new JProperty("name",reader["AL_NAME"]),
+                              new JProperty("countryName",reader["COU_COUNTRY_NAME"])
+                              );
+                            airLines.Add(airline);
+                        }
+                    }
+                }
+            }
+            return airLines;
+        }
     }
-}
+    }
+

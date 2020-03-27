@@ -11,5 +11,8 @@ namespace FlightManagerProject.DAO
         public const string ADD_FLIGHT_STORED_PROCEDURE_NAME = "ADD_FLIGHT";
 
         public const string GET_AVAILABLE_FLIGHTS = "GET_ALL_AVAILABLE_FLIGHTS";
+        public const string SEARCH_FLIGHT = "SEARCH_FLIGHT";
+
+        public const string GET_PRESENTABLE_AIRLINES = "GET_PRESENTABLE_AIRLINES";
     }
 }
