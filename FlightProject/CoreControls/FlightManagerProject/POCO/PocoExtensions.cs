@@ -29,7 +29,8 @@ namespace FlightManagerProject
         public static JObject ToJsonPresentable(this AirLine a)
         {
             JObject airline = new JObject(
-                new JProperty("name",a.AirLine_Name),
+                new JProperty("id", a.Id),
+                new JProperty("name", a.AirLine_Name),
                 new JProperty("countryName", _countryDao.Get(a.CountryCode).Country_Name)
                 );
             return airline;

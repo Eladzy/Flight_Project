@@ -9,7 +9,7 @@ using Newtonsoft.Json.Linq;
 
 namespace FlightManagerProject
 {
-    public class AirLineMsSqlDao : IAirLineDao, IAirLineMsSqlDao
+    public class AirLineMsSqlDao : IAirLineDao
     {
         static string connectionString = ConfigurationUtils.connectionString;
 
