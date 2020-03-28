@@ -14,6 +14,7 @@ namespace FlightManagerProject
         {
             _flightDAO = new FlightsMsSqlDao();
             _airlineDAO = new AirLineMsSqlDao();
+            _countryDAO = new CountryMsSqlDao();
         }
 
 
