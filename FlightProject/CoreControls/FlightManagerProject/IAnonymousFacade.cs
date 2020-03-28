@@ -7,6 +7,7 @@ namespace FlightManagerProject
     {
         IList<Flight> GetAllFlights();
         IList<AirLine> GetAllAirlineCompanies();
+        IList<Country> GetCountries();
         Dictionary<Flight, int> GetAllFlightsVacancy();
         Flight GetFlightById(long id);
         IList<Flight> GetFlightsByOriginCountry(int countryCode);

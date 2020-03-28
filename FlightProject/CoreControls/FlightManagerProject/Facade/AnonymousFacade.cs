@@ -24,12 +24,16 @@ namespace FlightManagerProject
             return airLines;
         }
 
+        public IList<Country> GetCountries()
+        {
+            return _countryDAO.GetAll();
+        }
 
 
         public IList<Flight> GetAllFlights()
         {
-            List<Flight> flights = _flightDAO.GetAll().ToList();
-            return flights;
+            return _flightDAO.GetAll();
+          
         }
 
 
@@ -57,8 +61,7 @@ namespace FlightManagerProject
 
         public IList<Flight> GetFlightsByDepatrureDate(DateTime departureDate)
         {
-            List<Flight> flights = _flightDAO.GetFlightsByDepatrureDate(departureDate).ToList();
-            return flights;
+            return _flightDAO.GetFlightsByDepatrureDate(departureDate);
         }
 
 

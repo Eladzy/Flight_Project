@@ -24,21 +24,15 @@ namespace FlightProjectWebServices.Controllers
         public IHttpActionResult GetAllFlights()
         {
             List<Flight> flights = instance.GetFacade(token).GetAllFlights().ToList();
-            //List<JObject> jFlights = new List<JObject>();
             if (flights.Count == 0)
                 return StatusCode(HttpStatusCode.NoContent);
-            //testing
-            //foreach (Flight flight in flights)
-            //{
-            //    jFlights.Add(flight.ToJsonPresentable());
-            //}
             return Ok(flights);
         }
 
-        [ResponseType(typeof(IEnumerable<AirLine>))]//add filter that censores username&password
+        [ResponseType(typeof(IEnumerable<AirLine>))]//add filter that censores username&password temporary private
         [HttpGet]
         [Route("api/airlines")]
-        public IHttpActionResult GetAllAirlineCompanies()
+        private IHttpActionResult GetAllAirlineCompanies()
         {
             List<AirLine> airLines = instance.GetFacade(token).GetAllAirlineCompanies().ToList();
             if (airLines.Count == 0)
