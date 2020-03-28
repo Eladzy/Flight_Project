@@ -20,6 +20,19 @@ namespace FlightProjectWebServices.Controllers
 
         [ResponseType(typeof(IEnumerable<JObject>))]
         [HttpGet]
+        [Route("api/countries")]
+        public IHttpActionResult GetCountries()
+        {
+            List<Country> countries = instance.GetFacade(token).GetCountries().ToList();
+            if (countries.Count == 0)
+                return StatusCode(HttpStatusCode.NoContent);
+            return Ok(countries);
+        }
+
+
+
+        [ResponseType(typeof(IEnumerable<JObject>))]
+        [HttpGet]
         [Route("api/flights")]
         public IHttpActionResult GetAllFlights()
         {
