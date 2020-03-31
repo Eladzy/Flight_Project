@@ -391,7 +391,7 @@ namespace FlightManagerProject
                     cmd.Parameters.AddWithValue("@airlineId", airlineId);
                     cmd.Parameters.AddWithValue("@origin",originCountryId );
                     cmd.Parameters.AddWithValue("@destination",destinationCountryId);
-                    cmd.Parameters.AddWithValue("@deaprtureTime",departureTime);
+                    cmd.Parameters.AddWithValue("@departureTime",departureTime);
                     cmd.Parameters.AddWithValue("@landingTime",landingTime);
 
                     connection.Open();
@@ -403,8 +403,8 @@ namespace FlightManagerProject
                             JObject flight = new JObject(
                             new JProperty("id", reader["F_ID"]),
                             new JProperty("airlineName", reader["AL_NAME"]),
-                            new JProperty("origin", reader["ORIGIN"]),
-                            new JProperty("destination", reader["DESTINATION"]),
+                            new JProperty("origin", reader["ORIGIN_NAME"]),
+                            new JProperty("destination", reader["DESTINATION_NAME"]),
                             new JProperty("departureTime", reader["F_DEPARTURE_TIME"]),
                             new JProperty("arrivalTime", reader["F_LANDING_TIME"]),
                             new JProperty("vacancy", reader["F_REMAINING_TICKETS"])

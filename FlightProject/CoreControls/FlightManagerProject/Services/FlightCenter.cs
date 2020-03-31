@@ -10,7 +10,6 @@ namespace FlightManagerProject
     {
         private static FlightCenter _instance;
         private static readonly object key = new object();
-        private static Task UpdateHistory;
         private static System.Timers.Timer timer;
         /// <summary>
         /// private ctor starts the time count
@@ -80,17 +79,7 @@ namespace FlightManagerProject
         /// <param name="args"></param>
         private void CheckTime(object sender,EventArgs args)
         {
-            DailyCLeanUpTool.GetInstance().MoveToHistory();
-
-            //if (DateTime.Now.Hour == ConfigurationUtils.updateHour)
-            //{
-            //    UpdateHistory = Task.Run(() =>
-            //    {
-            //       DailyCLeanUpTool.GetInstance().MoveToHistory();
-            //    });
-               
-            //}
-             
+            DailyCLeanUpTool.GetInstance().MoveToHistory();             
         }
     }
 }

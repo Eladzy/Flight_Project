@@ -177,14 +177,22 @@ namespace FlightProjectWebServices.Controllers
 
         [HttpGet]
         [ResponseType(typeof(IEnumerable<JObject>))]//todo
-        [Route("api/searchFlight")]
-        public IHttpActionResult GetBySearch([FromBody] long? flightId = null, long? airlineId = null, int? originCountryId = null,int? destinationCountryId = null, string depTime = null, string landTime = null)
+        [Route("api/searchFlight/{flightId?}/{airlineId?}/{originCountryId?}/{destinationCountryId?}/{depTime?}/{landTime?}")]
+        public IHttpActionResult GetBySearch([FromUri] long? flightId = null, long? airlineId = null, int? originCountryId = null,int? destinationCountryId = null, string depTime = null, string landTime = null)
         {
-            DateTime? departureTime = DateTime.Parse(depTime);
-            DateTime? landingTime = DateTime.Parse(landTime);
+            DateTime? departureTime = null;
+            DateTime? landingTime = null;
+            if (!string.IsNullOrEmpty(depTime))
+            {
+                 departureTime = DateTime.Parse(depTime);
+            }
+            if(!string.IsNullOrEmpty(landTime))
+            {
+                landingTime= DateTime.Parse(landTime);
+            }
             try
             {
-                List<JObject> flights = instance.GetFacade(token).SearchFlights( flightId, airlineId, originCountryId, destinationCountryId, departureTime, landingTime).ToList();
+                List<JObject> flights = instance.GetFacade(token).SearchFlights( flightId=null, airlineId = null, originCountryId = null, destinationCountryId = null, departureTime = null, landingTime = null).ToList();
                 if (flights.Count == 0)
                     return StatusCode(HttpStatusCode.NoContent);
                 return Ok(flights);
