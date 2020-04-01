@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace FlightManagerProject
 {
-     public class AnonymousFacade :FacadeBase, IAnonymousFacade
-     {
-        
+    public class AnonymousFacade : FacadeBase, IAnonymousFacade
+    {
+
         public AnonymousFacade()
         {
             _flightDAO = new FlightsMsSqlDao();
@@ -34,25 +34,24 @@ namespace FlightManagerProject
         public IList<Flight> GetAllFlights()
         {
             return _flightDAO.GetAll();
-          
+
         }
 
 
 
         public Dictionary<Flight, int> GetAllFlightsVacancy()
         {
-            Dictionary<Flight, int>  flightVancy = _flightDAO.GetAllFlightsVacancy();
+            Dictionary<Flight, int> flightVancy = _flightDAO.GetAllFlightsVacancy();
             return flightVancy;
         }
 
 
-
         public Flight GetFlightById(long id)
         {
-            if (id != 0 )
+            if (id != 0)
             {
                 Flight flight = _flightDAO.Get(id);
-          
+
                 return flight;
             }
             return null;
@@ -89,17 +88,17 @@ namespace FlightManagerProject
             return flights;
         }
 
-        public IList<JObject> SearchFlights(long? id = null, long? airlineId = null, int? originCountryId = null, int? destinationCountryId = null, DateTime? departureTime = null, DateTime? landingTime = null)
+        public IList<JObject> SearchFlights(long? id, long? airlineId, int? originCountryId, int? destinationCountryId, DateTime? departureTime, DateTime? landingTime)
         {
             List<JObject> flights =
                 _flightDAO.SearchFlight(id, airlineId, originCountryId, destinationCountryId, departureTime, landingTime).ToList();
             return flights;
         }
 
-        public IList<Flight> SearchFlightsByTimeSpan( long? id = null, long? airlineId = null, int? originCountryId = null, int? destinationCountryId = null, DateTime? departureTime1 = null, DateTime? departureTime2 = null, DateTime? landingTime1 = null, DateTime? landingTime2 = null)
+        public IList<Flight> SearchFlightsByTimeSpan(long? id, long? airlineId, int? originCountryId, int? destinationCountryId, DateTime? departureTime1, DateTime? departureTime2, DateTime? landingTime1, DateTime? landingTime2)
         {
             List<Flight> flights =
-                _flightDAO.FlightsByTimeSpan( id, airlineId, originCountryId, destinationCountryId, departureTime1,departureTime2, landingTime1,landingTime2).ToList();
+                _flightDAO.FlightsByTimeSpan(id, airlineId, originCountryId, destinationCountryId, departureTime1, departureTime2, landingTime1, landingTime2).ToList();
             return flights;
         }
         public IList<Newtonsoft.Json.Linq.JObject> GetAvailableFlightsJson()

@@ -13,7 +13,7 @@ namespace UnitTestingForFlightProject
         [TestMethod]
         public void TestMethod1()
         {
-            List<JObject> flights = (List<JObject>)anonymousFacade.SearchFlights( null, null, null, null, null, null);
+            List<JObject> flights = (List<JObject>)anonymousFacade.SearchFlights(82009212, null, null, null, null, null);
             Assert.IsTrue(flights.Count > 0);
         }
     }

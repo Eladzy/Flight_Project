@@ -192,7 +192,7 @@ namespace FlightProjectWebServices.Controllers
             }
             try
             {
-                List<JObject> flights = instance.GetFacade(token).SearchFlights( flightId=null, airlineId = null, originCountryId = null, destinationCountryId = null, departureTime = null, landingTime = null).ToList();
+                List<JObject> flights = instance.GetFacade(token).SearchFlights( flightId, airlineId , originCountryId , destinationCountryId , departureTime, landingTime).ToList();
                 if (flights.Count == 0)
                     return StatusCode(HttpStatusCode.NoContent);
                 return Ok(flights);
@@ -208,7 +208,7 @@ namespace FlightProjectWebServices.Controllers
         [HttpGet]
         [ResponseType(typeof(IEnumerable<Flight>))]//todo
         [Route("api/searchFlightRange")]
-        public IHttpActionResult GetByTimeRange(long? flightId = null, long? airlineId = null, int? originCountryId = null, int? destinationCountryId = null, string depTime1 = null, string depTime2 = null, string landTime1 = null, string landTime2 = null)
+        public IHttpActionResult GetByTimeRange(long? flightId, long? airlineId, int? originCountryId, int? destinationCountryId, string depTime1, string depTime2, string landTime1, string landTime2)
         {
             DateTime? departureTime1= null;
             DateTime? departureTime2 = null;

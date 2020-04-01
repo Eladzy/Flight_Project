@@ -378,7 +378,7 @@ namespace FlightManagerProject
         }
 
 
-        public IList<JObject> SearchFlight(long? id=null,long? airlineId=null,int? originCountryId=null,int? destinationCountryId=null,DateTime? departureTime=null,DateTime? landingTime=null)
+        public IList<JObject> SearchFlight(long? id,long? airlineId,int? originCountryId, int? destinationCountryId,DateTime? departureTime,DateTime? landingTime)
         {
             string query = StProceduresConsts.SEARCH_FLIGHT;
             List<JObject> flights = new List<JObject>();
