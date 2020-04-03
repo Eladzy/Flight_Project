@@ -65,10 +65,6 @@
       <Project>{d0c44f96-01c6-461b-a64d-9135ff31a06f}</Project>
       <Name>FlightDataBaseFiller</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\FlightsWebApp\FlightsWebApp.csproj">
-      <Project>{3650f4bf-b735-4a1f-9d39-4660ec142522}</Project>
-      <Name>FlightsWebApp</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FlightManagerProject\FlightManagerProject.csproj">
       <Project>{c31e7e46-7f91-44e1-9496-cde3d77bbc90}</Project>
       <Name>FlightManagerProject</Name>

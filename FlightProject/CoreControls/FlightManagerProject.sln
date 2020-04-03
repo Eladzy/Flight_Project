@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightsWebApp", "..\Flights
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestingForFlightProject", "UnitTestingForFlightProject\UnitTestingForFlightProject.csproj", "{02D7A1D0-BC64-412F-BDD8-D641B4A398E3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightManagerWebService", "..\FlightManagerWebService\FlightManagerWebService.csproj", "{54EF66F4-FC7E-47AC-B7D0-545DCF021DFE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{02D7A1D0-BC64-412F-BDD8-D641B4A398E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02D7A1D0-BC64-412F-BDD8-D641B4A398E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02D7A1D0-BC64-412F-BDD8-D641B4A398E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54EF66F4-FC7E-47AC-B7D0-545DCF021DFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54EF66F4-FC7E-47AC-B7D0-545DCF021DFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54EF66F4-FC7E-47AC-B7D0-545DCF021DFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54EF66F4-FC7E-47AC-B7D0-545DCF021DFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
