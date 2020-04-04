@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FlightManagerProject
 {
-    class ExceptionWrongPassword:Exception
+    public class ExceptionWrongPassword:Exception
     {
         public ExceptionWrongPassword()
         {

@@ -13,6 +13,7 @@ namespace FlightProjectWebServices
     [RoutePrefix("authJwt")]
     public class JwtController : ApiController
     {
+        private readonly static object key = new object();
         [HttpGet]
         [Authorize]
         [Route("authSucceed")]
@@ -31,7 +32,34 @@ namespace FlightProjectWebServices
         [Route("authenticate")]
         public IHttpActionResult Authenticate([FromBody]string username,string password)
         {
-           
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+                return NotAuthenticated();
+            LoginService loginService = new LoginService();
+            lock (key)
+            {
+                try
+                {
+                    var token = loginService.TryLogin(username, password);
+                    if (token != null)
+                    {
+                        var jwtToken = CreateJwtToken(username);
+                        return Ok(jwtToken);
+                    }
+                }
+                catch (ExceptionWrongPassword e)
+                {
+                    ErrorLogger.Logger(e);
+                    return NotAuthenticated();
+                }
+               
+              
+            }
+            return NotAuthenticated();
+        }
+
+        private string CreateJwtToken(string username)
+        {
+            DateTime issuedAt = DateTime.UtcNow;
             throw new NotImplementedException();
         }
     }

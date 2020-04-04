@@ -9,7 +9,7 @@ using System.Diagnostics;
 namespace FlightManagerProject
 {
    public  class LoginService : ILoginService//to change and renovate the whole class
-    {//ask if i can make that static
+    {
        private  AirLineMsSqlDao AirlineDao =new AirLineMsSqlDao();
        private  CustomerMsSqlDao CustomerDao = new CustomerMsSqlDao();
 
