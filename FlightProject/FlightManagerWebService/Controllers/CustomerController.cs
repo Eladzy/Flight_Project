@@ -10,6 +10,7 @@ using FlightManagerProject;
 namespace FlightProjectWebServices//test pending
 {
     [BasicAuthCustomerAttribute]
+    //[Authorize(Roles ="Customer")]
     public class CustomerController : ApiController
     {
 

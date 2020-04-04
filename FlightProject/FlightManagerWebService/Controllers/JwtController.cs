@@ -7,6 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Web.Http;
 using FlightManagerProject;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FlightProjectWebServices
 {
@@ -42,7 +43,7 @@ namespace FlightProjectWebServices
                     var token = loginService.TryLogin(username, password);
                     if (token != null)
                     {
-                        var jwtToken = CreateJwtToken(username);
+                        var jwtToken = CreateJwtToken(token,username);
                         return Ok(jwtToken);
                     }
                 }
@@ -57,10 +58,44 @@ namespace FlightProjectWebServices
             return NotAuthenticated();
         }
 
-        private string CreateJwtToken(string username)
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        private string CreateJwtToken(ILoginTokenBase token,string username)
         {
             DateTime issuedAt = DateTime.UtcNow;
-            throw new NotImplementedException();
+            DateTime expired = DateTime.UtcNow.AddDays(1);
+
+
+            var tokenHandler =new JwtSecurityTokenHandler();
+            Type t = token.GetUser().GetType();
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(new[]
+            {
+                new Claim("username",username),
+                new Claim(ClaimTypes.Role,t.Name)
+            });
+
+
+            const string secretKey = "99C4A955E7274BE9B4D78B0025E04E88D55C6783EF3446C88ACAF9EBC22D9758";
+            var securityKey = new SymmetricSecurityKey(System.Text.Encoding.Default.GetBytes(secretKey));
+              var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
+
+            var jwtToken =(JwtSecurityToken)tokenHandler.CreateJwtSecurityToken(
+                   issuer: "https://localhost:44375/",
+                   audience: "https://localhost:44375/",
+                   subject: claimsIdentity,
+                   notBefore: issuedAt,
+                   expires: expired,
+                   signingCredentials: signingCredentials);
+
+            var tokenString = tokenHandler.WriteToken(jwtToken);
+
+            return tokenString;
         }
     }
 }

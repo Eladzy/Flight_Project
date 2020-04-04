@@ -11,7 +11,7 @@ using System.Web;
 using FlightManagerProject;
 namespace FlightManagerWebService
 {
-    public class TokenHandler:DelegatingHandler
+    public class JwtTokenHandler:DelegatingHandler
     {
 
         public bool LifetimeValidator(DateTime? notBefore,DateTime? expires,SecurityToken securityToken,TokenValidationParameters validationParameters)

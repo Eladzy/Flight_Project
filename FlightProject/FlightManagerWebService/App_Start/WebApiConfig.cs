@@ -15,7 +15,7 @@ namespace FlightManagerWebService
             // Web API routes
             config.MapHttpAttributeRoutes();
             //Web API routes
-           // config.MessageHandlers.Add(new TokenValidationHandler());
+            config.MessageHandlers.Add(new JwtTokenHandler());
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

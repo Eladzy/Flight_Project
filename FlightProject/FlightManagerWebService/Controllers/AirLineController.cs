@@ -12,6 +12,7 @@ using FlightManagerProject;
 namespace FlightProjectWebServices
 {
     [BasicAuthAirline]
+   // [Authorize(Roles ="AirLine")]
     public class AirLineController : ApiController//TODO: rethink if the id null check is neccessery or even logical
     {
 
