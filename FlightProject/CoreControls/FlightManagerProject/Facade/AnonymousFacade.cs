@@ -19,11 +19,11 @@ namespace FlightManagerProject
 
 
 
-        public IList<AirLine> GetAllAirlineCompanies()
-        {
-            List<AirLine> airLines = _airlineDAO.GetAll().ToList();
-            return airLines;
-        }
+        //public IList<AirLine> GetAllAirlineCompanies()
+        //{
+        //    List<AirLine> airLines = _airlineDAO.GetAll().ToList();
+        //    return airLines;
+        //}
 
         public IList<Country> GetCountries()
         {
@@ -36,7 +36,6 @@ namespace FlightManagerProject
             return _flightDAO.GetAll();
 
         }
-
 
 
         public Dictionary<Flight, int> GetAllFlightsVacancy()
@@ -58,12 +57,10 @@ namespace FlightManagerProject
         }
 
 
-
         public IList<Flight> GetFlightsByDepatrureDate(DateTime departureDate)
         {
             return _flightDAO.GetFlightsByDepatrureDate(departureDate);
         }
-
 
 
         public IList<Flight> GetFlightsByDestinationCountry(int countryCode)
@@ -73,13 +70,11 @@ namespace FlightManagerProject
         }
 
 
-
         public IList<Flight> GetFlightsByLandingDate(DateTime landingDate)
         {
             List<Flight> flights = _flightDAO.GetFlightsByLandingDate(landingDate).ToList();
             return flights;
         }
-
 
 
         public IList<Flight> GetFlightsByOriginCountry(int countryCode)
@@ -88,6 +83,7 @@ namespace FlightManagerProject
             return flights;
         }
 
+
         public IList<JObject> SearchFlights(long? id, long? airlineId, int? originCountryId, int? destinationCountryId, DateTime? departureTime, DateTime? landingTime)
         {
             List<JObject> flights =
@@ -95,19 +91,78 @@ namespace FlightManagerProject
             return flights;
         }
 
-        public IList<Flight> SearchFlightsByTimeSpan(long? id, long? airlineId, int? originCountryId, int? destinationCountryId, DateTime? departureTime1, DateTime? departureTime2, DateTime? landingTime1, DateTime? landingTime2)
+
+        public IList<Flight> SearchFlightsByTimeSpan(long? id, long? airlineId, int? originCountryId, int? destinationCountryId, DateTime? departureTime1,
+            DateTime? departureTime2, DateTime? landingTime1, DateTime? landingTime2)//todo fix or remove
         {
             List<Flight> flights =
                 _flightDAO.FlightsByTimeSpan(id, airlineId, originCountryId, destinationCountryId, departureTime1, departureTime2, landingTime1, landingTime2).ToList();
             return flights;
         }
+
+
         public IList<Newtonsoft.Json.Linq.JObject> GetAvailableFlightsJson()
         {
             return _flightDAO.GetAvailableFlightsJson();
         }
+
+
         public IList<Newtonsoft.Json.Linq.JObject> GetAirlinesJson()
         {
             return _airlineDAO.GetAirlinesJson();
+        }
+
+        /// <summary>
+        /// check for customer username availablity return true for avialable username
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public bool IsCustomerUsernameAvailable(string username)
+        {
+            try
+            {
+                Customer c = _customerDAO.GetCustomerByUserName(username);
+            }
+            catch (ExceptionUserNotFound)
+            {
+
+                return true;
+            }
+            return false;
+        }
+
+        public bool RegisterCustomer(string fname,string lname,string username, string password,
+            string address,string phoneNum,string creditCard,string mail)
+        {
+            string[] args = new string[] { fname, lname, username, password, address, phoneNum, creditCard, mail };
+            
+            foreach (string arg in args)
+            {
+                if (string.IsNullOrWhiteSpace(arg))
+                {
+                    return false;
+                }
+               
+            }
+           
+            if (fname.All(Char.IsDigit))
+            {
+                return false;
+            }
+            if(lname.All(Char.IsDigit))
+            {
+                return false;
+            }
+
+            //if ((!long.TryParse(args["phoneNum"], out _))&&args["phoneNum"].Length!=10)
+            //{
+            //    return false;
+            //}
+            //if ((!long.TryParse(args["creditCard"], out _))&& args["creditCard"].Length!=16)
+            //{
+            //    return false;
+            //}
+            return false;
         }
     }
 }

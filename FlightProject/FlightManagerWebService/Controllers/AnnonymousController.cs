@@ -42,17 +42,17 @@ namespace FlightProjectWebServices
             return Ok(flights);
         }
 
-        [ResponseType(typeof(IEnumerable<AirLine>))]//add filter that censores username&password temporary private
-        [HttpGet]
-        [Route("api/airlines")]
-        private IHttpActionResult GetAllAirlineCompanies()
-        {
-            List<AirLine> airLines = instance.GetFacade(token).GetAllAirlineCompanies().ToList();
-            if (airLines.Count == 0)
-                return StatusCode(HttpStatusCode.NoContent);          
-            return Ok(airLines);
+        //[ResponseType(typeof(IEnumerable<AirLine>))]//move to admin controller
+        //[HttpGet]
+        //[Route("api/airlines")]
+        //private IHttpActionResult GetAllAirlineCompanies()
+        //{
+        //    List<AirLine> airLines = instance.GetFacade(token).GetAllAirlineCompanies().ToList();
+        //    if (airLines.Count == 0)
+        //        return StatusCode(HttpStatusCode.NoContent);          
+        //    return Ok(airLines);
 
-        }
+        //}
 
 
         [HttpGet]
@@ -206,7 +206,7 @@ namespace FlightProjectWebServices
 
 
         [HttpGet]
-        [ResponseType(typeof(IEnumerable<Flight>))]//todo
+        [ResponseType(typeof(IEnumerable<Flight>))]//todo fix parameters and  url string
         [Route("api/searchFlightRange")]
         public IHttpActionResult GetByTimeRange(long? flightId, long? airlineId, int? originCountryId, int? destinationCountryId, string depTime1, string depTime2, string landTime1, string landTime2)
         {

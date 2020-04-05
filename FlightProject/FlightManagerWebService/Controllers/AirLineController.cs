@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
 using System.Web.Http.Description;
 using FlightManagerProject;
@@ -11,8 +12,8 @@ using FlightManagerProject;
 
 namespace FlightProjectWebServices
 {
-    [BasicAuthAirline]
-   // [Authorize(Roles ="AirLine")]
+   // [BasicAuthAirline]
+    [Authorize(Roles ="AirLine")]
     public class AirLineController : ApiController//TODO: rethink if the id null check is neccessery or even logical
     {
 
@@ -28,11 +29,14 @@ namespace FlightProjectWebServices
        
         private LoggedInAirLineFacade GetTokenFacade()
         {
+            LoginService loginService = new LoginService();
             LoggedInAirLineFacade facade;
             try
             {
-                ActionContext.Request.Properties.TryGetValue("tokenResult", out object tokenResult);
-                Token = (LoginToken<AirLine>)tokenResult;
+                //ActionContext.Request.Properties.TryGetValue("tokenResult", out object tokenResult);
+                //Token = (LoginToken<AirLine>)tokenResult;
+                var identity = User.Identity as ClaimsIdentity;
+                Token = (LoginToken<AirLine>)loginService.TryLogin(identity.FindFirst("username").ToString(), identity.FindFirst("password").ToString());
                 facade = (LoggedInAirLineFacade)FlightCenter.GetInstance().GetFacade(Token);
             }
             catch (Exception)

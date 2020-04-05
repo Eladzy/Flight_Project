@@ -6,7 +6,7 @@ namespace FlightManagerProject
     public interface IAnonymousFacade
     {
         IList<Flight> GetAllFlights();
-        IList<AirLine> GetAllAirlineCompanies();
+        //IList<AirLine> GetAllAirlineCompanies();
         IList<Country> GetCountries();
         Dictionary<Flight, int> GetAllFlightsVacancy();
         Flight GetFlightById(long id);

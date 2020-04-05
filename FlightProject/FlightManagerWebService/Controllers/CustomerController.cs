@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
 using System.Web.Http.Description;
 using FlightManagerProject;
@@ -10,26 +11,29 @@ using FlightManagerProject;
 namespace FlightProjectWebServices//test pending
 {
     [BasicAuthCustomerAttribute]
-    //[Authorize(Roles ="Customer")]
+    [Authorize(Roles ="Customer")]
     public class CustomerController : ApiController
     {
-
+       
         private LoginToken<Customer> _token;
         private LoggedInCustomerFacade _facade
         {
             get
-            {
+            {               
                 return GetTokenFacade();
             }
         }
         public LoggedInCustomerFacade GetTokenFacade()
         {
-            _token = new LoginToken<Customer>();
+            //_token = new LoginToken<Customer>();
             LoggedInCustomerFacade facade=null;
-            Request.Properties.TryGetValue("tokenResult", out object tokenResult);
-            _token = (LoginToken<Customer>)tokenResult;
+            //Request.Properties.TryGetValue("tokenResult", out object tokenResult);---->Basic auth
+            //_token = (LoginToken<Customer>)tokenResult;
+            LoginService loginService = new LoginService();
             try
-            {               
+            {
+                var identity = User.Identity as ClaimsIdentity;
+                _token = (LoginToken<Customer>)loginService.TryLogin(identity.FindFirst("username").ToString(), identity.FindFirst("password").ToString());
                 facade = (LoggedInCustomerFacade)FlightCenter.GetInstance().GetFacade(_token);
             }
             catch (Exception e)

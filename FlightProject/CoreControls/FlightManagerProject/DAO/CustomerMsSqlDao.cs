@@ -49,9 +49,9 @@ namespace FlightManagerProject
         /// <returns></returns>
        public Customer Get(long id)
        {
-         
             Customer customer=new Customer();
             string query = "GET_CUSTOMER_BY_ID";
+            
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(query, connection))
@@ -82,6 +82,12 @@ namespace FlightManagerProject
                         }
                     }
                     
+                }
+                if (customer.Id == 0 || customer.First_Name == null)
+                {
+                    ExceptionUserNotFound e = new ExceptionUserNotFound("Sent null or white space to getCustomerByUserName");
+                    ErrorLogger.Logger(e);
+                    throw e;
                 }
                 return customer;
        }    }
@@ -134,6 +140,12 @@ namespace FlightManagerProject
         /// <returns></returns>
        public Customer GetCustomerByUserName(string userName)
         {
+            if(string.IsNullOrWhiteSpace(userName))
+            {
+                ExceptionUserNotFound e = new ExceptionUserNotFound("Sent null or white space to getCustomerByUserName");
+                ErrorLogger.Logger(e);
+                throw e;
+            }
             Customer customer = new Customer();
             string query = "GET_CUSTOMER_BY_USERNAME";
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -167,6 +179,13 @@ namespace FlightManagerProject
                     }
 
                 }
+            }
+            if (customer.Id == 0||customer.First_Name==null)
+            {
+                ExceptionUserNotFound e = new ExceptionUserNotFound("Sent null or white space to getCustomerByUserName");
+
+                ErrorLogger.Logger(e);
+                throw e;
             }
             return customer;
         }
@@ -217,7 +236,7 @@ namespace FlightManagerProject
                     connection.Close();
                 }
             }
-        }
+       }
 
     }
   }

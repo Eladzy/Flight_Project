@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Web.Http;
 using FlightManagerProject;
 using Microsoft.IdentityModel.Tokens;
+using System.Reflection;
 
 namespace FlightProjectWebServices
 {
@@ -43,7 +44,7 @@ namespace FlightProjectWebServices
                     var token = loginService.TryLogin(username, password);
                     if (token != null)
                     {
-                        var jwtToken = CreateJwtToken(token,username);
+                        var jwtToken = CreateJwtToken(token);
                         return Ok(jwtToken);
                     }
                 }
@@ -66,7 +67,7 @@ namespace FlightProjectWebServices
         /// <param name="token"></param>
         /// <param name="username"></param>
         /// <returns></returns>
-        private string CreateJwtToken(ILoginTokenBase token,string username)
+        private string CreateJwtToken(ILoginTokenBase token)
         {
             DateTime issuedAt = DateTime.UtcNow;
             DateTime expired = DateTime.UtcNow.AddDays(1);
@@ -74,9 +75,14 @@ namespace FlightProjectWebServices
 
             var tokenHandler =new JwtSecurityTokenHandler();
             Type t = token.GetUser().GetType();
+            PropertyInfo pwdInfo = t.GetProperty("Password");
+            PropertyInfo usernameInfo = t.GetProperty("User_Name");
+            var username=usernameInfo.GetValue(token.GetUser());
+            var pwd = pwdInfo.GetValue(token.GetUser());
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(new[]
             {
-                new Claim("username",username),
+                new Claim("username",username.ToString()),
+                new Claim("password",pwd.ToString()),
                 new Claim(ClaimTypes.Role,t.Name)
             });
 
