@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -144,24 +145,23 @@ namespace FlightManagerProject
                 }
                
             }
-           
-            if (fname.All(Char.IsDigit))
+            var email = new EmailAddressAttribute();
+            if (!email.IsValid(mail))
             {
                 return false;
             }
-            if(lname.All(Char.IsDigit))
+            if (!IsCustomerUsernameAvailable(username))
             {
                 return false;
             }
-
-            //if ((!long.TryParse(args["phoneNum"], out _))&&args["phoneNum"].Length!=10)
-            //{
-            //    return false;
-            //}
-            //if ((!long.TryParse(args["creditCard"], out _))&& args["creditCard"].Length!=16)
-            //{
-            //    return false;
-            //}
+            if (fname.All(Char.IsDigit)|| lname.All(Char.IsDigit))
+            {
+                return false;
+            }
+            if(creditCard.All(char.IsLetter)||phoneNum.All(char.IsLetter)||phoneNum.Length!=10||creditCard.Length!=16)
+            {
+                return false;
+            }
             return false;
         }
     }

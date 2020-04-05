@@ -56,7 +56,7 @@ namespace FlightManagerWebService
 
 
                 var handler = new JwtSecurityTokenHandler();
-                
+
                 TokenValidationParameters validationParameters = new TokenValidationParameters
                 {
                     ValidAudience = "https://localhost:44375/",
@@ -64,6 +64,7 @@ namespace FlightManagerWebService
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
                     LifetimeValidator = LifetimeValidator,
+                    ClockSkew = TimeSpan.FromMinutes(5),
                     IssuerSigningKey = securityKey
                 };
 
