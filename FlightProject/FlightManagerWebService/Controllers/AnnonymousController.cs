@@ -312,12 +312,6 @@ namespace FlightProjectWebServices
             return StatusCode(HttpStatusCode.BadRequest);
         }
 
-        [HttpGet]
-        [Route("api/userSignIn")]
-        public IHttpActionResult UserSignIn()
-        {
-
-        }
     }
 
 }

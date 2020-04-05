@@ -36,7 +36,7 @@ namespace FlightProjectWebServices
                 //ActionContext.Request.Properties.TryGetValue("tokenResult", out object tokenResult);
                 //Token = (LoginToken<AirLine>)tokenResult;
                 var identity = User.Identity as ClaimsIdentity;
-                Token = (LoginToken<AirLine>)loginService.TryLogin(identity.FindFirst("username").ToString(), identity.FindFirst("password").ToString());
+                Token = (LoginToken<AirLine>)loginService.TryLogin(identity.FindFirst("username").Value.ToString(), identity.FindFirst("password").Value.ToString());
                 facade = (LoggedInAirLineFacade)FlightCenter.GetInstance().GetFacade(Token);
             }
             catch (Exception)

@@ -32,10 +32,12 @@ namespace FlightProjectWebServices
 
         [HttpPost]
         [Route("authenticate")]
-        public IHttpActionResult Authenticate([FromBody]string username,string password)
-        {
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+        public IHttpActionResult Authenticate([FromBody]string[]credentials)
+        {          
+            if (credentials==null||string.IsNullOrWhiteSpace(credentials[0]) || string.IsNullOrWhiteSpace(credentials[1]))
                 return NotAuthenticated();
+            string username = credentials[0];
+            string password = credentials[1];
             LoginService loginService = new LoginService();
             lock (key)
             {

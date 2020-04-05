@@ -33,7 +33,7 @@ namespace FlightProjectWebServices//test pending
             try
             {
                 var identity = User.Identity as ClaimsIdentity;
-                _token = (LoginToken<Customer>)loginService.TryLogin(identity.FindFirst("username").ToString(), identity.FindFirst("password").ToString());
+                _token = (LoginToken<Customer>)loginService.TryLogin(identity.FindFirst("username").Value.ToString(), identity.FindFirst("password").Value.ToString());
                 facade = (LoggedInCustomerFacade)FlightCenter.GetInstance().GetFacade(_token);
             }
             catch (Exception e)
