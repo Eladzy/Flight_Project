@@ -162,7 +162,22 @@ namespace FlightManagerProject
             {
                 return false;
             }
-            return false;
+
+            Customer c = new Customer
+            {
+                First_Name=fname,
+                Last_Name=lname,
+                User_Name=username,
+                Password=password,
+                Address=address,
+                Phone_Number=phoneNum,
+                Credit_Card_Number=creditCard,
+            };
+            _customerDAO.Add(c);
+
+            //sendgrid send mail to email
+
+            return true;
         }
     }
 }

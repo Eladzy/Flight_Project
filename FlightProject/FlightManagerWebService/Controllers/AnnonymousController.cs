@@ -281,6 +281,43 @@ namespace FlightProjectWebServices
             return Ok(airlinesJson);
         }
 
+        [HttpGet]
+        [ResponseType(typeof(bool))]
+        public IHttpActionResult IsCustomerNameAvailable(string username)
+        {
+            bool isAvailable;
+            try
+            {
+                isAvailable = instance.GetFacade(token).IsCustomerUsernameAvailable(username);
+                return Ok(isAvailable);
+                
+            }
+            catch (Exception e)
+            {
+                ErrorLogger.Logger(e);
+                return InternalServerError();
+            }
+        }
+        [HttpPost]
+        [Route("userSignUp")]
+        [ResponseType(typeof(bool))]
+        public IHttpActionResult RegisterCustomer(string fname, string lname, string username, string password,
+            string address, string phoneNum, string creditCard, string mail)
+        {
+           if(instance.GetFacade(token).RegisterCustomer(fname, lname, username, password, address, phoneNum, creditCard, mail))
+           {
+                return Ok(true);
+
+           }
+            return StatusCode(HttpStatusCode.BadRequest);
+        }
+
+        [HttpGet]
+        [Route("api/userSignIn")]
+        public IHttpActionResult UserSignIn()
+        {
+
+        }
     }
 
 }
