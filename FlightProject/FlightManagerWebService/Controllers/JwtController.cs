@@ -9,6 +9,8 @@ using System.Web.Http;
 using FlightManagerProject;
 using Microsoft.IdentityModel.Tokens;
 using System.Reflection;
+using System.Web.Http.Description;
+using Newtonsoft.Json.Linq;
 
 namespace FlightProjectWebServices
 {
@@ -105,5 +107,20 @@ namespace FlightProjectWebServices
 
             return tokenString;
         }
+        [Authorize]
+        [HttpGet]
+        [ResponseType(typeof(JObject))]
+        [Route("getUser")]
+        public IHttpActionResult GetUser()
+        {
+            var userClaims = User.Identity as ClaimsIdentity;
+            var userObj =new JObject(
+                new JProperty("username",userClaims.FindFirst("username").Value.ToString()),
+                new JProperty("roles", userClaims.FindFirst(ClaimTypes.Role).Value.ToString())
+                );
+            return Ok(userObj);
+
+        }
+
     }
 }
