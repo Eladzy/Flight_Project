@@ -34,7 +34,7 @@ namespace FlightProjectWebServices
 
         [HttpPost]
         [Route("authenticate")]
-        public IHttpActionResult Authenticate([FromBody]string[]credentials)
+        public IHttpActionResult Authenticate([FromBody]string[] credentials)
         {          
             if (credentials==null||string.IsNullOrWhiteSpace(credentials[0]) || string.IsNullOrWhiteSpace(credentials[1]))
                 return NotAuthenticated();

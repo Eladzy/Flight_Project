@@ -25,10 +25,10 @@ namespace FlightProjectWebServices//test pending
         }
         public LoggedInCustomerFacade GetTokenFacade()
         {
-            //_token = new LoginToken<Customer>();
-            LoggedInCustomerFacade facade=null;
+            //_token = new LoginToken<Customer>();---->Basic auth
             //Request.Properties.TryGetValue("tokenResult", out object tokenResult);---->Basic auth
-            //_token = (LoginToken<Customer>)tokenResult;
+            //_token = (LoginToken<Customer>)tokenResult;---->Basic auth
+            LoggedInCustomerFacade facade =null;
             LoginService loginService = new LoginService();
             try
             {

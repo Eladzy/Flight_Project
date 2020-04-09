@@ -14,17 +14,18 @@ namespace FlightDataBaseFiller
         private DateTime DepartureTime;
         private DateTime LandTime;
         private static object Key = new object();
+        static Random rnd = new Random();
 
-       
 
         private void Init()
         {
-            Random rnd = new Random();
+            
             lock (Key)
             {
+                 
                 this.DepartureTime = DateTime.Now.AddDays(rnd.Next(0, 5)).AddHours(rnd.Next(0, 10));
                 this.LandTime = this.DepartureTime.AddHours(rnd.Next(1, 10));
-                rnd = null;
+               
             }
             
         }
