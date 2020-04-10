@@ -158,8 +158,8 @@ namespace FlightManagerProject
                     SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
                     while (reader.Read())
                     {
-                        if (reader.HasRows)
-                        {
+                       
+                        
                             customer = new Customer
                             {
                                 Id = (long)reader["C_ID"],
@@ -171,11 +171,7 @@ namespace FlightManagerProject
                                 Phone_Number = (string)reader["C_PHONE_NUMBER"],
                                 Credit_Card_Number = (string)reader["CREDIT_CARD_NUMBER"]
                             };
-                        }
-                        else
-                        {
-                            throw new ExceptionUserNotFound("Customer Not Found");
-                        }
+                                             
                     }
 
                 }

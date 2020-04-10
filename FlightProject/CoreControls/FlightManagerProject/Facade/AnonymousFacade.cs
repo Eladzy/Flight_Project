@@ -16,6 +16,7 @@ namespace FlightManagerProject
             _flightDAO = new FlightsMsSqlDao();
             _airlineDAO = new AirLineMsSqlDao();
             _countryDAO = new CountryMsSqlDao();
+            _customerDAO = new CustomerMsSqlDao();
         }
 
 
@@ -129,13 +130,17 @@ namespace FlightManagerProject
 
                 return true;
             }
+            catch(Exception e)
+            {
+                ErrorLogger.Logger(e);
+            }
             return false;
         }
 
-        public bool RegisterCustomer(string fname,string lname,string username, string password,
+        public bool RegisterCustomer(string username,string password,string fname, string lname,
             string address,string phoneNum,string creditCard,string mail)
         {
-            string[] args = new string[] { fname, lname, username, password, address, phoneNum, creditCard, mail };
+            string[] args = new string[] { username, password, fname, lname,  address, phoneNum, creditCard, mail };
             
             foreach (string arg in args)
             {
@@ -150,10 +155,10 @@ namespace FlightManagerProject
             {
                 return false;
             }
-            if (!IsCustomerUsernameAvailable(username))
-            {
-                return false;
-            }
+            //if (!IsCustomerUsernameAvailable(username))
+            //{
+            //    return false;
+            //}
             if (fname.All(Char.IsDigit)|| lname.All(Char.IsDigit))
             {
                 return false;
