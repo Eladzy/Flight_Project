@@ -176,7 +176,7 @@ namespace FlightProjectWebServices
         }
 
         [HttpGet]
-        [ResponseType(typeof(IEnumerable<JObject>))]//todo
+        [ResponseType(typeof(IEnumerable<JObject>))]
         [Route("api/searchFlight/{flightId?}/{airlineId?}/{originCountryId?}/{destinationCountryId?}/{depTime?}/{landTime?}")]
         public IHttpActionResult GetBySearch([FromUri] long? flightId = null, long? airlineId = null, int? originCountryId = null,int? destinationCountryId = null, string depTime = null, string landTime = null)
         {

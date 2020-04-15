@@ -113,12 +113,25 @@ namespace FlightProjectWebServices
         [Route("getUser")]
         public IHttpActionResult GetUser()
         {
+            if (User == null)
+            {
+                return Unauthorized();
+            }
             var userClaims = User.Identity as ClaimsIdentity;
-            var userObj =new JObject(
-                new JProperty("username",userClaims.FindFirst("username").Value.ToString()),
-                new JProperty("roles", userClaims.FindFirst(ClaimTypes.Role).Value.ToString())
-                );
-            return Ok(userObj);
+            try
+            {
+                var userObj = new JObject(
+              new JProperty("username", userClaims.FindFirst("username").Value.ToString()),
+              new JProperty("roles", userClaims.FindFirst(ClaimTypes.Role).Value.ToString())
+              );
+                return Ok(userObj);
+            }
+            catch (Exception)
+            {
+
+                return Unauthorized();
+            }
+          
 
         }
 

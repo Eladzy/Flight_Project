@@ -161,7 +161,7 @@ namespace FlightDataBaseFiller
                     return result; ;
                 case ("NumFlights"):
 
-                    if (NumCustomers * TicketsPerCustomer > NumFlights * NumAirlines * NumAirlines * Int32.Parse(ConfigurationManager.AppSettings["TicketsPerFlight"]))
+                    if (NumCustomers * TicketsPerCustomer > NumFlights *  NumAirlines * Int32.Parse(ConfigurationManager.AppSettings["TicketsPerFlight"]))
                     {
                         result = "Tickets and customers ratio exceeds the amount of available tickets";
                         return result;
@@ -170,7 +170,7 @@ namespace FlightDataBaseFiller
                     return result;
                 case ("TicketsPerCustomer"):
                  
-                    if (NumCustomers * TicketsPerCustomer > NumFlights * NumAirlines * NumAirlines * Int32.Parse(ConfigurationManager.AppSettings["TicketsPerFlight"]))
+                    if (NumCustomers * TicketsPerCustomer > NumFlights  * NumAirlines * Int32.Parse(ConfigurationManager.AppSettings["TicketsPerFlight"]))
                     {
                         result = "Tickets and customers ratio exceeds the amount of available tickets";
                         return result; 
