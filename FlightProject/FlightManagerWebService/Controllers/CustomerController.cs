@@ -10,7 +10,7 @@ using FlightManagerProject;
 
 namespace FlightProjectWebServices//test pending
 {
-    [BasicAuthCustomerAttribute]
+   // [BasicAuthCustomerAttribute]
     [Authorize(Roles ="Customer")]
     public class CustomerController : ApiController
     {
@@ -69,14 +69,38 @@ namespace FlightProjectWebServices//test pending
 
         [HttpPost]
         [ResponseType(typeof(Ticket))]
-        [Route("api/customer/purchase/{flight}")]
-        public IHttpActionResult PurchaseTicket([FromBody]Flight flight)
-        {
-            Ticket ticket = new Ticket(); ;
+        [Route("api/customer/purchase")]
+        public IHttpActionResult PurchaseTicket([FromBody]string flightId)
+        {          
+            Flight flight = null;
+            try
+            {
+                long id;
+                if (long.TryParse(flightId, out id))
+                {
+                    flight = _facade.GetFlightById(id);
+                }
+                else
+                {
+                    return BadRequest("invalid id input format");
+                }
+            }
+            catch (ExceptionFlightNotFound e)
+            {
+              
+                ErrorLogger.Logger(e);
+                return BadRequest("flight Id not found");
+            }
+            catch(Exception e)
+            {
+                ErrorLogger.Logger(e);
+                return InternalServerError();
+            }
+            Ticket ticket = new Ticket(); 
             try
             {
                 ticket = _facade.PurchaseTicket(_token, flight);
-                if (ticket.Id == 0 || ticket == null)
+                if ( ticket == null)
                 {
                     return StatusCode(HttpStatusCode.NotFound);
                 }
@@ -85,7 +109,7 @@ namespace FlightProjectWebServices//test pending
             catch (ExceptionTicketSoldOut e)
             {
                 ErrorLogger.Logger(e);
-                return StatusCode(HttpStatusCode.NotFound);
+                return StatusCode(HttpStatusCode.BadRequest);
             }
             catch (ExceptionFlightNotFound e)
             {

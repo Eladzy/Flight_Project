@@ -68,8 +68,8 @@ namespace FlightProjectWebServices
         }
         [HttpGet]
         [ResponseType(typeof(string))]
-        [Route("api/getflightbyid/{id}")]
-        public IHttpActionResult GetFlightById([FromBody]long id)
+        [Route("api/getflightbyid")]
+        public IHttpActionResult GetFlightById([FromUri]long id)
         {
             Flight flight;
             try
