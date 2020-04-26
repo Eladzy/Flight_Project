@@ -35,7 +35,6 @@ namespace FlightDataBaseFiller
             Init();
             Customer c = new Customer
             {
-               // Id = this.ID,
                 First_Name = this.FirstName,
                 Last_Name = this.LastName,
                 User_Name = this.UserName,

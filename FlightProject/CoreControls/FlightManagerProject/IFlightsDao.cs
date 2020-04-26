@@ -17,5 +17,6 @@ namespace FlightManagerProject
         IList<Newtonsoft.Json.Linq.JObject> SearchFlight(long? id , long? airlineId, int? originCountryId, int? destinationCountryId, DateTime? departureTime, DateTime? landingTime );
         IList<Flight> FlightsByTimeSpan(long? id, long? airlineId , int? originCountryId, int? destinationCountryId, DateTime? departureTime1, DateTime? departureTime2, DateTime? landingTime1, DateTime? landingTime2);
         IList<Newtonsoft.Json.Linq.JObject> GetAvailableFlightsJson();
+        IList<Newtonsoft.Json.Linq.JObject> GetJsonFlightsByCustomer(long id);
     }
 }

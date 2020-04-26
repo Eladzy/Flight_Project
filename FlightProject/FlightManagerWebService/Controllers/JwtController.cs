@@ -81,13 +81,16 @@ namespace FlightProjectWebServices
             Type t = token.GetUser().GetType();
             PropertyInfo pwdInfo = t.GetProperty("Password");
             PropertyInfo usernameInfo = t.GetProperty("User_Name");
+            PropertyInfo idInfo = t.GetProperty("Id");
             var username=usernameInfo.GetValue(token.GetUser());
             var pwd = pwdInfo.GetValue(token.GetUser());
+            var id = idInfo.GetValue(token.GetUser());
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(new[]
             {
                 new Claim("username",username.ToString()),
                 new Claim("password",pwd.ToString()),
-                new Claim(ClaimTypes.Role,t.Name)
+                new Claim(ClaimTypes.Role,t.Name),
+                new Claim("id",id.ToString())
             });
 
 
@@ -122,13 +125,13 @@ namespace FlightProjectWebServices
             {
                 var userObj = new JObject(
               new JProperty("username", userClaims.FindFirst("username").Value.ToString()),
-              new JProperty("roles", userClaims.FindFirst(ClaimTypes.Role).Value.ToString())
+              new JProperty("roles", userClaims.FindFirst(ClaimTypes.Role).Value.ToString()),
+              new JProperty("id", userClaims.FindFirst("id").Value)
               );
                 return Ok(userObj);
             }
             catch (Exception)
-            {
-
+            {               
                 return Unauthorized();
             }
           

@@ -9,12 +9,25 @@ namespace FlightManagerProject
         private static AirLineMsSqlDao _airlineDao = new AirLineMsSqlDao();
         private static CountryMsSqlDao _countryDao = new CountryMsSqlDao();
 
+        public static JObject ToJsonPresentable(this Customer c)
+        {
+            JObject customer = new JObject(
+                new JProperty("id", c.Id.ToString()),
+                new JProperty("firstName", c.First_Name),
+                new JProperty("lastName",c.Last_Name),
+                new JProperty("username",c.User_Name),
+                new JProperty("address",c.Address)
+                );
+            return customer;
+        }
+
+
         public static JObject ToJsonPresentable(this Flight f)
         {
-            
+
             JObject flight =
                 new JObject(
-                    new JProperty("id",f.Id.ToString()),
+                    new JProperty("id", f.Id.ToString()),
                     new JProperty("airlineName", _airlineDao.Get(f.AirLine_Id).AirLine_Name),
                     new JProperty("origin", _countryDao.Get(f.Origin_Country_Code).Country_Name),
                     new JProperty("destination", _countryDao.Get(f.Destination_Country_Code).Country_Name),

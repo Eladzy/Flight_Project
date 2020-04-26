@@ -14,5 +14,7 @@ namespace FlightManagerProject
         public const string SEARCH_FLIGHT = "SEARCH_FLIGHT";
 
         public const string GET_PRESENTABLE_AIRLINES = "GET_PRESENTABLE_AIRLINES";
+
+        public const string GET_PRESENTABLE_FLIGHTS_BY_CUSTOMER = "GET_PRESENTABLE_FLIGHTS_BY_CUSTOMER";
     }
 }

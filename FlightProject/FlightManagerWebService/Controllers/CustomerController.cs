@@ -7,6 +7,7 @@ using System.Security.Claims;
 using System.Web.Http;
 using System.Web.Http.Description;
 using FlightManagerProject;
+using Newtonsoft.Json.Linq;
 
 namespace FlightProjectWebServices//test pending
 {
@@ -41,6 +42,30 @@ namespace FlightProjectWebServices//test pending
                 ErrorLogger.Logger(e);
             }
             return facade;
+        }
+
+        [HttpGet]
+        [ResponseType(typeof(JObject))]
+        [Route("api/customer/getCustomerDetails")]
+        public IHttpActionResult GetCustomerDetails([FromUri]string username)
+        {
+            JObject c = null;
+            try
+            {
+                c = _facade.GetUserDetails(_token, username);
+                return Ok(c);
+            }
+            catch (ExceptionUserNotFound e)
+            {
+
+                ErrorLogger.Logger(e);
+                return BadRequest();
+            }
+            catch(Exception e)
+            {
+                ErrorLogger.Logger(e);
+                return InternalServerError();
+            }
         }
 
         [HttpGet]
@@ -131,6 +156,32 @@ namespace FlightProjectWebServices//test pending
 
         }
 
+        [HttpPost]
+        [ResponseType(typeof(IEnumerable<JObject>))]
+        [Route("api/customer/getmyflightsjson/")]
+        public IHttpActionResult GetMyFlightsJson([FromBody]string id)
+        {
+            try
+            {
+                long userId;
+                long.TryParse(id, out userId);
+                IList<JObject> flights = _facade.GetCustomerFlightsJson(_token, userId);
+                return Ok(flights);
+            }
+            catch (ExceptionUserNotFound e)
+            {
+                ErrorLogger.Logger(e);
+                return BadRequest();
+            }
+            catch (Exception e)
+            {
+                ErrorLogger.Logger(e);
+                return InternalServerError();
+            }
+        }
+
+
+
         [HttpDelete]
         [ResponseType(typeof(Ticket))]
         [Route("api/customer/cancelticket/{ticket}")]
@@ -166,5 +217,7 @@ namespace FlightProjectWebServices//test pending
             }
 
         }
+
+
     }
 }

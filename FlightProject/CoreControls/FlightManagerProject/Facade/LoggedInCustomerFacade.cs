@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -76,6 +77,37 @@ namespace FlightManagerProject
             
         }
 
-        
+        public JObject GetUserDetails(LoginToken<Customer> token, string username)
+        {
+            if (token.User.User_Name == username)
+            {
+
+                Customer c = _customerDAO.GetCustomerByUserName(username);
+                return c.ToJsonPresentable();
+            }
+            else
+            {
+                var e = new ExceptionUserNotFound();
+                ErrorLogger.Logger(e);
+                throw e;
+
+            }
+
+        }
+
+
+        public IList<JObject> GetCustomerFlightsJson(LoginToken<Customer> token, long id)
+        {
+            if (token.User.Id == id)
+            {
+                return _flightDAO.GetJsonFlightsByCustomer(id);
+            }
+            else
+            {
+                 ExceptionUserNotFound e = new ExceptionUserNotFound();
+                ErrorLogger.Logger(e);
+                throw e;
+            }
+        }
     }
 }

@@ -492,5 +492,34 @@ namespace FlightManagerProject
             }
             return flightsJson;
         }
+        public IList<JObject> GetJsonFlightsByCustomer(long id)
+        {
+            string query = StProceduresConsts.GET_PRESENTABLE_FLIGHTS_BY_CUSTOMER;
+            IList<JObject> flights = new List<JObject>();
+
+            using(SqlConnection connection=new SqlConnection(ConfigurationUtils.connectionString))
+            {
+                using(SqlCommand cmd=new SqlCommand(query, connection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id", id);
+                    connection.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        JObject flight = new JObject(
+                              new JProperty("id", reader["id"]),
+                              new JProperty("airlineName", reader["airline"]),
+                              new JProperty("origin", reader["origin"]),
+                              new JProperty("destination", reader["destination"]),
+                              new JProperty("departureTime", reader["F_DEPARTURE_TIME"]),
+                              new JProperty("arrivalTime", reader["F_LANDING_TIME"])
+                            );
+                        flights.Add(flight);
+                    }
+                    return flights;
+                }
+            }
+        }
     }
 }
