@@ -44,15 +44,18 @@ namespace FlightProjectWebServices//test pending
             return facade;
         }
 
-        [HttpGet]
+        [HttpPost]
         [ResponseType(typeof(JObject))]
         [Route("api/customer/getCustomerDetails")]
-        public IHttpActionResult GetCustomerDetails([FromUri]string username)
+        public IHttpActionResult GetCustomerDetails([FromBody]string customerId)
         {
             JObject c = null;
             try
             {
-                c = _facade.GetUserDetails(_token, username);
+                long id;
+                
+                long.TryParse(customerId, out id);
+                c = _facade.GetUserDetails(_token, id);
                 return Ok(c);
             }
             catch (ExceptionUserNotFound e)

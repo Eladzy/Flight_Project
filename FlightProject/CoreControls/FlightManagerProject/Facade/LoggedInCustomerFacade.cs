@@ -77,12 +77,12 @@ namespace FlightManagerProject
             
         }
 
-        public JObject GetUserDetails(LoginToken<Customer> token, string username)
+        public JObject GetUserDetails(LoginToken<Customer> token, long id)
         {
-            if (token.User.User_Name == username)
+            if (token.User.Id==id)
             {
-
-                Customer c = _customerDAO.GetCustomerByUserName(username);
+               
+                Customer c = _customerDAO.Get(id);
                 return c.ToJsonPresentable();
             }
             else
@@ -108,6 +108,18 @@ namespace FlightManagerProject
                 ErrorLogger.Logger(e);
                 throw e;
             }
+        }
+
+
+        public JObject UpdateCustomerDetails(long id,string fname,string lname,string phone,string address)
+        {
+            Customer c = _customerDAO.Get(id);
+            c.First_Name = string.IsNullOrWhiteSpace(fname) ? c.First_Name : fname;
+            c.Last_Name = string.IsNullOrWhiteSpace(lname) ? c.Last_Name : lname;
+            c.Phone_Number = !string.IsNullOrWhiteSpace(phone) && phone.Length == 10 ? phone : c.Phone_Number;
+            c.Address = string.IsNullOrWhiteSpace(address) ? c.Address : address;
+            _customerDAO.Update(c);
+            return _customerDAO.Get(id).ToJsonPresentable();
         }
     }
 }

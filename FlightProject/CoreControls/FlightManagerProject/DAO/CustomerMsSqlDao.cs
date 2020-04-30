@@ -9,21 +9,21 @@ using System.Data;
 using Newtonsoft.Json.Linq;
 
 namespace FlightManagerProject
-{  
+{
     public class CustomerMsSqlDao : ICustomerDao
     {
-       static string connectionString = ConfigurationUtils.connectionString;
-       
+        static string connectionString = ConfigurationUtils.connectionString;
+
         /// <summary>
         /// adds customer to the db
         /// </summary>
         /// <param name="customer"></param>
-       public void Add(Customer customer)
+        public void Add(Customer customer)
         {
             string query = "ADD_CUSTOMER";
-            using(SqlConnection connection=new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using(SqlCommand cmd=new SqlCommand(query, connection))
+                using (SqlCommand cmd = new SqlCommand(query, connection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@firstName", customer.First_Name.ToString());
@@ -40,7 +40,7 @@ namespace FlightManagerProject
 
                 }
             }
-       }
+        }
 
 
         /// <summary>
@@ -48,11 +48,11 @@ namespace FlightManagerProject
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-       public Customer Get(long id)
-       {
-            Customer customer=new Customer();
+        public Customer Get(long id)
+        {
+            Customer customer = new Customer();
             string query = "GET_CUSTOMER_BY_ID";
-            
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(query, connection))
@@ -82,7 +82,7 @@ namespace FlightManagerProject
                             throw new ExceptionUserNotFound("Customer Not Found");
                         }
                     }
-                    
+
                 }
                 if (customer.Id == 0 || customer.First_Name == null)
                 {
@@ -91,15 +91,16 @@ namespace FlightManagerProject
                     throw e;
                 }
                 return customer;
-       }    }
+            }
+        }
 
 
         /// <summary>
         /// returns a list of all customers
         /// </summary>
         /// <returns></returns>
-       public IList<Customer> GetAll()
-       { 
+        public IList<Customer> GetAll()
+        {
             string query = "GET_ALL_CUSTOMERS";
             Customer customer = new Customer();
             List<Customer> customers = new List<Customer>();
@@ -139,9 +140,9 @@ namespace FlightManagerProject
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-       public Customer GetCustomerByUserName(string userName)
+        public Customer GetCustomerByUserName(string userName)
         {
-            if(string.IsNullOrWhiteSpace(userName))
+            if (string.IsNullOrWhiteSpace(userName))
             {
                 ExceptionUserNotFound e = new ExceptionUserNotFound("Sent null or white space to getCustomerByUserName");
                 ErrorLogger.Logger(e);
@@ -159,25 +160,25 @@ namespace FlightManagerProject
                     SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
                     while (reader.Read())
                     {
-                       
-                        
-                            customer = new Customer
-                            {
-                                Id = (long)reader["C_ID"],
-                                First_Name = (string)reader["C_FIRST_NAME"],
-                                Last_Name = (string)reader["C_LAST_NAME"],
-                                User_Name = userName,
-                                Password = (string)reader["C_PASSWORD"],
-                                Address = (string)reader["C_ADDRESS"],
-                                Phone_Number = (string)reader["C_PHONE_NUMBER"],
-                                Credit_Card_Number = (string)reader["CREDIT_CARD_NUMBER"]
-                            };
-                                             
+
+
+                        customer = new Customer
+                        {
+                            Id = (long)reader["C_ID"],
+                            First_Name = (string)reader["C_FIRST_NAME"],
+                            Last_Name = (string)reader["C_LAST_NAME"],
+                            User_Name = userName,
+                            Password = (string)reader["C_PASSWORD"],
+                            Address = (string)reader["C_ADDRESS"],
+                            Phone_Number = (string)reader["C_PHONE_NUMBER"],
+                            Credit_Card_Number = (string)reader["CREDIT_CARD_NUMBER"]
+                        };
+
                     }
 
                 }
             }
-            if (customer.Id == 0||customer.First_Name==null)
+            if (customer.Id == 0 || customer.First_Name == null)
             {
                 ExceptionUserNotFound e = new ExceptionUserNotFound("Sent null or white space to getCustomerByUserName");
 
@@ -192,7 +193,7 @@ namespace FlightManagerProject
         /// removes customer from the db
         /// </summary>
         /// <param name="t"></param>
-       public void Remove(Customer t)
+        public void Remove(Customer t)
         {
             string query = "REMOVE_CUSTOMER";
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -212,8 +213,8 @@ namespace FlightManagerProject
         /// update details in the db
         /// </summary>
         /// <param name="t"></param>
-       public void Update(Customer t)
-       {
+        public void Update(Customer t)
+        {
             string query = "UPDATE_CUSTOMER";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -233,7 +234,7 @@ namespace FlightManagerProject
                     connection.Close();
                 }
             }
-       }
+        }
     }
-  }
+}
 

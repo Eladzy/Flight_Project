@@ -16,6 +16,8 @@ namespace FlightManagerProject
                 new JProperty("firstName", c.First_Name),
                 new JProperty("lastName",c.Last_Name),
                 new JProperty("username",c.User_Name),
+                 new JProperty("phone", c.Phone_Number),
+                  new JProperty("roles", typeof(Customer).Name),
                 new JProperty("address",c.Address)
                 );
             return customer;
