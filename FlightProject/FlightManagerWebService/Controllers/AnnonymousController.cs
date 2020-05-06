@@ -282,6 +282,7 @@ namespace FlightProjectWebServices
         }
 
         [HttpGet]
+        [Route("api/checkCustomerUsername")]
         [ResponseType(typeof(bool))]
         public IHttpActionResult IsCustomerNameAvailable(string username)
         {
@@ -300,19 +301,20 @@ namespace FlightProjectWebServices
         }
         [HttpPost]
         [Route("api/registerCustomer")]
-        [ResponseType(typeof(bool))]
-        //public IHttpActionResult RegisterCustomer(string fname, string lname, string username, string password,
-        //    string address, string phoneNum, string creditCard, string mail)
+       // [ResponseType(typeof(bool))]
         public IHttpActionResult RegisterCustomer(string[]userData)
         {
            if(instance.GetFacade(token).RegisterCustomer(userData[0], userData[1], userData[2], userData[3], userData[4], userData[5], userData[6], userData[7]))
            {
-               
+
                 //sendgrid mail
-               return Ok();
+                //string[] credentials = new string[] { userData[0], userData[1] };
+                //JwtController jwtController = new JwtController();
+                //jwtController.Authenticate(credentials);
+                return Ok(true);
 
            }
-            return StatusCode(HttpStatusCode.BadRequest);
+            return BadRequest();
         }
 
     }

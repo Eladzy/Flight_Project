@@ -221,6 +221,29 @@ namespace FlightProjectWebServices//test pending
 
         }
 
+        [HttpPut]
+        [ResponseType(typeof(JObject))]
+        [Route("api/customer/updateDetails")]
+        public IHttpActionResult UpdateDetails([FromBody]string[] userData)
+        {
+            long id;
+            if(long.TryParse(userData[0],out id))
+            {
+                try
+                {
+                     return Ok( _facade.UpdateCustomerDetails(_token, id, userData[1], userData[2], userData[3], userData[4]));
 
+                }
+                catch (Exception e)
+                {
+                    ErrorLogger.Logger(e);
+                    return InternalServerError();
+                }
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
 }

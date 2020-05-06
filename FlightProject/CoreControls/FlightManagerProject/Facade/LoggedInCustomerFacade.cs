@@ -111,12 +111,12 @@ namespace FlightManagerProject
         }
 
 
-        public JObject UpdateCustomerDetails(long id,string fname,string lname,string phone,string address)
+        public JObject UpdateCustomerDetails(LoginToken<Customer> token, long id,string fname,string lname,string phone,string address)
         {
             Customer c = _customerDAO.Get(id);
             c.First_Name = string.IsNullOrWhiteSpace(fname) ? c.First_Name : fname;
             c.Last_Name = string.IsNullOrWhiteSpace(lname) ? c.Last_Name : lname;
-            c.Phone_Number = !string.IsNullOrWhiteSpace(phone) && phone.Length == 10 ? phone : c.Phone_Number;
+            c.Phone_Number = !string.IsNullOrWhiteSpace(phone) && phone.All(char.IsDigit)&&phone.Length == 10 ? phone : c.Phone_Number;
             c.Address = string.IsNullOrWhiteSpace(address) ? c.Address : address;
             _customerDAO.Update(c);
             return _customerDAO.Get(id).ToJsonPresentable();

@@ -178,13 +178,13 @@ namespace FlightManagerProject
 
                 }
             }
-            if (customer.Id == 0 || customer.First_Name == null)
-            {
-                ExceptionUserNotFound e = new ExceptionUserNotFound("Sent null or white space to getCustomerByUserName");
+            //if ( customer.First_Name == null) //customer.Id == 0 ||
+            //{
+            //    ExceptionUserNotFound e = new ExceptionUserNotFound("Sent null or white space to getCustomerByUserName");
 
-                ErrorLogger.Logger(e);
-                throw e;
-            }
+            //    ErrorLogger.Logger(e);
+            //    throw e;
+            //}
             return customer;
         }
 
