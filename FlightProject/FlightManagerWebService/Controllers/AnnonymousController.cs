@@ -282,9 +282,9 @@ namespace FlightProjectWebServices
         }
 
         [HttpGet]
-        [Route("api/checkCustomerUsername")]
+        [Route("api/checkCustomerUsername/")]
         [ResponseType(typeof(bool))]
-        public IHttpActionResult IsCustomerNameAvailable(string username)
+        public IHttpActionResult IsCustomerNameAvailable([FromUri]string username)
         {
             bool isAvailable;
             try
