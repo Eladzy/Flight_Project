@@ -178,7 +178,7 @@ namespace FlightManagerProject
 
                 }
             }
-            if (customer.First_Name == null) //customer.Id == 0 ||
+            if (customer.First_Name == null) //unnecessary?
             {
                 ExceptionUserNotFound e = new ExceptionUserNotFound("username was not found");
 

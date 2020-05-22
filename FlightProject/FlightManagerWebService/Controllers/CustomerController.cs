@@ -245,5 +245,29 @@ namespace FlightProjectWebServices//test pending
                 return BadRequest();
             }
         }
+
+        [HttpPut]
+        [ResponseType(typeof(bool))]
+        [Route("api/customer/changePassword")]
+        public IHttpActionResult ChangePassword([FromBody] string[] passwords)
+        {
+            try
+            {
+            if (_facade.ChangePassword(_token,passwords[0], passwords[1]))
+            {
+                return Ok(true);
+            }
+            else
+            {
+                    return Ok(false);
+                }
+
+            }
+            catch (Exception)
+            {
+
+                return InternalServerError();
+            }
+        }
     }
 }

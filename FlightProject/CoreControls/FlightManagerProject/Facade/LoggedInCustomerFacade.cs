@@ -120,6 +120,17 @@ namespace FlightManagerProject
             c.Address = string.IsNullOrWhiteSpace(address) ? c.Address : address;
             _customerDAO.Update(c);
             return _customerDAO.Get(id).ToJsonPresentable();
+        }//revisit id parameter might be unnecessery
+        public bool ChangePassword(LoginToken<Customer> token,string oldPassword,string newPassword)
+        {
+            if (oldPassword == token.User.Password)
+            {
+                Customer c = token.User;
+                c.Password = newPassword;
+                _customerDAO.Update(c);
+                return true;
+            }
+            return false;
         }
     }
 }
