@@ -316,7 +316,38 @@ namespace FlightProjectWebServices
            }
             return BadRequest();
         }
+        [HttpGet]
+        [Route("api/checkAirlineUsername/")]
+        [ResponseType(typeof(bool))]
+        public IHttpActionResult IsAirlineNameAvailable([FromUri]string username)
+        {
+            bool isAvailable;
+            try
+            {
+                isAvailable = instance.GetFacade(token).IsAirlineusernameAvailable(username);
+                return Ok(isAvailable);
 
+            }
+            catch (Exception e)
+            {
+                ErrorLogger.Logger(e);
+                return InternalServerError();
+            }
+        }
+        [HttpPost]
+        [Route("api/registerAirline")]
+        public IHttpActionResult RegisterAirline(string[] userData)
+        {
+            if (instance.GetFacade(token).RegisterAirline(userData[0], userData[1], userData[2], userData[3], userData[4]))
+            {
+                //sendgrid mail
+                //string[] credentials = new string[] { userData[0], userData[1] };
+                //JwtController jwtController = new JwtController();
+                //jwtController.Authenticate(credentials);
+                return Ok(true);
+            }
+            return BadRequest();
+        }
         
     }
 

@@ -178,13 +178,13 @@ namespace FlightManagerProject
 
                 }
             }
-            if (customer.First_Name == null) //unnecessary?
-            {
-                ExceptionUserNotFound e = new ExceptionUserNotFound("username was not found");
+            //if (customer.First_Name == null) //unnecessary?
+            //{
+            //    ExceptionUserNotFound e = new ExceptionUserNotFound("username was not found");
 
                 
-                throw e;
-            }
+            //    throw e;
+            //}
             return customer;
         }
 

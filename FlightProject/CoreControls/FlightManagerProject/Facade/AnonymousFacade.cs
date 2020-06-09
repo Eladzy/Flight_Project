@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace FlightManagerProject
@@ -137,7 +138,7 @@ namespace FlightManagerProject
             return false;
         }
 
-        public bool RegisterCustomer(string username,string password,string fname, string lname,
+        public bool RegisterCustomer(string username,string password,string fname, string lname,//need improving
             string address,string phoneNum,string creditCard,string mail)
         {
             string[] args = new string[] { username, password, fname, lname,  address, phoneNum, creditCard, mail };
@@ -182,6 +183,78 @@ namespace FlightManagerProject
 
             //sendgrid send mail to email
 
+            return true;
+        }
+
+        public bool IsAirlineusernameAvailable(string username)
+        {
+            try
+            {
+                AirLine a = _airlineDAO.GetAirLineByUserName(username);
+            }
+            catch (ExceptionUserNotFound)
+            {
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                ErrorLogger.Logger(e);
+            }
+            return false;
+        }
+
+        public bool RegisterAirline(string username, string password,string name, string countrycode, string email)
+        {
+            //user name exists-false
+            Regex reg;
+            string pwdPattern = @"^\d{16}$";
+            string usernamePattern = @"^([a-zA-z])([a-zA-z0-9_]){2,9}$";
+            string namePattern = @"^([a-zA-Z]){2,16}$";
+            string countryPattern = @"^\d{3}$";
+            var mail = new EmailAddressAttribute();
+            if (!mail.IsValid(email))
+            {
+                return false;
+            }
+            reg = new Regex(pwdPattern);
+            if (!reg.IsMatch(password))
+            {
+                return false;
+            }
+            reg = new Regex(usernamePattern);
+            if (!reg.IsMatch(username))
+            {
+                return false;
+            }
+            reg = new Regex(namePattern);
+            if (!reg.IsMatch(name))
+            {
+                return false;
+            }
+            reg = new Regex(countryPattern);
+            if (!reg.IsMatch(countrycode))
+            {
+                return false;
+            }
+            AirLine a = new AirLine
+            {
+                AirLine_Name = name,
+                User_Name = username,
+                Password = password,
+                CountryCode = int.Parse(countrycode)
+            };
+            try
+            {
+                _airlineDAO.Add(a);
+
+            }
+            catch (Exception e)//improve
+            {
+
+                ErrorLogger.Logger(e);
+                return false;
+            }
             return true;
         }
     }

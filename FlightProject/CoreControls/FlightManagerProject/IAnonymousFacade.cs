@@ -19,7 +19,9 @@ namespace FlightManagerProject
         IList<Newtonsoft.Json.Linq.JObject> GetAvailableFlightsJson();
         IList<Newtonsoft.Json.Linq.JObject> GetAirlinesJson();
         bool RegisterCustomer(string username, string password, string fname, string lname,
-            string address, string phoneNum, string creditCard, string mail);
+        string address, string phoneNum, string creditCard, string mail);
         bool IsCustomerUsernameAvailable(string username);
+        bool IsAirlineusernameAvailable(string username);
+        bool RegisterAirline(string username, string password, string name, string countrycode, string email);
     }
 }
