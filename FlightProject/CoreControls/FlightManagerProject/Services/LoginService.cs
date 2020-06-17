@@ -13,7 +13,13 @@ namespace FlightManagerProject
        private  AirLineMsSqlDao AirlineDao =new AirLineMsSqlDao();
        private  CustomerMsSqlDao CustomerDao = new CustomerMsSqlDao();
 
-
+        /// <summary>
+        /// determins wether the username and password belongs to any user in the database and to which archytype
+        /// and yields back ILoginTokenBase result
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public ILoginTokenBase TryLogin(string username, string password) //, out FacadeBase facade) 
         {
            // facade = null;
@@ -37,7 +43,13 @@ namespace FlightManagerProject
             }
             return null;
         }
-
+        /// <summary>
+        /// check if credntials match to an administrator
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
         public bool TryAdminLogin(string username, string password,out LoginToken<Administrator>token)
         {
             if (string.IsNullOrWhiteSpace(username))
@@ -66,7 +78,13 @@ namespace FlightManagerProject
             token = null;
             return false;
         }
-
+        /// <summary>
+        /// check if credntials match to an airline
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
         public bool TryAirLineLogin(string username, string password,out LoginToken<AirLine>token)
         {
            
@@ -101,7 +119,13 @@ namespace FlightManagerProject
             
          
         }
-
+        /// <summary>
+        /// check if credntials match to a customer
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
         public bool TryCustomerLogin(string username, string password,out LoginToken<Customer>token)
         {
             if (string.IsNullOrWhiteSpace(username))

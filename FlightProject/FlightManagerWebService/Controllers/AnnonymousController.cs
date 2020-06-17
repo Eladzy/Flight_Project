@@ -18,6 +18,10 @@ namespace FlightProjectWebServices
         };
         FlightCenter instance = FlightCenter.GetInstance();
 
+        /// <summary>
+        ///  provides a list of all availalble countries in a web ready JSON format
+        /// </summary>
+        /// <returns></returns>
         [ResponseType(typeof(IEnumerable<JObject>))]
         [HttpGet]
         [Route("api/countries")]
@@ -30,7 +34,10 @@ namespace FlightProjectWebServices
         }
 
 
-
+        /// <summary>
+        /// provides a list of all availalble flights in a web ready JSON format
+        /// </summary>
+        /// <returns></returns>
         [ResponseType(typeof(IEnumerable<JObject>))]
         [HttpGet]
         [Route("api/flights")]
@@ -54,7 +61,10 @@ namespace FlightProjectWebServices
 
         //}
 
-
+            /// <summary>
+            /// returns a list of flights with available tickets
+            /// </summary>
+            /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(Dictionary<Flight, int>))]
         [Route("api/flightsbyvacancy")]
@@ -66,6 +76,12 @@ namespace FlightProjectWebServices
             
             return Ok(flights);
         }
+       
+        /// <summary>
+        /// provides flight by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(string))]
         [Route("api/getflightbyid")]
@@ -86,7 +102,11 @@ namespace FlightProjectWebServices
 
         }
 
-
+        /// <summary>
+        /// return a list of flights by a corresponding origin country id 
+        /// </summary>
+        /// <param name="countryCode"></param>
+        /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(IEnumerable<Flight>))]
         [Route("api/getflightsbyorigin/{countryCode}")]
@@ -113,7 +133,11 @@ namespace FlightProjectWebServices
 
         }
 
-
+        /// <summary>
+        /// return a list of flights by a corresponding destination country id 
+        /// </summary>
+        /// <param name="countryCode"></param>
+        /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(IEnumerable<Flight>))]
         [Route("api/getflightsbydestination/{countryCode}")]
@@ -153,7 +177,11 @@ namespace FlightProjectWebServices
             return Ok(flights);
         }
 
-
+        /// <summary>
+        /// return a list of flights by a arrival  date
+        /// </summary>
+        /// <param name="landingDate"></param>
+        /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(IEnumerable<Flight>))]
         [Route("api/getflightsbydeparture/{ladingDate}")]

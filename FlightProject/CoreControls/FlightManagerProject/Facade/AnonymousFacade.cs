@@ -204,7 +204,7 @@ namespace FlightManagerProject
             return false;
         }
 
-        public bool RegisterAirline(string username, string password,string name, string countrycode, string email)
+        public bool RegisterAirline(string username, string password,string name, string email, string countrycode)
         {
             //user name exists-false
             Regex reg;
