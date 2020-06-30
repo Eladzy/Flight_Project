@@ -208,10 +208,10 @@ namespace FlightManagerProject
         {
             //user name exists-false
             Regex reg;
-            string pwdPattern = @"^\d{16}$";
+            string pwdPattern = @"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$";
             string usernamePattern = @"^([a-zA-z])([a-zA-z0-9_]){2,9}$";
             string namePattern = @"^([a-zA-Z]){2,16}$";
-            string countryPattern = @"^\d{3}$";
+            string countryPattern = @"^\d{1,3}$";
             var mail = new EmailAddressAttribute();
             if (!mail.IsValid(email))
             {

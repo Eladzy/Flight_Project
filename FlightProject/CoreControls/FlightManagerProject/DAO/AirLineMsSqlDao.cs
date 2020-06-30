@@ -30,7 +30,7 @@ namespace FlightManagerProject
             if (t == null)
                 throw new ArgumentNullException();
 
-            string query = "ADD_AIRLINE";
+            string query = StProceduresConsts.ADD_AIRLINE;
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
@@ -66,7 +66,7 @@ namespace FlightManagerProject
         public AirLine Get(long id)
         {
             AirLine airLine = new AirLine();
-            string query = "GET_AIRLINE";
+            string query = StProceduresConsts.GET_AIRLINE;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(query, connection))
@@ -110,7 +110,7 @@ namespace FlightManagerProject
             {
                 throw new ArgumentNullException();
             }
-            string query = "GET_AIRLINE_BYUSER";
+            string query = StProceduresConsts.GET_AIRLINE_BYUSER;
             AirLine airLine = new AirLine();
 
             using (SqlConnection connection = new SqlConnection(connectionString))

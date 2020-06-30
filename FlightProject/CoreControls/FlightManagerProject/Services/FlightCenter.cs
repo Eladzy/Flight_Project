@@ -21,6 +21,7 @@ namespace FlightManagerProject
                 Interval = ConfigurationUtils.CLEAN_DB_INTERVAL
             };
             timer.Elapsed += CheckTime;
+            timer.Start();
         }
         /// <summary>
         /// returns to correct facade

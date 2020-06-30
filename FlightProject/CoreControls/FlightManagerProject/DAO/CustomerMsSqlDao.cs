@@ -20,7 +20,7 @@ namespace FlightManagerProject
         /// <param name="customer"></param>
         public void Add(Customer customer)
         {
-            string query = "ADD_CUSTOMER";
+            string query = StProceduresConsts.ADD_CUSTOMER;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(query, connection))
@@ -51,7 +51,7 @@ namespace FlightManagerProject
         public Customer Get(long id)
         {
             Customer customer = new Customer();
-            string query = "GET_CUSTOMER_BY_ID";
+            string query = StProceduresConsts.GET_CUSTOMER_BY_ID;
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -101,7 +101,7 @@ namespace FlightManagerProject
         /// <returns></returns>
         public IList<Customer> GetAll()
         {
-            string query = "GET_ALL_CUSTOMERS";
+            string query = StProceduresConsts.GET_ALL_CUSTOMERS;
             Customer customer = new Customer();
             List<Customer> customers = new List<Customer>();
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -149,7 +149,7 @@ namespace FlightManagerProject
                 throw e;
             }
             Customer customer = new Customer();
-            string query = "GET_CUSTOMER_BY_USERNAME";
+            string query = StProceduresConsts.GET_CUSTOMER_BY_USERNAME;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(query, connection))
@@ -195,7 +195,7 @@ namespace FlightManagerProject
         /// <param name="t"></param>
         public void Remove(Customer t)
         {
-            string query = "REMOVE_CUSTOMER";
+            string query = StProceduresConsts.REMOVE_CUSTOMER;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(query, connection))
@@ -215,7 +215,7 @@ namespace FlightManagerProject
         /// <param name="t"></param>
         public void Update(Customer t)
         {
-            string query = "UPDATE_CUSTOMER";
+            string query = StProceduresConsts.UPDATE_CUSTOMER;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(query, connection))
