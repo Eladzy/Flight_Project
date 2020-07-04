@@ -35,5 +35,41 @@ namespace FlightManagerProject
         public const string GET_AIRLINE= "GET_AIRLINE";
 
         public const string GET_AIRLINE_BYUSER = "GET_AIRLINE_BYUSER";
+
+        public const string GET_ALL_AIRLINES = "GET_ALL_AIRLINES";
+
+        public const string GET_AIRLINES_BY_COUNTRY = "GET_AIRLINES_BY_COUNTRY";
+
+        public const string REMOVE_AIRLINE = "REMOVE_AIRLINE";
+
+        public const string UPDATE_AIRLINE = "UPDATE_AIRLINE";
+
+        public const string ADD_COUNTRY = "ADD_COUNTRY";
+
+        public const string GET_COUNTRY = "GET_COUNTRY";
+
+        public const string GET_ALL_COUNTRIES = "GET_ALL_COUNTRIES";
+
+        public const string REMOVE_COUNTRY = "REMOVE_COUNTRY";
+
+        public const string UPDATE_COUNTRY = "UPDATE_COUNTRY";
+
+        public const string GET_FLIGHT = "GET_FLIGHT";
+
+        public const string GET_ALL_FLIGHTS = "GET_ALL_FLIGHTS";
+
+        public const string GET_FLIGHTS_BY_CUSTOMER = "GET_FLIGHTS_BY_CUSTOMER";
+
+        public const string GET_FLIGHTS_BYDEPARTURE = "GET_FLIGHTS_BYDEPARTURE";
+
+        public const string GET_FLIGHTS_BY_DESTINATION_COUNTRY="GET_FLIGHTS_BY_DESTINATION_COUNTRY";
+
+        public const string GET_FLIGHTS_BYLAND = "GET_FLIGHTS_BYLAND";
+
+        public const string GET_FLIGHTS_BY_ORIGIN_COUNTRY = "GET_FLIGHTS_BY_ORIGIN_COUNTRY";
+
+        public const string REMOVE_FLIGHT = "REMOVE_FLIGHT";
+
+        public const string UPDATE_FLIGHT = "UPDATE_FLIGHT";
     }
 }

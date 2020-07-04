@@ -49,7 +49,7 @@ namespace FlightManagerProject
         public Flight Get(long id)
         {
            
-            string query = "GET_FLIGHT";
+            string query = StProceduresConsts.GET_FLIGHT;
             Flight flight = new Flight();
             using (SqlConnection connection = new SqlConnection(ConfigurationUtils.connectionString))
             {
@@ -90,7 +90,7 @@ namespace FlightManagerProject
         /// <returns></returns>
         public IList<Flight> GetAll()
         {
-            string query = "GET_ALL_FLIGHTS"; // .........
+            string query = StProceduresConsts.GET_ALL_FLIGHTS; // .........
             List<Flight> flights = new List<Flight>();
             using(SqlConnection connection=new SqlConnection(ConfigurationUtils.connectionString))
             {
@@ -139,7 +139,7 @@ namespace FlightManagerProject
         /// <returns></returns>
         public IList<Flight> GetFlightsByCustomer(Customer customer)
         {
-            string query = "GET_FLIGHTS_BY_CUSTOMER";
+            string query = StProceduresConsts.GET_FLIGHTS_BY_CUSTOMER;
             List<Flight> flights = new List<Flight>();
             using(SqlConnection connection=new SqlConnection(ConfigurationUtils.connectionString))
             {
@@ -181,7 +181,7 @@ namespace FlightManagerProject
         /// <returns></returns>
         public IList<Flight> GetFlightsByDepatrureDate(DateTime departureDate)
         {
-            string query = "GET_FLIGHTS_BYDEPARTURE";
+            string query = StProceduresConsts.GET_FLIGHTS_BYDEPARTURE; ;
             List<Flight> flights = new List<Flight>();
             using (SqlConnection connection = new SqlConnection(ConfigurationUtils.connectionString))
             {
@@ -220,7 +220,7 @@ namespace FlightManagerProject
         /// <returns></returns>
         public IList<Flight> GetFlightsByDestinationCountry(int countryCode)
         {
-            string query = "GET_FLIGHTS_BY_DESTINATION_COUNTRY";
+            string query = StProceduresConsts.GET_FLIGHTS_BY_DESTINATION_COUNTRY;
             List<Flight> flights = new List<Flight>();
             using (SqlConnection connection = new SqlConnection(ConfigurationUtils.connectionString))
             {
@@ -259,7 +259,7 @@ namespace FlightManagerProject
         /// <returns></returns>
         public IList<Flight> GetFlightsByLandingDate(DateTime landingDate)
         {
-            string query = "GET_FLIGHTS_BYLAND";
+            string query = StProceduresConsts.GET_FLIGHTS_BYLAND;
             List<Flight> flights = new List<Flight>();
             using (SqlConnection connection = new SqlConnection(ConfigurationUtils.connectionString))
             {
@@ -298,7 +298,7 @@ namespace FlightManagerProject
         /// <returns></returns>
         public IList<Flight> GetFlightsByOriginCountry(int countryCode)
         {
-            string query = "GET_FLIGHTS_BY_ORIGIN_COUNTRY";
+            string query = StProceduresConsts.GET_FLIGHTS_BY_ORIGIN_COUNTRY;
             List<Flight> flights = new List<Flight>();
             using (SqlConnection connection = new SqlConnection(ConfigurationUtils.connectionString))
             {
@@ -340,7 +340,7 @@ namespace FlightManagerProject
             {
                 throw new ArgumentNullException();
             }
-            string query = "REMOVE_FLIGHT";
+            string query = StProceduresConsts.REMOVE_FLIGHT;
             using (SqlConnection connection = new SqlConnection(ConfigurationUtils.connectionString))
             {
                 using(SqlCommand cmd=new SqlCommand(query, connection))
@@ -358,7 +358,7 @@ namespace FlightManagerProject
         /// <param name="t"></param>
         public void Update(Flight t)
         {
-            string query = "UPDATE_FLIGHT";
+            string query = StProceduresConsts.UPDATE_FLIGHT;
             using(SqlConnection connection=new SqlConnection(ConfigurationUtils.connectionString))
             {
                 using(SqlCommand cmd=new SqlCommand(query, connection))
@@ -492,6 +492,8 @@ namespace FlightManagerProject
             }
             return flightsJson;
         }
+
+
         public IList<JObject> GetJsonFlightsByCustomer(long id)
         {
             string query = StProceduresConsts.GET_PRESENTABLE_FLIGHTS_BY_CUSTOMER;

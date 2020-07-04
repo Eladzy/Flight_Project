@@ -153,7 +153,7 @@ namespace FlightManagerProject
         public IList<AirLine> GetAll()
         {
             List<AirLine> airLines = new List<AirLine>();
-            string query = "GET_ALL_AIRLINES";
+            string query = StProceduresConsts.GET_ALL_AIRLINES;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(query, connection))
@@ -189,7 +189,7 @@ namespace FlightManagerProject
         /// <returns></returns>
         public IList<AirLine> GetAllAirLinesByCountry(long countryId)
         {
-            string query = "GET_AIRLINES_BY_COUNTRY";
+            string query = StProceduresConsts.GET_AIRLINES_BY_COUNTRY;
             List<AirLine> airLines = new List<AirLine>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -230,7 +230,7 @@ namespace FlightManagerProject
             {
                 throw new ArgumentNullException();
             }
-            string query = "REMOVE_AIRLINE";
+            string query = StProceduresConsts.REMOVE_AIRLINE;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(query, connection))
@@ -254,7 +254,7 @@ namespace FlightManagerProject
             {
                 throw new ArgumentNullException();
             }
-            string query = "UPDATE_AIRLINE";
+            string query = StProceduresConsts.UPDATE_AIRLINE;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(query, connection))

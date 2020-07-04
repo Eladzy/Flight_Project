@@ -17,7 +17,7 @@ namespace FlightManagerProject
         /// <param name="t"></param>
         public void Add(Country t)
         {
-            string query = "ADD_COUNTRY";
+            string query = StProceduresConsts.ADD_COUNTRY;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 using(SqlCommand cmd=new SqlCommand(query, connection))
@@ -38,7 +38,7 @@ namespace FlightManagerProject
         /// <returns></returns>
         public Country Get(long id)
         {
-            string query = "GET_COUNTRY";
+            string query = StProceduresConsts.GET_COUNTRY;
             Country country = new Country();
             using(SqlConnection connection=new SqlConnection(connectionString))
             {
@@ -76,7 +76,7 @@ namespace FlightManagerProject
         /// <returns></returns>
         public IList<Country> GetAll()
         {
-            string query = "GET_ALL_COUNTRIES";
+            string query = StProceduresConsts.GET_ALL_COUNTRIES;
             List<Country> countries = new List<Country>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -109,7 +109,7 @@ namespace FlightManagerProject
         /// <param name="t"></param>
         public void Remove(Country t)
         {
-            string query = "REMOVE_COUNTRY";
+            string query = StProceduresConsts.REMOVE_COUNTRY;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 using (SqlCommand cmd=new SqlCommand(query, connection))
@@ -129,7 +129,7 @@ namespace FlightManagerProject
         /// <param name="t"></param>
         public void Update(Country t)
         { 
-            string query = "UPDATE_COUNTRY";
+            string query = StProceduresConsts.UPDATE_COUNTRY;
             using(SqlConnection connection=new SqlConnection(connectionString))
             {
                 using(SqlCommand cmd=new SqlCommand(query, connection))

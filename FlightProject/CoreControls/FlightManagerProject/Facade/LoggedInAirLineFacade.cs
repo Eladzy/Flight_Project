@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -127,6 +128,23 @@ namespace FlightManagerProject
             }
             else
                 throw new ExceptionFlightNotFound();
+        }
+        public JObject GetUserDetails(LoginToken<AirLine> token, long id)
+        {
+            if (token.User.Id == id)
+            {
+
+                AirLine a = _airlineDAO.Get(id);
+                return a.ToJsonPresentable();
+            }
+            else
+            {
+                var e = new ExceptionUserNotFound();
+                ErrorLogger.Logger(e);
+                throw e;
+
+            }
+
         }
     }
 }

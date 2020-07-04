@@ -8,7 +8,7 @@ using System.Security.Claims;
 using System.Web.Http;
 using System.Web.Http.Description;
 using FlightManagerProject;
-
+using Newtonsoft.Json.Linq;
 
 namespace FlightProjectWebServices
 {
@@ -235,6 +235,34 @@ namespace FlightProjectWebServices
                 return NotFound();
             }
 
+        }
+
+
+        [HttpPost]
+        [ResponseType(typeof(JObject))]
+        [Route("api/airline/getAirlineDetails")]
+        public IHttpActionResult GetAirlineDetails([FromBody]string airlineId)
+        {
+            JObject a = null;
+            try
+            {
+                long id;
+
+                long.TryParse(airlineId, out id);
+                a = Facade.GetUserDetails(Token, id);
+                return Ok(a);
+            }
+            catch (ExceptionUserNotFound e)
+            {
+
+                ErrorLogger.Logger(e);
+                return BadRequest();
+            }
+            catch (Exception e)
+            {
+                ErrorLogger.Logger(e);
+                return InternalServerError();
+            }
         }
 
     }
