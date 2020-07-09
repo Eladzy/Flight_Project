@@ -78,7 +78,7 @@ namespace FlightProjectWebServices
         }
 
 
-        [HttpGet]
+        [HttpPost]
         [ResponseType(typeof(List<Flight>))]
         [Route("api/airline/getflights")]
         public IHttpActionResult GetAllFlights()

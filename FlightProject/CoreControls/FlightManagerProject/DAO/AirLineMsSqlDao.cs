@@ -81,6 +81,7 @@ namespace FlightManagerProject
                         {
                             airLine = new AirLine
                             {
+                                Id = id,
                                 AirLine_Name = (string)reader["AL_NAME"],
                                 User_Name = (string)reader["AL_USERNAME"],
                                 Password = (string)reader["AL_PASSWORD"],

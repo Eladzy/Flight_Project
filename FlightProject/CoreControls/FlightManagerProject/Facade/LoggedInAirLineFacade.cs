@@ -82,7 +82,7 @@ namespace FlightManagerProject
         public IList<Flight> GetAllFlights(LoginToken<AirLine> token)
         {
 
-            List<Flight> flights = _flightDAO.GetAll().Where(f => f.AirLine_Id == token.User.Id).ToList();
+            List<Flight> flights = _flightDAO.GetFlightByAirline(token.User).ToList();
             return flights;
         }
         /// <summary>

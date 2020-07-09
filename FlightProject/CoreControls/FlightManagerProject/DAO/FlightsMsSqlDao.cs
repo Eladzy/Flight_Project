@@ -175,6 +175,48 @@ namespace FlightManagerProject
             return flights;
         }
         /// <summary>
+        /// get list of flights by an airline
+        /// </summary>
+        /// <param name="airline"></param>
+        /// <returns></returns>
+        public IList<Flight>GetFlightByAirline(AirLine airline)
+        {
+            string query = StProceduresConsts.GET_FLIGHTS_BY_AIRLINE;
+            List<Flight> flights = new List<Flight>();
+            using (SqlConnection connection = new SqlConnection(ConfigurationUtils.connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(query, connection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id", airline.Id.ToString());
+                    connection.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
+                    while (reader.Read())
+                    {
+                        if (reader.HasRows)
+                        {
+                            Flight flight = new Flight
+                            {
+                                Id = (long)reader["F_ID"],
+                                AirLine_Id = (long)reader["F_AIRLINE_ID"],
+                                Origin_Country_Code = (long)reader["F_ORIGIN_COUNTRYCODE"],
+                                Destination_Country_Code = (long)reader["F_DESTINATION_COUNTRYCODE"],
+                                Departure_Time = (DateTime)reader["F_DEPARTURE_TIME"],
+                                Landing_Time = (DateTime)reader["F_LANDING_TIME"],
+                                Remaining_Tickets = (int)reader["F_REMAINING_TICKETS"]
+                            };
+                            flights.Add(flight);
+                        }
+                        else
+                        {
+                            throw new ExceptionFlightNotFound();
+                        }
+                    }
+                }
+            }
+            return flights;
+        }
+        /// <summary>
         /// returns a list of flights by a specific date of departure
         /// </summary>
         /// <param name="departureDate"></param>

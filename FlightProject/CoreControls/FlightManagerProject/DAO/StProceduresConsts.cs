@@ -71,5 +71,9 @@ namespace FlightManagerProject
         public const string REMOVE_FLIGHT = "REMOVE_FLIGHT";
 
         public const string UPDATE_FLIGHT = "UPDATE_FLIGHT";
+
+        public const string GET_FLIGHTS_BY_TIMESPAN = "GET_FLIGHTS_BY_TIMESPAN";
+
+        public const string GET_FLIGHTS_BY_AIRLINE = "GET_FLIGHTS_BY_AIRLINE";
     }
 }
