@@ -18,8 +18,9 @@ namespace FlightManagerProject
         /// </summary>
         /// <param name="token"></param>
         /// <param name="ticket"></param>
-        public void CancelTicket(LoginToken<Customer> token, Ticket ticket)
+        public void CancelTicket(LoginToken<Customer> token, long flightId)
         {
+            Ticket ticket = _ticketDAO.GetTicketByInfo(token.User.Id, flightId);
             if(ticket.Customer_Id!=token.User.Id||ticket==null)
             {
                 Exception e=new TicketNotFoundException ("Ticket is either not belong to user or not found");

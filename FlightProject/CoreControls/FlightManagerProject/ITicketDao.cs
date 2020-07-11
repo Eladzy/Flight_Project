@@ -8,6 +8,6 @@ namespace FlightManagerProject
 {
     public interface ITicketDao:IBasic<Ticket>
     {
-
+        Ticket GetTicketByInfo(long customerId, long flightId);
     }
 }

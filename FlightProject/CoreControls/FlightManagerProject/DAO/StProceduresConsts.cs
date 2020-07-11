@@ -75,5 +75,7 @@ namespace FlightManagerProject
         public const string GET_FLIGHTS_BY_TIMESPAN = "GET_FLIGHTS_BY_TIMESPAN";
 
         public const string GET_FLIGHTS_BY_AIRLINE = "GET_FLIGHTS_BY_AIRLINE";
+
+        public const string GET_TICKET_BY_INFO = "GET_TICKET_BY_INFO";
     }
 }

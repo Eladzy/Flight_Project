@@ -143,5 +143,34 @@ namespace FlightManagerProject
                 }
             }
         }
+
+        public Ticket GetTicketByInfo(long customerId, long flightId)
+        {
+            string query = StProceduresConsts.GET_TICKET_BY_INFO;
+            Ticket t;
+            using(SqlConnection connection=new SqlConnection(connectionString))
+            {
+                using(SqlCommand cmd=new SqlCommand(query, connection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@customerId", customerId.ToString());
+                    cmd.Parameters.AddWithValue("@flightId", flightId.ToString());
+                    connection.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
+                    while (reader.Read())
+                    {
+                        t = new Ticket
+                        {
+                            Id = (long)reader["T_ID"],
+                            Flight_Id = (long)reader["T_FLIGHT_ID"],
+                            Customer_Id = (long)reader["T_CUSTOMER_ID"]
+                        };
+                        return t;
+                    }
+                }
+            }
+            TicketNotFoundException e = new TicketNotFoundException("Ticekt does not exist");
+            throw e;
+        }
     }
 }

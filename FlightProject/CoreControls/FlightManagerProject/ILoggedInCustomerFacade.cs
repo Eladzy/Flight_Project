@@ -10,7 +10,7 @@ namespace FlightManagerProject
     {
         IList<Flight> GetAllMyFlights(LoginToken<Customer> token);
         Ticket PurchaseTicket(LoginToken<Customer> token, Flight flight);
-        void CancelTicket(LoginToken<Customer> token, Ticket ticket);
+        void CancelTicket(LoginToken<Customer> token, long flightId);
         Newtonsoft.Json.Linq.JObject UpdateCustomerDetails(LoginToken<Customer> token, long id, string fname, string lname, string phone, string address);
         bool ChangePassword(LoginToken<Customer> token, string oldPassword, string newPassword);
     }
