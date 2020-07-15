@@ -4,7 +4,7 @@ using  FlightManagerProject;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace FlightProjectTeting.UnitTest
+namespace FlightProjectTesting.UnitTest
 {
     [TestClass]
     public class AnnonymousFacadeTest

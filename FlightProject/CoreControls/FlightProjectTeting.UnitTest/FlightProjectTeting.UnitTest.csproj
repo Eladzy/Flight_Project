@@ -47,13 +47,16 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomerFacadeUnitTest.cs" />
+    <Compile Include="DataAccessTestingTools.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AnnonymousUnitTest.cs" />
     <Compile Include="LoginUnitTest.cs" />
     <Compile Include="AirlineFacadeUnitTest.cs" />
+    <Compile Include="TestResurces.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FlightManagerProject\FlightManagerProject.csproj">

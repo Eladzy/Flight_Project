@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FlightManagerProject;
 using System.Collections.Generic;
 
-namespace FlightProjectTeting.UnitTest
+namespace FlightProjectTesting.UnitTest
 {
     [TestClass]
     public class AirlineFacadeUnitTest
@@ -19,7 +19,6 @@ namespace FlightProjectTeting.UnitTest
 
         Flight f1 = new Flight
         {
-            Id = 21,
             AirLine_Id = 20,
             Departure_Time = new DateTime(2019, 11, 20, 16, 30, 0),
             Landing_Time = new DateTime(2019, 11, 20, 20, 0, 0),

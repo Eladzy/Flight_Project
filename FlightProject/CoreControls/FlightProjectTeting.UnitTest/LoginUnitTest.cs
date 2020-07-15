@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FlightManagerProject;
 using System.Diagnostics;
 
-namespace FlightProjectTeting.UnitTest
+namespace FlightProjectTesting.UnitTest
 {
     [TestClass]
     public class LoginTest

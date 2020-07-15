@@ -185,21 +185,20 @@ namespace FlightProjectWebServices//test pending
 
 
 
-        [HttpDelete]
-        [ResponseType(typeof(Ticket))]
-        [Route("api/customer/cancelticket/{ticket}")]
-        public IHttpActionResult CancelTicket([FromBody]Ticket ticket)
+        [HttpPost]
+        [Route("api/customer/cancelticket")]
+        public IHttpActionResult CancelTicket([FromBody]long flightId)
         {
-            if (ticket.Customer_Id != _token.User.Id)
-            {
-                TicketNotFoundException  ex = new TicketNotFoundException ("Ticket Either Not Found Or Not Belond To The User");
-                ErrorLogger.Logger(ex);
-                return StatusCode(HttpStatusCode.Forbidden);
-            }
+            //if (ticket.Customer_Id != _token.User.Id)
+            //{
+            //    TicketNotFoundException  ex = new TicketNotFoundException ("Ticket Either Not Found Or Not Belond To The User");
+            //    ErrorLogger.Logger(ex);
+            //    return StatusCode(HttpStatusCode.Forbidden);
+            //}
             try
             {
-                _facade.CancelTicket(_token, ticket);
-                return Ok(ticket);
+                _facade.CancelTicket(_token, flightId);
+                return Ok();
             }
             catch (System.Data.SqlClient.SqlException e)
             {
