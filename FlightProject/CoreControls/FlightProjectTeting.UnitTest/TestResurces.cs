@@ -11,7 +11,7 @@ namespace FlightProjectTesting.UnitTest
     {
        public static Customer c1 = new Customer
         {
-            First_Name = "aaa",
+            First_Name = "cust1Test",
             User_Name = "aaa1",
             Last_Name = "aaa",
             Password = "123",
@@ -21,8 +21,18 @@ namespace FlightProjectTesting.UnitTest
         };
         public static Customer c2 = new Customer
         {
-            First_Name = "bba",
+            First_Name = "cus2tTest",
             User_Name = "aaa2",
+            Last_Name = "bba",
+            Password = "123",
+            Address = "123a",
+            Phone_Number = "1234567890",
+            Credit_Card_Number = "1234567890"
+        };
+        public static Customer c3 = new Customer
+        {
+            First_Name = "cus3tTest",
+            User_Name = "aaa3",
             Last_Name = "bba",
             Password = "123",
             Address = "123a",
@@ -31,14 +41,14 @@ namespace FlightProjectTesting.UnitTest
         };
         public static AirLine a1 = new AirLine
         {
-            User_Name = "air1",
+            User_Name = "air1test",
             AirLine_Name = "fff",
             Password = "123",
             CountryCode = 50
         };
         public static AirLine a2 = new AirLine
         {
-            User_Name = "air2",
+            User_Name = "air2test",
             AirLine_Name = "fff",
             Password = "123",
             CountryCode = 55

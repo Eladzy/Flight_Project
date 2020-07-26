@@ -37,7 +37,7 @@ namespace FlightDataBaseFiller
                 Init();
                 Flight flight = new Flight
                 {
-                    Id =Math.Abs( Guid.NewGuid().GetHashCode()),
+                   // Id =Math.Abs( Guid.NewGuid().GetHashCode()),
                     AirLine_Id = airline.Id,
                     Origin_Country_Code = c1.Id,
                     Destination_Country_Code = c2.Id,

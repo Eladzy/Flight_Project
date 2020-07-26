@@ -86,7 +86,7 @@ namespace FlightProjectWebServices
             List<Flight> flights;
             try
             {
-                flights = this.Facade.GetAllFlights(Token).ToList();
+                flights = this.Facade.GetAllComapnyFlights(Token).ToList();
                 if (flights.Count == 0 || flights == null)
                     return StatusCode(HttpStatusCode.NoContent);
                 return Ok(flights);

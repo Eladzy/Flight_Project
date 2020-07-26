@@ -79,7 +79,7 @@ namespace FlightManagerProject
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
-        public IList<Flight> GetAllFlights(LoginToken<AirLine> token)
+        public IList<Flight> GetAllComapnyFlights(LoginToken<AirLine> token)
         {
 
             List<Flight> flights = _flightDAO.GetFlightByAirline(token.User).ToList();
@@ -92,7 +92,7 @@ namespace FlightManagerProject
         /// <returns></returns>
         public IList<Ticket> GetAllTickets(LoginToken<AirLine> token)
         {
-            List<Flight> flights = GetAllFlights(token).ToList();
+            List<Flight> flights = GetAllComapnyFlights(token).ToList();
             List<Ticket> tickets = new List<Ticket>();
             
             foreach (Flight flight in flights)

@@ -22,11 +22,6 @@ namespace FlightManagerProject
 
 
 
-        //public IList<AirLine> GetAllAirlineCompanies()
-        //{
-        //    List<AirLine> airLines = _airlineDAO.GetAll().ToList();
-        //    return airLines;
-        //}
 
         public IList<Country> GetCountries()
         {

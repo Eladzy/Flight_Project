@@ -3,31 +3,43 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using  FlightManagerProject;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Newtonsoft.Json.Linq;
 
 namespace FlightProjectTesting.UnitTest
 {
     [TestClass]
     public class AnnonymousFacadeTest
     {
-        
-        
+        DataAccessTestingTools _testingTools = new DataAccessTestingTools();
+        AirLineMsSqlDao _airlineDao = new AirLineMsSqlDao();
+        CustomerMsSqlDao _customerDao = new CustomerMsSqlDao();
+
+
         [TestMethod]
         public void AnonymouseFacade_GetFlightById_FlightFound()
         {
-            Flight flight = FlightCenter.GetInstance().GetFacade(null).GetFlightById(1);
+            Flight f = _testingTools.GetFlight();
+            Flight flight = FlightCenter.GetInstance().GetFacade(null).GetFlightById(f.Id);
         }
         [TestMethod]
-       public void GetFlightLIst()
+       public void GetFlightList()
        {
            
             List<Flight> flights = (List<Flight>)FlightCenter.GetInstance().GetFacade(null).GetAllFlights();
             Assert.IsTrue(flights.Count > 1);
        }
         [TestMethod]
+        public void GetAvailableFlightLst()
+        {
+
+            List<Flight> flights = (List<Flight>)FlightCenter.GetInstance().GetFacade(null).GetAvailableFlightsJson();
+            Assert.IsTrue(flights.Count > 1);
+        }
+        [TestMethod]
         public void GetAirlines()
         {
-            
-            List<AirLine> airLines = (List<AirLine>)FlightCenter.GetInstance().GetFacade(null).GetAllAirlineCompanies();
+
+            List<JObject> airLines = (List<JObject>)FlightCenter.GetInstance().GetFacade(null).GetAirlinesJson();
             Assert.IsTrue(airLines.Count > 1);
         }
         [TestMethod]
@@ -40,28 +52,60 @@ namespace FlightProjectTesting.UnitTest
         [TestMethod]
         public void GetByDeparture()
         {
-            Flight flight = FlightCenter.GetInstance().GetFacade(null).GetFlightById(1);
+            Flight flight = _testingTools.GetFlight();
             List<Flight> flights = (List<Flight>)FlightCenter.GetInstance().GetFacade(null).GetFlightsByDepatrureDate(flight.Departure_Time);
             Assert.IsTrue(flights.Contains(flight));
         }
         [TestMethod]
         public void GetByLanding()
         {
-            Flight flight = FlightCenter.GetInstance().GetFacade(null).GetFlightById(2);
+            Flight flight = _testingTools.GetFlight();
             List<Flight> flights = (List<Flight>)FlightCenter.GetInstance().GetFacade(null).GetFlightsByLandingDate(flight.Landing_Time);
             Assert.IsTrue( flights.Contains(flight));
         }
         [TestMethod]
         public void GetByOrigin()
         {
-            List<Flight> flights = (List<Flight>)FlightCenter.GetInstance().GetFacade(null).GetFlightsByOriginCountry(1);
+            Flight flight = _testingTools.GetFlight();
+            List<Flight> flights = (List<Flight>)FlightCenter.GetInstance().GetFacade(null).GetFlightsByOriginCountry((int)flight.Origin_Country_Code);
             Assert.IsTrue(flights.Count > 0);
         }
         [TestMethod]
         public void GetByDestination()
         {
-            List<Flight> flights = (List<Flight>)FlightCenter.GetInstance().GetFacade(null).GetFlightsByDestinationCountry(2);
+            Flight flight = _testingTools.GetFlight();
+            List<Flight> flights = (List<Flight>)FlightCenter.GetInstance().GetFacade(null).GetFlightsByDestinationCountry((int)flight.Destination_Country_Code);
             Assert.IsTrue(flights.Count > 0);
+        }
+
+        [TestMethod]
+        public void CustomerUsernameCheck()
+        {
+            Customer c = _testingTools.GetCustomer();
+            Assert.IsTrue(FlightCenter.GetInstance().GetFacade(null).IsCustomerUsernameAvailable(c.User_Name) == false && FlightCenter.GetInstance().GetFacade(null).IsCustomerUsernameAvailable("4324234") == true);
+        }
+        [TestMethod]
+        public void AirlineUsernameCheck()
+        {
+            AirLine a = _testingTools.GetAirLine();
+            Assert.IsTrue(FlightCenter.GetInstance().GetFacade(null).IsCustomerUsernameAvailable(a.User_Name) == false && FlightCenter.GetInstance().GetFacade(null).IsCustomerUsernameAvailable("4324234") == true);
+        }
+
+        [TestMethod]
+        public void RegisterAirline()
+        {
+            AirLine a = TestResurces.a1;
+
+            FlightCenter.GetInstance().GetFacade(null).RegisterAirline(a.User_Name, a.Password, a.AirLine_Name, a.CountryCode.ToString(), "as2as@aad.com");
+            Assert.IsTrue(_airlineDao.GetAirLineByUserName(a.User_Name).Id != 0);
+        }
+
+        [TestMethod]
+        public void RegisterCustomer()
+        {
+            Customer c = TestResurces.c2;
+            FlightCenter.GetInstance().GetFacade(null).RegisterCustomer(c.User_Name, c.Password, c.First_Name, c.Last_Name, c.Address, c.Phone_Number, c.Credit_Card_Number, "dadad@elasdsd.com");
+            Assert.IsTrue(_customerDao.GetCustomerByUserName(c.User_Name).Id!=0);
         }
     }
 }

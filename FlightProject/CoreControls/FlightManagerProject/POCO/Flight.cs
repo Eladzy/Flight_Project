@@ -31,6 +31,17 @@ namespace FlightManagerProject
             Remaining_Tickets = remaining_Tickets;
         }
 
+        public Flight( long airLine_Id, long origin_Country_Code, long destination_Country_Code, DateTime departure_Time, DateTime landing_Time, int remaining_Tickets)
+        {
+           
+            AirLine_Id = airLine_Id;
+            Origin_Country_Code = origin_Country_Code;
+            Destination_Country_Code = destination_Country_Code;
+            Departure_Time = departure_Time;
+            Landing_Time = landing_Time;
+            Remaining_Tickets = remaining_Tickets;
+        }
+
         public static bool operator ==(Flight flight1, Flight flight2)
         {
             if (Equals(flight1, null) && Equals(flight2, null))

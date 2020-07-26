@@ -29,7 +29,7 @@ namespace FlightManagerProject
                 using(SqlCommand cmd=new SqlCommand(query, connection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@id", t.Id);
+               //     cmd.Parameters.AddWithValue("@id", t.Id);
                     cmd.Parameters.AddWithValue("@airline", t.AirLine_Id.ToString());
                     cmd.Parameters.AddWithValue("@origin", t.Origin_Country_Code.ToString());
                     cmd.Parameters.AddWithValue("@destination", t.Destination_Country_Code.ToString());

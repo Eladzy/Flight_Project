@@ -9,27 +9,12 @@ namespace FlightProjectTesting.UnitTest
     [TestClass]
     public class CustomerFacadeTest
     {
-        CustomerMsSqlDao customerDao = new CustomerMsSqlDao();
+        CustomerMsSqlDao _customerDao = new CustomerMsSqlDao();
         DataAccessTestingTools testingTools = new DataAccessTestingTools();
         TicketsMsSqlDao _ticketsDao = new TicketsMsSqlDao();
-       
         static Customer _customer = TestResurces.c1;
-        public LoginToken<Customer> _token = new LoginToken<Customer>
-        {
-            User = _customer
-        };
         public static LoggedInCustomerFacade customerFacade=new LoggedInCustomerFacade();
         
-       
-        [TestMethod]
-        public void CustomerAdd()
-        {
-            customerDao.Add(_customer);
-             var customer2= customerDao.GetCustomerByUserName(_customer.User_Name);
-            Assert.IsTrue(customer2.Id != 0);
-            
-        }
-
       
 
         [TestMethod]
@@ -44,19 +29,20 @@ namespace FlightProjectTesting.UnitTest
             Assert.IsTrue(flights.Count > 0);
             
         }
+
         [TestMethod]
         public void TicketTesting()
         {
             Customer c;
             try
             {
-                c= customerDao.GetCustomerByUserName(_customer.User_Name);
+                c= _customerDao.GetCustomerByUserName(_customer.User_Name);
             }
             catch (Exception)
             {
 
-                customerDao.Add(_customer);
-                c = customerDao.GetCustomerByUserName(_customer.User_Name);
+                _customerDao.Add(_customer);
+                c = _customerDao.GetCustomerByUserName(_customer.User_Name);
             }
            
             LoginToken<Customer> loginToken = new LoginToken<Customer>
@@ -67,63 +53,95 @@ namespace FlightProjectTesting.UnitTest
              Assert.IsTrue(ticket ==_ticketsDao.Get(ticket.Id));
 
         }
+
         [TestMethod]
+        public void PurchaseFlight()
+        {
+            Customer c;
+            try
+            {
+                c = _customerDao.GetCustomerByUserName(_customer.User_Name);
+            }
+            catch (Exception)
+            {
+
+                _customerDao.Add(_customer);
+                c = _customerDao.GetCustomerByUserName(_customer.User_Name);
+            }
+
+            LoginToken<Customer> loginToken = new LoginToken<Customer>
+            {
+                User = c
+            };
+            var ticket = customerFacade.PurchaseTicket(loginToken, testingTools.GetFlight());
+            Assert.IsTrue(ticket == _ticketsDao.GetTicketByInfo(loginToken.User.Id, ticket.Flight_Id));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TicketNotFoundException))]
         public void CancelTicket()
         {
-            //customerDao.Add(c);
-            //LoginToken<Customer> loginToken = new LoginToken<Customer>
-            //{
-            //    User = c
-            //};
-            //var ticket = customerFacade.PurchaseTicket(loginToken, customerFacade.GetFlightById(2));
-            ////customerFacade.CancelTicket(loginToken, ticket);
-            //Assert.IsTrue(customerFacade.GetAllMyFlights(loginToken).Count == 0);
-        }
-        private void TicketAssertScenarioA()
-        {
+            Customer c;
+            try
+            {
+                c = _customerDao.GetCustomerByUserName(_customer.User_Name);
+            }
+            catch (Exception)
+            {
 
-        }
-        private void TicketAssertScenarioB()
-        {
+                _customerDao.Add(_customer);
+                c = _customerDao.GetCustomerByUserName(_customer.User_Name);
+            }
 
+            LoginToken<Customer> loginToken = new LoginToken<Customer>
+            {
+                User = c
+            };
+            var ticket = customerFacade.PurchaseTicket(loginToken, testingTools.GetFlight());
+            customerFacade.CancelTicket(loginToken, ticket.Flight_Id);
+            _ticketsDao.GetTicketByInfo(loginToken.User.Id,ticket.Flight_Id);
+  
+        }
+
+        [TestMethod]
+        public void UpdateCustomer()
+        {
+            Customer c = TestResurces.c3;
+            _customerDao.Add(c);
+            c = _customerDao.GetCustomerByUserName(c.User_Name);
+            LoginToken<Customer> loginToken = new LoginToken<Customer>
+            {
+                User = c
+            };
+            var facade=(LoggedInCustomerFacade)FlightCenter.GetInstance().GetFacade(loginToken);
+            facade.UpdateCustomerDetails(loginToken, c.Id, "testName", "testLName", "0123456789", "testAddress");
+            c = _customerDao.Get(c.Id);
+            Assert.IsTrue(c.First_Name == "testName" && c.Last_Name == "testLName"&& c.Address == "testAddress");
+        }
+
+        [TestMethod]
+        public void ChangePassword()
+        {
+            Customer c;
+            try
+            {
+                c = _customerDao.GetCustomerByUserName(_customer.User_Name);
+            }
+            catch (Exception)
+            {
+
+                _customerDao.Add(_customer);
+                c = _customerDao.GetCustomerByUserName(_customer.User_Name);
+            }
+            LoginToken<Customer> loginToken = new LoginToken<Customer>
+            {
+                User = c
+            };
+            string newPassword = "TestNewPassword1";
+            var facade = (LoggedInCustomerFacade)FlightCenter.GetInstance().GetFacade(loginToken);
+            facade.ChangePassword(loginToken, c.Password, newPassword);
+            c= _customerDao.GetCustomerByUserName(_customer.User_Name);
+            Assert.IsTrue(c.Password == newPassword);
         }
     }
 }
-
-//[TestMethod]
-//public void GetFlightByID()
-//{
-
-//    var customerFacade = flightCenter.GetFacade(token);
-//    Flight flight =customerFacade.GetFlightById(1);
-//    Assert.IsNotNull(flight);
-//}
-
-//[TestMethod]
-//public void GetAirlines()
-//{
-//    List<AirLine> airLines = (List<AirLine>)customerFacade.GetAllAirlineCompanies();
-//    Assert.IsTrue(airLines.Count > 1);
-//}
-//[TestMethod]
-//public void GetFlightVacancy()
-//{
-//    Dictionary<Flight, int> vacancy = customerFacade.GetAllFlightsVacancy();
-//    Assert.IsTrue(vacancy.Count > 0);
-//}
-//[TestMethod]
-//public void GetByDeparture()
-//{
-//    var customerFacade = flightCenter.GetFacade(token);
-//    Flight flight = customerFacade.GetFlightById(1);
-//    List<Flight> flights = (List<Flight>)customerFacade.GetFlightsByDepatrureDate(flight.Departure_Time);
-//    Assert.IsTrue(flights.Contains(flight));
-//}
-//[TestMethod]
-//public void GetByLanding()
-//{
-//    var customerFacade = flightCenter.GetFacade(token);
-//    Flight flight = customerFacade.GetFlightById(2);
-//    List<Flight> flights = (List<Flight>)customerFacade.GetFlightsByLandingDate(flight.Landing_Time);
-//    Assert.IsTrue(flights.Contains(flight));
-//}

@@ -165,7 +165,10 @@ namespace FlightManagerProject
                             Flight_Id = (long)reader["T_FLIGHT_ID"],
                             Customer_Id = (long)reader["T_CUSTOMER_ID"]
                         };
-                        return t;
+                        if (t.Id != 0)
+                        {
+                            return t;
+                        }
                     }
                 }
             }

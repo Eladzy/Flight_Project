@@ -2,122 +2,214 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FlightManagerProject;
 using System.Collections.Generic;
-
+using System.Reflection;
 namespace FlightProjectTesting.UnitTest
 {
     [TestClass]
     public class AirlineFacadeUnitTest
     {
-        FlightsMsSqlDao flightsDao = new FlightsMsSqlDao();
+        FlightsMsSqlDao _flightsDao = new FlightsMsSqlDao();
 
-        AirLineMsSqlDao airlineDao = new AirLineMsSqlDao();
+        AirLineMsSqlDao _airlineDao = new AirLineMsSqlDao();
 
-        LoginToken<AirLine> Token { get; set; }
+        DataAccessTestingTools testingTools = new DataAccessTestingTools();
 
         static LoggedInAirLineFacade AirlineFacade { get; set; }
 
 
-        Flight f1 = new Flight
+        [TestMethod]
+        public void CreateFlights()
         {
-            AirLine_Id = 20,
-            Departure_Time = new DateTime(2019, 11, 20, 16, 30, 0),
-            Landing_Time = new DateTime(2019, 11, 20, 20, 0, 0),
-            Origin_Country_Code = 6,
-            Destination_Country_Code = 5,
-            Remaining_Tickets = 20
-        };
-
-
-
-        Flight f2 = new Flight
-        {
-            Id = 22,
-            AirLine_Id = 20,
-            Departure_Time = new DateTime(2019, 11, 22, 17, 30, 0),
-            Landing_Time = new DateTime(2019, 11, 22, 21, 0, 0),
-            Origin_Country_Code = 5,
-            Destination_Country_Code = 6,
-            Remaining_Tickets = 20
-        };
-
-
-
-        AirLine airline = new AirLine
-        {
-            AirLine_Name = "UnitTestAirLine",
-            User_Name = "AirlineTest",
-            CountryCode = 1,
-            Password = "A12345678",
-            Id = 20,
-        };
-
-
-       
-        public AirlineFacadeUnitTest()
-        {
-            Token = new LoginToken<AirLine>
+            bool isIncluded = false;
+            AirLine a = TestResurces.a2;
+            try
             {
-                User = airline
+                _airlineDao.Add(a);
+            }
+            catch (Exception)
+            {
+
+                a = _airlineDao.GetAirLineByUserName(a.User_Name);
+            }
+            LoginToken<AirLine> loginToken = new LoginToken<AirLine>
+            {
+                User = a,
             };
-            AirlineFacade = (LoggedInAirLineFacade)FlightCenter.GetInstance().GetFacade(Token);
+            Flight f = new Flight()
+            {
+                AirLine_Id = a.Id,
+                Departure_Time = DateTime.Now.AddDays(1),
+                Landing_Time = DateTime.Now.AddDays(1).AddHours(1),
+                Destination_Country_Code = 34,
+                Origin_Country_Code = 32,
+                Remaining_Tickets = 250
+            };
+           AirlineFacade.CreateFlight(loginToken,f);
+            List<Flight> flights = (List<Flight>)AirlineFacade.GetAllComapnyFlights(loginToken);
+            foreach (Flight flight in flights)
+            {
+                Type type = f.GetType();
+                PropertyInfo[] properties =type.GetProperties();
+                foreach (PropertyInfo property in properties)
+                {
+                    
+                    if(property.GetValue(flight)==property.GetValue(f))
+                    {
+                        isIncluded = true;
+                    }
+                    else
+                    {
+                        if(property.Name != "Id")
+                        {
+                            isIncluded = false;
+                           break;
+                        }
+                    }  
+                }
+                _flightsDao.Remove(flight);
+                if (isIncluded)
+                {
+                    _airlineDao.Remove(loginToken.User);
+                    Assert.IsTrue(isIncluded);
+                }
+            }
+            //flights.ForEach(flight => AirlineFacade.CancelFlight(loginToken, flight));
+            //_airlineDao.Remove(loginToken.User);
+            Clear(loginToken);
+            Assert.IsTrue(isIncluded);
         }
-        
-      [TestMethod]
-      public void CreateFlights()
-      {
-            airlineDao.Add(Token.User);
-            AirlineFacade.CreateFlight(Token,f1);
-            AirlineFacade.CreateFlight(Token,f2);
-            Assert.IsTrue(AirlineFacade.GetAllFlights(Token).Contains(f2));
-      }
 
 
 
-       [TestMethod]
-       public void CancelFlight()
-       {
-           AirlineFacade.CancelFlight(Token, f2);
-           Assert.IsFalse(AirlineFacade.GetAllFlights(Token).Contains(f2));
-       }
+        [TestMethod]
+        public void CancelFlight()
+        {          
+            AirLine a = GetAirLine(TestResurces.a2);        
+            LoginToken<AirLine> loginToken = new LoginToken<AirLine>
+            {
+                User = a,
+            };
+            Flight f = new Flight()
+            {
+                AirLine_Id = a.Id,
+                Departure_Time = DateTime.Now.AddDays(1),
+                Landing_Time = DateTime.Now.AddDays(1).AddHours(1),
+                Destination_Country_Code = 34,
+                Origin_Country_Code = 32,
+                Remaining_Tickets = 250
+            };
+            AirlineFacade.CreateFlight(loginToken, f);
+            List<Flight> flights = (List<Flight>)AirlineFacade.GetAllComapnyFlights(loginToken);
+            if (flights.Count == 0)
+            {
+                throw new AssertFailedException("no flights were pulled");
+            }
+            flights.ForEach(flight => AirlineFacade.CancelFlight(loginToken, flight));
+            flights= (List<Flight>)AirlineFacade.GetAllComapnyFlights(loginToken);
+            _airlineDao.Remove(loginToken.User);
+            Assert.IsTrue(flights.Count == 0);
+        }
 
 
 
-       [TestMethod]
+        [TestMethod]
         public void UpdateFlight()
         {
-            f1.Remaining_Tickets = 10;
-            AirlineFacade.UpdateFlight(Token,f1);
-            Flight flight = flightsDao.Get(f1.Id);
-            Assert.IsTrue(flight.Remaining_Tickets==f1.Remaining_Tickets);
+            AirLine a = GetAirLine(TestResurces.a2);
+           
+            LoginToken<AirLine> loginToken = new LoginToken<AirLine>
+            {
+                User = a,
+            };
+            Flight f = new Flight()
+            {
+                AirLine_Id = a.Id,
+                Departure_Time = DateTime.Now.AddDays(1),
+                Landing_Time = DateTime.Now.AddDays(1).AddHours(1),
+                Destination_Country_Code = 34,
+                Origin_Country_Code = 32,
+                Remaining_Tickets = 250
+            };
+            AirlineFacade.CreateFlight(loginToken, f);
+            List<Flight> flights = (List<Flight>)AirlineFacade.GetAllComapnyFlights(loginToken);
+            if (flights.Count == 0)
+            {
+                throw new AssertFailedException("no flights were pulled");
+            }
+            Flight flight1 = flights[1];
+            flight1.Remaining_Tickets = 55;
+            AirlineFacade.UpdateFlight(loginToken, flight1);
+            flight1 = _flightsDao.Get(flight1.Id);
+            //flights.ForEach(flight => AirlineFacade.CancelFlight(loginToken, flight));
+            //_airlineDao.Remove(loginToken.User);
+            Clear(loginToken);
+            Assert.IsTrue(flight1.Remaining_Tickets == 55);
         }
 
 
 
         [TestMethod]
 
-       public void Modify()
-       {
-            airline.Password = "123";
-            AirlineFacade.MofidyAirlineDetails(Token,airline);
-            Assert.IsTrue(airline.Password == airlineDao.Get(20).Password);
-            Token.User = airline;
-       }
+        public void Modify()
+        {
+            AirLine a = GetAirLine(TestResurces.a2);
+            LoginToken<AirLine> loginToken = new LoginToken<AirLine>
+            {
+                User = a,
+            };
+            a.User_Name = "modifyTest";
+            AirlineFacade.MofidyAirlineDetails(loginToken,a);
+           AirLine airLine= _airlineDao.Get(a.Id);
+            Clear(loginToken);
+            Assert.IsTrue(airLine.User_Name == "modifyTest");
+        }
         [TestMethod]
 
         public void ChangePassword()
         {
-            
-            AirlineFacade.ChangeMyPassword(Token,airline.Password,"newpassword");
-            airline.Password = "newpassword";
-            Assert.IsTrue(airline.Password == airlineDao.Get(airline.Id).Password);
+            AirLine a = GetAirLine(TestResurces.a2);
+            LoginToken<AirLine> loginToken = new LoginToken<AirLine>
+            {
+                User = a,
+            };
+
+            AirlineFacade.ChangeMyPassword(loginToken, a.Password, "newpassword");
+            a.Password = "newpassword";
+            Assert.IsTrue(a.Password == _airlineDao.Get(a.Id).Password);
+            Clear(loginToken);
         }
-       
+
         [TestMethod]
         public void GetAllTicketstest()
         {
-            List<Ticket> tickets = (List<Ticket>)AirlineFacade.GetAllTickets(Token);
-            Assert.IsTrue(tickets != null);
+            AirLine a = testingTools.GetAirLine();
+            LoginToken<AirLine> loginToken = new LoginToken<AirLine>
+            {
+                User = a,
+            };
+            List<Ticket> tickets = (List<Ticket>)AirlineFacade.GetAllTickets(loginToken);
+            Assert.IsTrue(tickets.Count>0);
         }
-      
+
+        AirLine GetAirLine(AirLine a)
+        {
+            try
+            {
+                _airlineDao.Add(a);
+            }
+            catch (Exception)
+            {
+
+                a = _airlineDao.GetAirLineByUserName(a.User_Name);
+            }
+            return a;
+        }
+
+        void Clear(LoginToken<AirLine>loginToken)
+        {
+            List<Flight> flights = (List<Flight>)AirlineFacade.GetAllComapnyFlights(loginToken);
+            flights.ForEach(flight => AirlineFacade.CancelFlight(loginToken, flight));
+            _airlineDao.Remove(loginToken.User);
+        }
     }
 }

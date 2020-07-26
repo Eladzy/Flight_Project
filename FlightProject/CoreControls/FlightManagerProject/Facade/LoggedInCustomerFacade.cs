@@ -96,7 +96,6 @@ namespace FlightManagerProject
 
         }
 
-
         public IList<JObject> GetCustomerFlightsJson(LoginToken<Customer> token, long id)
         {
             if (token.User.Id == id)
@@ -111,7 +110,6 @@ namespace FlightManagerProject
             }
         }
 
-
         public JObject UpdateCustomerDetails(LoginToken<Customer> token, long id,string fname,string lname,string phone,string address)
         {
             Customer c = _customerDAO.Get(id);
@@ -122,6 +120,7 @@ namespace FlightManagerProject
             _customerDAO.Update(c);
             return _customerDAO.Get(id).ToJsonPresentable();
         }//revisit id parameter might be unnecessery
+
         public bool ChangePassword(LoginToken<Customer> token,string oldPassword,string newPassword)
         {
             if (oldPassword == token.User.Password)
