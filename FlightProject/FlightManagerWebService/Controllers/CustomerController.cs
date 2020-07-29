@@ -24,7 +24,7 @@ namespace FlightProjectWebServices//test pending
                 return GetTokenFacade();
             }
         }
-        public LoggedInCustomerFacade GetTokenFacade()
+        private LoggedInCustomerFacade GetTokenFacade()
         {
             //_token = new LoginToken<Customer>();---->Basic auth
             //Request.Properties.TryGetValue("tokenResult", out object tokenResult);---->Basic auth

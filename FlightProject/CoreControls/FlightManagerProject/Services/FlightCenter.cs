@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
+using System.Configuration;
 using System.Threading.Tasks;
+//[assembly: log4net.Config.XmlConfigurator(Watch =true)]
 namespace FlightManagerProject
-{
+{    
     public class FlightCenter
     {
         private static FlightCenter _instance;
+      //  private static readonly log4net.ILog log = LogHelper.GetLog();
         private static readonly object key = new object();
         private static System.Timers.Timer timer;
         /// <summary>
@@ -18,7 +19,7 @@ namespace FlightManagerProject
         {
             timer = new System.Timers.Timer
             {
-                Interval = ConfigurationUtils.CLEAN_DB_INTERVAL
+                Interval =  ConfigurationUtils.CLEAN_DB_INTERVAL
             };
             timer.Elapsed += CheckTime;
             timer.Start();

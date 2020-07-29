@@ -238,6 +238,7 @@ namespace FlightManagerProject
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@id", t.Id);
+                    connection.Open();
                     cmd.ExecuteNonQuery();
                 }
 

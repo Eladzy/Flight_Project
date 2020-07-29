@@ -112,7 +112,10 @@ namespace FlightManagerProject
             {
                 _airlineDAO.Update(airline);
             }
-            throw new ExceptionUserNotFound();
+            else
+            {
+                throw new ExceptionUserNotFound();
+            }
             
         }
         /// <summary>

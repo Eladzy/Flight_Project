@@ -12,25 +12,17 @@ namespace FlightProjectTesting.UnitTest
 
         AirLineMsSqlDao _airlineDao = new AirLineMsSqlDao();
 
-        DataAccessTestingTools testingTools = new DataAccessTestingTools();
+        DataAccessTestingTools _testingTools = new DataAccessTestingTools();
 
-        static LoggedInAirLineFacade AirlineFacade { get; set; }
+        static LoggedInAirLineFacade _facade = new LoggedInAirLineFacade();
 
 
         [TestMethod]
         public void CreateFlights()
         {
             bool isIncluded = false;
-            AirLine a = TestResurces.a2;
-            try
-            {
-                _airlineDao.Add(a);
-            }
-            catch (Exception)
-            {
-
-                a = _airlineDao.GetAirLineByUserName(a.User_Name);
-            }
+            AirLine a = GetAirLine(TestResurces.a2);
+           
             LoginToken<AirLine> loginToken = new LoginToken<AirLine>
             {
                 User = a,
@@ -44,28 +36,32 @@ namespace FlightProjectTesting.UnitTest
                 Origin_Country_Code = 32,
                 Remaining_Tickets = 250
             };
-           AirlineFacade.CreateFlight(loginToken,f);
-            List<Flight> flights = (List<Flight>)AirlineFacade.GetAllComapnyFlights(loginToken);
+           _facade.CreateFlight(loginToken,f);
+            List<Flight> flights = (List<Flight>)_facade.GetAllComapnyFlights(loginToken);
             foreach (Flight flight in flights)
             {
-                Type type = f.GetType();
-                PropertyInfo[] properties =type.GetProperties();
-                foreach (PropertyInfo property in properties)
+                if (flight.AirLine_Id == f.AirLine_Id && flight.Departure_Time == f.Departure_Time && flight.Landing_Time == f.Landing_Time && f.Origin_Country_Code == flight.Origin_Country_Code && flight.Destination_Country_Code == f.Destination_Country_Code)
                 {
-                    
-                    if(property.GetValue(flight)==property.GetValue(f))
-                    {
-                        isIncluded = true;
-                    }
-                    else
-                    {
-                        if(property.Name != "Id")
-                        {
-                            isIncluded = false;
-                           break;
-                        }
-                    }  
+                    isIncluded = true;
                 }
+                //Type type = f.GetType();
+                //PropertyInfo[] properties =type.GetProperties();
+                //foreach (PropertyInfo property in properties)
+                //{
+                    
+                //    if(Equals(property.GetValue(flight),property.GetValue(f)))
+                //    {
+                //        isIncluded = true;
+                //    }
+                //    else
+                //    {
+                //        if(property.Name != "Id")
+                //        {
+                //            isIncluded = false;
+                //           break;
+                //        }
+                //    }  
+                //}
                 _flightsDao.Remove(flight);
                 if (isIncluded)
                 {
@@ -73,8 +69,6 @@ namespace FlightProjectTesting.UnitTest
                     Assert.IsTrue(isIncluded);
                 }
             }
-            //flights.ForEach(flight => AirlineFacade.CancelFlight(loginToken, flight));
-            //_airlineDao.Remove(loginToken.User);
             Clear(loginToken);
             Assert.IsTrue(isIncluded);
         }
@@ -98,14 +92,14 @@ namespace FlightProjectTesting.UnitTest
                 Origin_Country_Code = 32,
                 Remaining_Tickets = 250
             };
-            AirlineFacade.CreateFlight(loginToken, f);
-            List<Flight> flights = (List<Flight>)AirlineFacade.GetAllComapnyFlights(loginToken);
+            _facade.CreateFlight(loginToken, f);
+            List<Flight> flights = (List<Flight>)_facade.GetAllComapnyFlights(loginToken);
             if (flights.Count == 0)
             {
                 throw new AssertFailedException("no flights were pulled");
             }
-            flights.ForEach(flight => AirlineFacade.CancelFlight(loginToken, flight));
-            flights= (List<Flight>)AirlineFacade.GetAllComapnyFlights(loginToken);
+            flights.ForEach(flight => _facade.CancelFlight(loginToken, flight));
+            flights= (List<Flight>)_facade.GetAllComapnyFlights(loginToken);
             _airlineDao.Remove(loginToken.User);
             Assert.IsTrue(flights.Count == 0);
         }
@@ -130,15 +124,15 @@ namespace FlightProjectTesting.UnitTest
                 Origin_Country_Code = 32,
                 Remaining_Tickets = 250
             };
-            AirlineFacade.CreateFlight(loginToken, f);
-            List<Flight> flights = (List<Flight>)AirlineFacade.GetAllComapnyFlights(loginToken);
+            _facade.CreateFlight(loginToken, f);
+            List<Flight> flights = (List<Flight>)_facade.GetAllComapnyFlights(loginToken);
             if (flights.Count == 0)
             {
                 throw new AssertFailedException("no flights were pulled");
             }
-            Flight flight1 = flights[1];
+            Flight flight1 = flights[0];
             flight1.Remaining_Tickets = 55;
-            AirlineFacade.UpdateFlight(loginToken, flight1);
+            _facade.UpdateFlight(loginToken, flight1);
             flight1 = _flightsDao.Get(flight1.Id);
             //flights.ForEach(flight => AirlineFacade.CancelFlight(loginToken, flight));
             //_airlineDao.Remove(loginToken.User);
@@ -158,7 +152,7 @@ namespace FlightProjectTesting.UnitTest
                 User = a,
             };
             a.User_Name = "modifyTest";
-            AirlineFacade.MofidyAirlineDetails(loginToken,a);
+            _facade.MofidyAirlineDetails(loginToken,a);
            AirLine airLine= _airlineDao.Get(a.Id);
             Clear(loginToken);
             Assert.IsTrue(airLine.User_Name == "modifyTest");
@@ -173,7 +167,7 @@ namespace FlightProjectTesting.UnitTest
                 User = a,
             };
 
-            AirlineFacade.ChangeMyPassword(loginToken, a.Password, "newpassword");
+            _facade.ChangeMyPassword(loginToken, a.Password, "newpassword");
             a.Password = "newpassword";
             Assert.IsTrue(a.Password == _airlineDao.Get(a.Id).Password);
             Clear(loginToken);
@@ -182,12 +176,12 @@ namespace FlightProjectTesting.UnitTest
         [TestMethod]
         public void GetAllTicketstest()
         {
-            AirLine a = testingTools.GetAirLine();
+            AirLine a = _testingTools.GetAirLine();
             LoginToken<AirLine> loginToken = new LoginToken<AirLine>
             {
                 User = a,
             };
-            List<Ticket> tickets = (List<Ticket>)AirlineFacade.GetAllTickets(loginToken);
+            List<Ticket> tickets = (List<Ticket>)_facade.GetAllTickets(loginToken);
             Assert.IsTrue(tickets.Count>0);
         }
 
@@ -196,6 +190,7 @@ namespace FlightProjectTesting.UnitTest
             try
             {
                 _airlineDao.Add(a);
+                a = _airlineDao.GetAirLineByUserName(a.User_Name);
             }
             catch (Exception)
             {
@@ -207,8 +202,8 @@ namespace FlightProjectTesting.UnitTest
 
         void Clear(LoginToken<AirLine>loginToken)
         {
-            List<Flight> flights = (List<Flight>)AirlineFacade.GetAllComapnyFlights(loginToken);
-            flights.ForEach(flight => AirlineFacade.CancelFlight(loginToken, flight));
+            List<Flight> flights = (List<Flight>)_facade.GetAllComapnyFlights(loginToken);
+            flights.ForEach(flight => _facade.CancelFlight(loginToken, flight));
             _airlineDao.Remove(loginToken.User);
         }
     }

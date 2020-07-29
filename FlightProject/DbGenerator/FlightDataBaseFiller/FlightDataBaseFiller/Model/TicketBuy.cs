@@ -7,7 +7,7 @@ using FlightManagerProject;
 
 namespace FlightDataBaseFiller
 {
-    class TicketBuy
+    class TicketBuy///not used
     {
 
         private LoginService GetLoginService;

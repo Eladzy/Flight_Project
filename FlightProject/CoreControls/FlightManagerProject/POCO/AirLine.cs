@@ -61,7 +61,7 @@ namespace FlightManagerProject
 
         public override bool Equals(object obj)
         {
-            if (this == null & obj == null)
+            if (this == null && obj == null)
                 return true;
             if (this == null || obj == null)
                 return false;

@@ -17,7 +17,7 @@ namespace FlightProjectTesting.UnitTest
             Flight flight;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand cmd = new SqlCommand(" SELECT TOP 1 * FROM FLIGHTS WHERE F_REMAINING_TICKETS >1;"))
+                using (SqlCommand cmd = new SqlCommand(" SELECT TOP 1 * FROM FLIGHTS WHERE F_REMAINING_TICKETS >1;",connection))
                 {
                     cmd.CommandType = System.Data.CommandType.Text;
                     connection.Open();
@@ -45,7 +45,7 @@ namespace FlightProjectTesting.UnitTest
             Customer customer;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("SELECT TOP 1* FROM CUSTOMERS ORDER BY NEWID() "))
+                using (SqlCommand cmd = new SqlCommand("SELECT TOP 1* FROM CUSTOMERS ORDER BY NEWID() ", connection))
                 {
                     cmd.CommandType = System.Data.CommandType.Text;
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -76,11 +76,13 @@ namespace FlightProjectTesting.UnitTest
             AirLine airLine;
             using(SqlConnection connection=new SqlConnection(connectionString))
             {
-                using(SqlCommand cmd=new SqlCommand(" SELECT TOP 1* FROM AIRLINES ORDER BY NEWID() ;"))
+                using(SqlCommand cmd=new SqlCommand((" SELECT TOP 1* FROM AIRLINE ORDER BY NEWID() ;"),connection))
                 {
+                    connection.Open();
                     cmd.CommandType = System.Data.CommandType.Text;
                     SqlDataReader reader = cmd.ExecuteReader();
-                    connection.Open();
+                    while (reader.Read())
+                    {
                     if (reader.HasRows)
                     {
                         airLine = new AirLine
@@ -92,13 +94,12 @@ namespace FlightProjectTesting.UnitTest
                             CountryCode = (long)reader["AL_COUNTRYCODE"]
                         };
                         return airLine;
-                    }
-                    else
-                    {
-                        throw new ExceptionUserNotFound("Airline Not Found");
+                    }                  
                     }
                 }
+               
             }
+            throw new ExceptionUserNotFound("Airline Not Found");
         }
     }
 }

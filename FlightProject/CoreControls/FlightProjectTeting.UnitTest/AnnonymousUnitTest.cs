@@ -32,7 +32,7 @@ namespace FlightProjectTesting.UnitTest
         public void GetAvailableFlightLst()
         {
 
-            List<Flight> flights = (List<Flight>)FlightCenter.GetInstance().GetFacade(null).GetAvailableFlightsJson();
+            List<JObject> flights = (List<JObject>)FlightCenter.GetInstance().GetFacade(null).GetAvailableFlightsJson();
             Assert.IsTrue(flights.Count > 1);
         }
         [TestMethod]
@@ -95,9 +95,10 @@ namespace FlightProjectTesting.UnitTest
         public void RegisterAirline()
         {
             AirLine a = TestResurces.a1;
-
-            FlightCenter.GetInstance().GetFacade(null).RegisterAirline(a.User_Name, a.Password, a.AirLine_Name, a.CountryCode.ToString(), "as2as@aad.com");
-            Assert.IsTrue(_airlineDao.GetAirLineByUserName(a.User_Name).Id != 0);
+            FlightCenter.GetInstance().GetFacade(null).RegisterAirline(a.User_Name, a.Password, a.AirLine_Name,"as2as@aad.com",a.CountryCode.ToString());
+            AirLine a1 = _airlineDao.GetAirLineByUserName(a.User_Name);
+            Assert.IsTrue(a1.Id != 0);
+            _airlineDao.Remove(a1);
         }
 
         [TestMethod]
@@ -105,8 +106,12 @@ namespace FlightProjectTesting.UnitTest
         {
             Customer c = TestResurces.c2;
             FlightCenter.GetInstance().GetFacade(null).RegisterCustomer(c.User_Name, c.Password, c.First_Name, c.Last_Name, c.Address, c.Phone_Number, c.Credit_Card_Number, "dadad@elasdsd.com");
-            Assert.IsTrue(_customerDao.GetCustomerByUserName(c.User_Name).Id!=0);
+            Customer c1 = (_customerDao.GetCustomerByUserName(c.User_Name));
+            Assert.IsTrue(c1.Id!=0);
+            _customerDao.Remove(c1);
         }
+
+       
     }
 }
  

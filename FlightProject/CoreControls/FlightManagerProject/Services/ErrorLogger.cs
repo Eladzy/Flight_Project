@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Configuration;
 
 namespace FlightManagerProject
 {
@@ -13,7 +14,7 @@ namespace FlightManagerProject
         /// Logs Error messages and stack trace+timestamp
         /// </summary>
 
-        private static readonly string Path = ConfigurationUtils.errorLog;
+        private static readonly string Path = ConfigurationUtils.errorLog;//ConfigurationManager.AppSettings["errorLog"];
         private static readonly object key = new object();
 
         public static void Logger(Exception e)//TODO improve to a daily report

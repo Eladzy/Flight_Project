@@ -13,6 +13,7 @@ namespace FlightDataBaseFiller
 
         private static LoginToken<Administrator> Token;
         private static LoggedInAdminFacade Facade;
+        private static AnonymousFacade _anonymousFacade = new AnonymousFacade();
        static DataSendUnit()
        {
             Administrator administrator = new Administrator();
@@ -89,7 +90,7 @@ namespace FlightDataBaseFiller
                     }
                 }
             }
-                return flights;
+                return _anonymousFacade.GetAllFlights().ToList();
         }
         private static void BuyTickets(int ticketsPerCustomer,List<Customer>customers,List<Flight>flights)
         {
