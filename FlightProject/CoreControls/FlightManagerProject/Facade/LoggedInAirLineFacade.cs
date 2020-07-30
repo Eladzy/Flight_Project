@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace FlightManagerProject
@@ -45,8 +46,11 @@ namespace FlightManagerProject
         /// <param name="newPassword"></param>
         public void ChangeMyPassword(LoginToken<AirLine> token, string oldPassword, string newPassword)
         {
-            if (oldPassword == token.User.Password)
+            var reg = new Regex(@"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$");
+            if (oldPassword == token.User.Password&&reg.IsMatch(newPassword))
             {
+               
+
                 AirLine airLine = new AirLine
                 {
                     Id = token.User.Id,
@@ -59,9 +63,13 @@ namespace FlightManagerProject
                 };
                 _airlineDAO.Update(airLine);
             }
-            else
+            else if(oldPassword != token.User.Password)
             {
                 throw new ExceptionWrongPassword();
+            }
+            else
+            {
+                throw new ArgumentException();
             }
         }
         /// <summary>

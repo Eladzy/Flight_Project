@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace FlightManagerProject
@@ -123,7 +124,8 @@ namespace FlightManagerProject
 
         public bool ChangePassword(LoginToken<Customer> token,string oldPassword,string newPassword)
         {
-            if (oldPassword == token.User.Password)
+            var reg = new Regex(@"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$");
+            if (oldPassword == token.User.Password&&reg.IsMatch(newPassword))
             {
                 Customer c = token.User;
                 c.Password = newPassword;

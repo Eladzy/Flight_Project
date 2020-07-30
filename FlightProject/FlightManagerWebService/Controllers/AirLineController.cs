@@ -199,10 +199,28 @@ namespace FlightProjectWebServices
         }
 
         [HttpPut]
-        [Route("api/airline/changemypassword/{oldPassword}/{newPassword}")]
-        public IHttpActionResult ChangeMyPassword([FromBody]string oldPassword, [FromBody] string newPassword)
+        [Route("api/airline/changemypassword")]
+        public IHttpActionResult ChangeMyPassword([FromBody]string[] passwords)
         {
-            throw new NotImplementedException();//TODO check regex
+            try
+            {
+                Facade.ChangeMyPassword(Token, passwords[0], passwords[1]);
+                return Ok();
+
+            }
+            catch (ExceptionWrongPassword)
+            {
+                return StatusCode(HttpStatusCode.Unauthorized);
+            }
+            catch (ArgumentException)
+            {
+                return StatusCode(HttpStatusCode.BadRequest);
+            }
+            catch (Exception)
+            {
+
+                return InternalServerError();
+            }
         }
 
         [HttpPut]

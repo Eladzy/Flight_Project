@@ -49,8 +49,10 @@ namespace FlightProjectTesting.UnitTest
             {
                 User = c
             };
-            var ticket= customerFacade.PurchaseTicket(loginToken,testingTools.GetFlight());
+            Flight f = testingTools.GetFlight();
+            var ticket= customerFacade.PurchaseTicket(loginToken,f);
              Assert.IsTrue(ticket ==_ticketsDao.Get(ticket.Id));
+            _ticketsDao.Remove(ticket);
 
         }
 

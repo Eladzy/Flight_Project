@@ -48,8 +48,8 @@ namespace FlightProjectTesting.UnitTest
                 using (SqlCommand cmd = new SqlCommand("SELECT TOP 1* FROM CUSTOMERS ORDER BY NEWID() ", connection))
                 {
                     cmd.CommandType = System.Data.CommandType.Text;
-                    SqlDataReader reader = cmd.ExecuteReader();
                     connection.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
                         customer = new Customer

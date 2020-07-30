@@ -40,28 +40,24 @@ namespace FlightProjectTesting.UnitTest
             List<Flight> flights = (List<Flight>)_facade.GetAllComapnyFlights(loginToken);
             foreach (Flight flight in flights)
             {
-                if (flight.AirLine_Id == f.AirLine_Id && flight.Departure_Time == f.Departure_Time && flight.Landing_Time == f.Landing_Time && f.Origin_Country_Code == flight.Origin_Country_Code && flight.Destination_Country_Code == f.Destination_Country_Code)
+                Type type = f.GetType();
+                PropertyInfo[] properties = type.GetProperties();
+                foreach (PropertyInfo property in properties)
                 {
-                    isIncluded = true;
+
+                    if (Equals(property.GetValue(flight).ToString(), property.GetValue(f).ToString()))
+                    {
+                        isIncluded = true;
+                    }
+                    else
+                    {
+                        if (property.Name != "Id")
+                        {
+                            isIncluded = false;
+                            break;
+                        }
+                    }
                 }
-                //Type type = f.GetType();
-                //PropertyInfo[] properties =type.GetProperties();
-                //foreach (PropertyInfo property in properties)
-                //{
-                    
-                //    if(Equals(property.GetValue(flight),property.GetValue(f)))
-                //    {
-                //        isIncluded = true;
-                //    }
-                //    else
-                //    {
-                //        if(property.Name != "Id")
-                //        {
-                //            isIncluded = false;
-                //           break;
-                //        }
-                //    }  
-                //}
                 _flightsDao.Remove(flight);
                 if (isIncluded)
                 {
