@@ -234,7 +234,7 @@ namespace FlightProjectWebServices
 
 
         [HttpGet]
-        [ResponseType(typeof(IEnumerable<Flight>))]//todo fix parameters and  url string
+        [ResponseType(typeof(IEnumerable<Flight>))]//todo fix parameters and  url string or remove
         [Route("api/searchFlightRange")]
         public IHttpActionResult GetByTimeRange(long? flightId, long? airlineId, int? originCountryId, int? destinationCountryId, string depTime1, string depTime2, string landTime1, string landTime2)
         {
