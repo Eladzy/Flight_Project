@@ -11,7 +11,7 @@ namespace FlightManagerProject
     public class LoggedInCustomerFacade : AnonymousFacade,ILoggedInCustomerFacade
     {
 
-        TicketsMsSqlDao ticketsDao = new TicketsMsSqlDao();
+        TicketsMsSqlDao _ticketsDao = new TicketsMsSqlDao();
         FlightsMsSqlDao flightsDao = new FlightsMsSqlDao();
         /// <summary>
         /// validate that the ticket actually belongs to the customer
@@ -21,14 +21,14 @@ namespace FlightManagerProject
         /// <param name="ticket"></param>
         public void CancelTicket(LoginToken<Customer> token, long flightId)
         {
-            Ticket ticket =ticketsDao.GetTicketByInfo(token.User.Id,flightId);
+            Ticket ticket =_ticketsDao.GetTicketByInfo(token.User.Id,flightId);
             if(ticket.Customer_Id!=token.User.Id||ticket==null)
             {
                 Exception e=new TicketNotFoundException ("Ticket is either not belong to user or not found");
                 ErrorLogger.Logger(e);
                 throw e;
             }
-            ticketsDao.Remove(ticket);
+            _ticketsDao.Remove(ticket);
             Flight flight = flightsDao.Get(ticket.Flight_Id);
             if (flight != null)
             {
@@ -68,10 +68,10 @@ namespace FlightManagerProject
                     Flight_Id = flight.Id,
                     Customer_Id = token.User.Id
                 };
-                ticketsDao.Add(ticket);
+                _ticketsDao.Add(ticket);
                 flight.Remaining_Tickets--;
                 flightsDao.Update(flight);
-                return ticket;
+                return _ticketsDao.GetTicketByInfo(ticket.Customer_Id,ticket.Flight_Id);
             }
            ExceptionTicketSoldOut e= new ExceptionTicketSoldOut();
             ErrorLogger.Logger(e);

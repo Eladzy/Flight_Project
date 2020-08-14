@@ -88,7 +88,7 @@ namespace FlightProjectTesting.UnitTest
         public void AirlineUsernameCheck()
         {
             AirLine a = _testingTools.GetAirLine();
-            Assert.IsTrue(FlightCenter.GetInstance().GetFacade(null).IsCustomerUsernameAvailable(a.User_Name) == false && FlightCenter.GetInstance().GetFacade(null).IsCustomerUsernameAvailable("4324234") == true);
+            Assert.IsTrue(FlightCenter.GetInstance().GetFacade(null).IsAirlineusernameAvailable(a.User_Name) == false && FlightCenter.GetInstance().GetFacade(null).IsCustomerUsernameAvailable("4324234") == true);
         }
 
         [TestMethod]

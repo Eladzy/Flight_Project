@@ -163,8 +163,8 @@ namespace FlightProjectTesting.UnitTest
                 User = a,
             };
 
-            _facade.ChangeMyPassword(loginToken, a.Password, "newpassword");
-            a.Password = "newpassword";
+            _facade.ChangeMyPassword(loginToken, a.Password, "newpassword1");
+            a.Password = "newpassword1";
             Assert.IsTrue(a.Password == _airlineDao.Get(a.Id).Password);
             Clear(loginToken);
         }

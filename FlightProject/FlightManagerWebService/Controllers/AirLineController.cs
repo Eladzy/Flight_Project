@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Reflection;
 using System.Security.Claims;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -167,15 +168,18 @@ namespace FlightProjectWebServices
 
         [HttpPut]
         [ResponseType(typeof(Flight))]
-        [Route("api/airline/updateflight/{flight}")]
+        [Route("api/airline/updateflight")]
         public IHttpActionResult UpdateFlight([FromBody]Flight flight)
         {
+            GetTokenFacade();
             if (flight.AirLine_Id != Token.User.Id)
             {
                 return StatusCode(HttpStatusCode.BadRequest);
             }
+            
             try
             {
+                //if(flight is Flight&&flight.Id>0)
                 this.Facade.UpdateFlight(Token, flight);
                 return Ok(flight);
             }

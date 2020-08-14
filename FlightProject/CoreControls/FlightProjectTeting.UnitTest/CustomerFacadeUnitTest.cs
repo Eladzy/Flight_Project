@@ -10,6 +10,7 @@ namespace FlightProjectTesting.UnitTest
     public class CustomerFacadeTest
     {
         CustomerMsSqlDao _customerDao = new CustomerMsSqlDao();
+        FlightsMsSqlDao _flightDao = new FlightsMsSqlDao();
         DataAccessTestingTools testingTools = new DataAccessTestingTools();
         TicketsMsSqlDao _ticketsDao = new TicketsMsSqlDao();
         static Customer _customer = TestResurces.c1;
@@ -33,7 +34,7 @@ namespace FlightProjectTesting.UnitTest
         [TestMethod]
         public void TicketTesting()
         {
-            Customer c;
+            Customer c=TestResurces.c3;
             try
             {
                 c= _customerDao.GetCustomerByUserName(_customer.User_Name);
@@ -53,13 +54,14 @@ namespace FlightProjectTesting.UnitTest
             var ticket= customerFacade.PurchaseTicket(loginToken,f);
              Assert.IsTrue(ticket ==_ticketsDao.Get(ticket.Id));
             _ticketsDao.Remove(ticket);
+            Clear(loginToken);
 
         }
 
         [TestMethod]
         public void PurchaseFlight()
         {
-            Customer c;
+            Customer c = TestResurces.c1;
             try
             {
                 c = _customerDao.GetCustomerByUserName(_customer.User_Name);
@@ -77,6 +79,7 @@ namespace FlightProjectTesting.UnitTest
             };
             var ticket = customerFacade.PurchaseTicket(loginToken, testingTools.GetFlight());
             Assert.IsTrue(ticket == _ticketsDao.GetTicketByInfo(loginToken.User.Id, ticket.Flight_Id));
+            Clear(loginToken);
         }
 
         [TestMethod]
@@ -144,6 +147,14 @@ namespace FlightProjectTesting.UnitTest
             facade.ChangePassword(loginToken, c.Password, newPassword);
             c= _customerDao.GetCustomerByUserName(_customer.User_Name);
             Assert.IsTrue(c.Password == newPassword);
+            Clear(loginToken);
+        }
+
+        void Clear(LoginToken<Customer> loginToken)
+        {
+            List<Flight> flights = (List<Flight>)_flightDao.GetFlightsByCustomer(loginToken.User);
+            flights.ForEach(f => _ticketsDao.Remove(_ticketsDao.GetTicketByInfo(loginToken.User.Id, f.Id)));
+            _customerDao.Remove(loginToken.User);
         }
     }
 }
