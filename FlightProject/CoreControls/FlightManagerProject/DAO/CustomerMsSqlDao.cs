@@ -138,11 +138,11 @@ namespace FlightManagerProject
         /// <summary>
         /// gets customer by its username
         /// </summary>
-        /// <param name="userName"></param>
+        /// <param name="username"></param>
         /// <returns></returns>
-        public Customer GetCustomerByUserName(string userName)
+        public Customer GetCustomerByUserName(string username)
         {
-            if (string.IsNullOrWhiteSpace(userName))
+            if (string.IsNullOrWhiteSpace(username))
             {
                 ExceptionUserNotFound e = new ExceptionUserNotFound("Sent null or white space to getCustomerByUserName");
                 ErrorLogger.Logger(e);
@@ -155,7 +155,7 @@ namespace FlightManagerProject
                 using (SqlCommand cmd = new SqlCommand(query, connection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@userName", userName.ToString());
+                    cmd.Parameters.AddWithValue("@user", username.ToString());
                     connection.Open();
                     SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
                     while (reader.Read())
@@ -167,7 +167,7 @@ namespace FlightManagerProject
                             Id = (long)reader["C_ID"],
                             First_Name = (string)reader["C_FIRST_NAME"],
                             Last_Name = (string)reader["C_LAST_NAME"],
-                            User_Name = userName,
+                            User_Name = username,
                             Password = (string)reader["C_PASSWORD"],
                             Address = (string)reader["C_ADDRESS"],
                             Phone_Number = (string)reader["C_PHONE_NUMBER"],

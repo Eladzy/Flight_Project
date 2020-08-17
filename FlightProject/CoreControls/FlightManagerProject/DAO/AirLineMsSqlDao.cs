@@ -119,7 +119,7 @@ namespace FlightManagerProject
                 using (SqlCommand cmd = new SqlCommand(query, connection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@user", username);
+                    cmd.Parameters.AddWithValue("@user", username.ToString());
                     connection.Open();
                     SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
                     while (reader.Read())
