@@ -136,12 +136,15 @@ namespace FlightManagerProject
                             };
 
                         }
-                        else
-                        {
+                       else
+                       {
                             throw new ExceptionUserNotFound("Airline Not Found");
-                        }
+                       }
                     }
                 }
+            }
+            if (airLine.Id == 0 || string.IsNullOrWhiteSpace(airLine.AirLine_Name)){
+                throw new ExceptionUserNotFound("Airline Not Found");
             }
             return airLine;
         }

@@ -129,6 +129,7 @@ namespace FlightManagerProject
             catch(Exception e)
             {
                 ErrorLogger.Logger(e);
+                
             }
             return false;
         }
@@ -151,10 +152,10 @@ namespace FlightManagerProject
             {
                 return false;
             }
-            //if (!IsCustomerUsernameAvailable(username))
-            //{
-            //    return false;
-            //}
+            if (!IsUsernameAvailable(username))
+            {
+                return false;
+            }
             if (fname.All(Char.IsDigit)|| lname.All(Char.IsDigit))
             {
                 return false;
@@ -208,6 +209,10 @@ namespace FlightManagerProject
             string namePattern = @"^([a-zA-Z]){2,16}$";
             string countryPattern = @"^\d{1,3}$";
             var mail = new EmailAddressAttribute();
+            if (!IsUsernameAvailable(username))
+            {
+                return false;
+            }
             if (!mail.IsValid(email))
             {
                 return false;
@@ -251,6 +256,11 @@ namespace FlightManagerProject
                 return false;
             }
             return true;
+        }
+
+        public bool IsUsernameAvailable(string username)
+        {
+            return (IsAirlineusernameAvailable(username) && IsCustomerUsernameAvailable(username));
         }
     }
 }

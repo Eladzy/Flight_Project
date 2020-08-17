@@ -23,5 +23,6 @@ namespace FlightManagerProject
         bool IsCustomerUsernameAvailable(string username);
         bool IsAirlineusernameAvailable(string username);
         bool RegisterAirline(string username, string password, string name, string countrycode, string email);
+        bool IsUsernameAvailable(string username);
     }
 }

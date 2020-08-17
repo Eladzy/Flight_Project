@@ -376,7 +376,22 @@ namespace FlightProjectWebServices
             }
             return BadRequest();
         }
-        
+        [HttpGet]
+        [Route("api/checkusername/")]
+        [ResponseType(typeof(bool))]
+        public IHttpActionResult IsUsernameAvailable([FromUri]string username)
+        {
+            try
+            {
+                return Ok(instance.GetFacade(token).IsUsernameAvailable(username));
+            }
+            catch (Exception)
+            {
+
+                return InternalServerError();
+            }
+           
+        }
     }
 
 }
