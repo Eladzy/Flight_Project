@@ -87,14 +87,22 @@ namespace FlightManagerProject
         /// <returns></returns>
         public bool TryAirLineLogin(string username, string password,out LoginToken<AirLine>token)
         {
-           
+            AirLine airline=new AirLine();
             if (string.IsNullOrWhiteSpace(username))
             {
                 token = null;
                 return false;
             }
-              
-            AirLine airline= AirlineDao.GetAirLineByUserName(username);
+            try
+            {
+                airline= AirlineDao.GetAirLineByUserName(username);
+
+            }
+            catch (ExceptionUserNotFound)
+            {
+                token = null;
+                return false;
+            }
             if (airline == null)
             {
 
@@ -134,7 +142,18 @@ namespace FlightManagerProject
                 return false;
             }
 
-            Customer customer = CustomerDao.GetCustomerByUserName(username);
+            Customer customer = new Customer();
+            try
+            {
+                  customer= CustomerDao.GetCustomerByUserName(username);
+
+            }
+            catch (ExceptionUserNotFound)
+            {
+
+                token = null;
+                return false;
+            }
             if (customer== null||customer.Id==0)
             {
 
