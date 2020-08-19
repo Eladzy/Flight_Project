@@ -189,12 +189,7 @@ namespace FlightProjectWebServices//test pending
         [Route("api/customer/cancelticket")]
         public IHttpActionResult CancelTicket([FromBody]long flightId)
         {
-            //if (ticket.Customer_Id != _token.User.Id)
-            //{
-            //    TicketNotFoundException  ex = new TicketNotFoundException ("Ticket Either Not Found Or Not Belond To The User");
-            //    ErrorLogger.Logger(ex);
-            //    return StatusCode(HttpStatusCode.Forbidden);
-            //}
+       
             try
             {
                 _facade.CancelTicket(_token, flightId);

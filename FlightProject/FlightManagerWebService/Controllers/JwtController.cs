@@ -48,8 +48,10 @@ namespace FlightProjectWebServices
                     var token = loginService.TryLogin(username, password);
                     if (token != null)
                     {
+                        
                         var jwtToken = CreateJwtToken(token);
-                        return Ok(jwtToken);
+                        string[] dataString = new string[] { jwtToken, username, token.GetUser().GetType().Name };
+                        return Ok(dataString);
                     }
                 }
                 catch (ExceptionWrongPassword e)

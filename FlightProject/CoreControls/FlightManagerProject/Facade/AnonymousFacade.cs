@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace FlightManagerProject
 {
+    /// <summary>
+    /// facade class wrapping DAO methods by user privileges
+    /// annonymous facade holds universal method allowed for every type of user including non registered users
+    /// </summary>
     public class AnonymousFacade : FacadeBase, IAnonymousFacade
     {
 
@@ -21,28 +25,40 @@ namespace FlightManagerProject
         }
 
 
-
-
+        /// <summary>
+        /// view list of countries
+        /// </summary>
+        /// <returns></returns>
         public IList<Country> GetCountries()
         {
             return _countryDAO.GetAll();
         }
 
-
+        /// <summary>
+        /// view all flights
+        /// </summary>
+        /// <returns></returns>
         public IList<Flight> GetAllFlights()
         {
             return _flightDAO.GetAll();
 
         }
 
-
+        /// <summary>
+        /// view all available flights
+        /// </summary>
+        /// <returns></returns>
         public Dictionary<Flight, int> GetAllFlightsVacancy()
         {
             Dictionary<Flight, int> flightVancy = _flightDAO.GetAllFlightsVacancy();
             return flightVancy;
         }
 
-
+        /// <summary>
+        /// get a flight by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Flight GetFlightById(long id)
         {
             if (id != 0)
@@ -54,41 +70,65 @@ namespace FlightManagerProject
             return null;
         }
 
-
+        /// <summary>
+        /// get a list of flights by a departure date
+        /// </summary>
+        /// <param name="departureDate"></param>
+        /// <returns></returns>
         public IList<Flight> GetFlightsByDepatrureDate(DateTime departureDate)
         {
             return _flightDAO.GetFlightsByDepatrureDate(departureDate);
         }
 
-
+        /// <summary>
+        /// get a list of flights by destination
+        /// </summary>
+        /// <param name="countryCode"></param>
+        /// <returns></returns>
         public IList<Flight> GetFlightsByDestinationCountry(int countryCode)
         {
             List<Flight> flights = _flightDAO.GetFlightsByDestinationCountry(countryCode).ToList();
             return flights;
         }
 
-
+        /// <summary>
+        /// get a list of flights by arrival time
+        /// </summary>
+        /// <param name="landingDate"></param>
+        /// <returns></returns>
         public IList<Flight> GetFlightsByLandingDate(DateTime landingDate)
         {
             List<Flight> flights = _flightDAO.GetFlightsByLandingDate(landingDate).ToList();
             return flights;
         }
 
-
+        /// <summary>
+        /// get a list of flights by origin country
+        /// </summary>
+        /// <param name="countryCode"></param>
+        /// <returns></returns>
         public IList<Flight> GetFlightsByOriginCountry(int countryCode)
         {
             List<Flight> flights = _flightDAO.GetFlightsByOriginCountry(countryCode).ToList();
             return flights;
         }
 
-
+        /// <summary>
+        /// allows search flights by parameters
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="airlineId"></param>
+        /// <param name="originCountryId"></param>
+        /// <param name="destinationCountryId"></param>
+        /// <param name="departureTime"></param>
+        /// <param name="landingTime"></param>
+        /// <returns></returns>
         public IList<JObject> SearchFlights(long? id, long? airlineId, int? originCountryId, int? destinationCountryId, DateTime? departureTime, DateTime? landingTime)
         {
             List<JObject> flights =
                 _flightDAO.SearchFlight(id, airlineId, originCountryId, destinationCountryId, departureTime, landingTime).ToList();
             return flights;
         }
-
 
         public IList<Flight> SearchFlightsByTimeSpan(long? id, long? airlineId, int? originCountryId, int? destinationCountryId, DateTime? departureTime1,
             DateTime? departureTime2, DateTime? landingTime1, DateTime? landingTime2)//todo fix or remove
@@ -98,13 +138,19 @@ namespace FlightManagerProject
             return flights;
         }
 
-
+        /// <summary>
+        /// retrieves a user friendly list of flights
+        /// </summary>
+        /// <returns></returns>
         public IList<Newtonsoft.Json.Linq.JObject> GetAvailableFlightsJson()
         {
             return _flightDAO.GetAvailableFlightsJson();
         }
 
-
+        /// <summary>
+        /// retrieves  a user friendly list of airlines
+        /// </summary>
+        /// <returns></returns>
         public IList<Newtonsoft.Json.Linq.JObject> GetAirlinesJson()
         {
             return _airlineDAO.GetAirlinesJson();
@@ -133,7 +179,19 @@ namespace FlightManagerProject
             }
             return false;
         }
-
+      
+        /// <summary>
+        /// verfies input and registering user
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="fname"></param>
+        /// <param name="lname"></param>
+        /// <param name="address"></param>
+        /// <param name="phoneNum"></param>
+        /// <param name="creditCard"></param>
+        /// <param name="mail"></param>
+        /// <returns></returns>
         public bool RegisterCustomer(string username,string password,string fname, string lname,//need improving
             string address,string phoneNum,string creditCard,string mail)
         {
@@ -181,7 +239,12 @@ namespace FlightManagerProject
 
             return true;
         }
-
+  
+        /// <summary>
+        /// checks if airline username is available
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public bool IsAirlineusernameAvailable(string username)
         {
             try
@@ -199,7 +262,15 @@ namespace FlightManagerProject
             }
             return false;
         }
-
+        /// <summary>
+        /// verifies input and registering airline company
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="name"></param>
+        /// <param name="email"></param>
+        /// <param name="countrycode"></param>
+        /// <returns></returns>
         public bool RegisterAirline(string username, string password,string name, string email, string countrycode)
         {
             //user name exists-false
@@ -257,7 +328,13 @@ namespace FlightManagerProject
             }
             return true;
         }
-
+       
+        /// <summary>
+        /// combining the user name checks into both tables
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        /// 
         public bool IsUsernameAvailable(string username)
         {
             return (IsAirlineusernameAvailable(username) && IsCustomerUsernameAvailable(username));

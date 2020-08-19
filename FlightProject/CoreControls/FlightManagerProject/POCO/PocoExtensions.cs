@@ -45,6 +45,7 @@ namespace FlightManagerProject
         {
             JObject airline = new JObject(
                 new JProperty("id", a.Id),
+                  new JProperty("username", a.User_Name),
                 new JProperty("name", a.AirLine_Name),
                  new JProperty("roles", typeof(AirLine).Name),
                 new JProperty("countryName", _countryDao.Get(a.CountryCode).Country_Name)
