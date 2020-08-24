@@ -61,7 +61,7 @@ namespace FlightDataBaseFiller
                 }
             }
 
-            this.Countries=countries;//might cause race condition?
+            this.Countries=countries;
 
         }
 

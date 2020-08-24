@@ -14,7 +14,7 @@ namespace FlightDataBaseFiller
 {
     public class ViewModel: IDataErrorInfo,INotifyPropertyChanged
     {
-      //  Dispatcher ViewModelDispatcher { get; set; }
+      
 
         private bool isEnabled;
         public bool IsEnabled
@@ -29,8 +29,6 @@ namespace FlightDataBaseFiller
             }
         }
 
-
-       
 
        // public  ObservableCollection<string> Status = new ObservableCollection<string>();
        
@@ -131,7 +129,7 @@ namespace FlightDataBaseFiller
             {
                 case ("NumCustomers") :
                  
-                    if (NumCustomers * TicketsPerCustomer > NumFlights * NumAirlines* int.Parse(ConfigurationManager.AppSettings["TicketsPerFlight"]))
+                    if (DataRatio())
                     {
                         result = "Tickets and customers ratio exceeds the amount of available tickets";
                         return result;
@@ -161,7 +159,7 @@ namespace FlightDataBaseFiller
                     return result; ;
                 case ("NumFlights"):
 
-                    if (NumCustomers * TicketsPerCustomer > NumFlights *  NumAirlines * Int32.Parse(ConfigurationManager.AppSettings["TicketsPerFlight"]))
+                    if (DataRatio())
                     {
                         result = "Tickets and customers ratio exceeds the amount of available tickets";
                         return result;
@@ -170,7 +168,7 @@ namespace FlightDataBaseFiller
                     return result;
                 case ("TicketsPerCustomer"):
                  
-                    if (NumCustomers * TicketsPerCustomer > NumFlights  * NumAirlines * Int32.Parse(ConfigurationManager.AppSettings["TicketsPerFlight"]))
+                    if (DataRatio())
                     {
                         result = "Tickets and customers ratio exceeds the amount of available tickets";
                         return result; 
@@ -216,6 +214,14 @@ namespace FlightDataBaseFiller
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        bool DataRatio()
+        {
+            if(NumCustomers * TicketsPerCustomer > NumFlights * NumAirlines * Int32.Parse(ConfigurationManager.AppSettings["TicketsPerFlight"])){
+                return true;
+            }
+            return false;
         }
 
     }

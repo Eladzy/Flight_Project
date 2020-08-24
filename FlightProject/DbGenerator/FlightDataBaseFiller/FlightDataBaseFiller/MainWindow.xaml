@@ -36,6 +36,6 @@
         <TextBlock x:Name="flightErrorBlk" HorizontalAlignment="Left" Margin="429,18,0,0" TextWrapping="Wrap"  Text="{Binding ErrorCollection[NumFlights],UpdateSourceTrigger=PropertyChanged}" FontSize="8" Foreground="Red" VerticalAlignment="Top" Grid.Row="3"/>
         <TextBlock x:Name="ticketsErrorBlk" HorizontalAlignment="Left" Margin="429,19,0,0" TextWrapping="Wrap"  Text="{Binding ErrorCollection[TicketsPerCustomer],UpdateSourceTrigger=PropertyChanged}" FontSize="8" Foreground="Red" VerticalAlignment="Top" Grid.Row="4"/>
         <TextBlock x:Name="countriesErrorBlk" HorizontalAlignment="Left" Margin="429,15,0,0" TextWrapping="Wrap"  Text="{Binding ErrorCollection[NumCountries],UpdateSourceTrigger=PropertyChanged}" FontSize="8" Foreground="Red" VerticalAlignment="Top" Grid.Row="5"/>
-        <Button x:Name="StartBtn" Content="Start" Command="{Binding Command}" HorizontalAlignment="Left" Margin="282,19.4,0,0" Grid.Row="6" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="StartBtn" Content="Start" Command="{Binding Command,Mode=TwoWay}" HorizontalAlignment="Left" Margin="282,19.4,0,0" Grid.Row="6" VerticalAlignment="Top" Width="75"/>
     </Grid>
 </Window>
