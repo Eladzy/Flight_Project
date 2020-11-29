@@ -8,7 +8,7 @@ namespace FlightManagerProject
 {
     public class Flight : IPoco
     {
-        public long Id { get; set; }//todo automatic id generator
+        public long Id { get; set; }
         public long AirLine_Id { get; set; }
         public long Origin_Country_Code { get; set; }
         public long Destination_Country_Code { get; set; }

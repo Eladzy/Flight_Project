@@ -50,21 +50,31 @@ namespace FlightManagerProject
         /// <param name="password"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public bool TryAdminLogin(string username, string password,out LoginToken<Administrator>token)
+        public bool TryAdminLogin(string username, string password,out LoginToken<Administrator>token)//todo fix temp login
         {
+            Administrator administrator = new Administrator();
             if (string.IsNullOrWhiteSpace(username))
             {
                 token = null;
                 return false;
             }
-                
-            if (username.ToUpper() == ConfigurationUtils.adminUserName.ToUpper() )
+            try
             {
-                if (password.ToUpper() == ConfigurationUtils.adminPassword.ToUpper())
+                administrator = AdminMsSqlDao.GetByUsername(username);
+            }
+            catch (ExceptionUserNotFound)
+            {
+
+                token = null;
+                return false;
+            }    
+            if (username == administrator.User_Name )
+            {
+                if (password == administrator.Password)
                 {
                     token = new LoginToken<Administrator>
                     {
-                        User = new Administrator()
+                        User = administrator
                     };
                     return true;
                 }
@@ -178,5 +188,5 @@ namespace FlightManagerProject
             }
 
         }
-    }
+   }
 }

@@ -140,6 +140,13 @@ namespace FlightManagerProject
             else
                 throw new ExceptionFlightNotFound();
         }
+
+        /// <summary>
+        /// get the required data for user interface
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public JObject GetUserDetails(LoginToken<AirLine> token, long id)
         {
             if (token.User.Id == id)

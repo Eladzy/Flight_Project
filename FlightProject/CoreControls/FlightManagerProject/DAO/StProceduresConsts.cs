@@ -77,5 +77,9 @@ namespace FlightManagerProject
         public const string GET_FLIGHTS_BY_AIRLINE = "GET_FLIGHTS_BY_AIRLINE";
 
         public const string GET_TICKET_BY_INFO = "GET_TICKET_BY_INFO";
+
+        public const string GET_ADMIN_BY_ID = "GET_ADMIN_BY_ID";
+
+        public const string GET_ADMIN_BY_USER_NAME = "GET_ADMIN_BY_USERNAME";
     }
 }

@@ -8,10 +8,10 @@ namespace FlightManagerProject
 {
   public abstract class FacadeBase
     {
-       /*protected*/public IAirLineDao _airlineDAO;
-       /*protected*/ public ICountryDao _countryDAO;
-       /*protected*/public  ICustomerDao _customerDAO;
-        /*protected*/public IFlightsDao _flightDAO;
-        /*protected*/public  ITicketDao _ticketDAO;
+       public IAirLineDao _airlineDAO;
+       public ICountryDao _countryDAO;
+       public  ICustomerDao _customerDAO;
+       public IFlightsDao _flightDAO;
+       public  ITicketDao _ticketDAO;
     }
 }

@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin\Administrator.cs" />
+    <Compile Include="DAO\AdminMsSqlDao.cs" />
     <Compile Include="DAO\AirLineMsSqlDao.cs" />
     <Compile Include="DAO\CountryMsSqlDao.cs" />
     <Compile Include="DAO\CustomerMsSqlDao.cs" />

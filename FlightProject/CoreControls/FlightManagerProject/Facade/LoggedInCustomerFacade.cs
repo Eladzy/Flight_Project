@@ -78,7 +78,12 @@ namespace FlightManagerProject
             throw e;
             
         }
-
+        /// <summary>
+        /// get requiered data for user interface
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public JObject GetUserDetails(LoginToken<Customer> token, long id)
         {
             if (token.User.Id==id)
@@ -96,7 +101,12 @@ namespace FlightManagerProject
             }
 
         }
-
+        /// <summary>
+        /// gets flights by customer in a json format
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IList<JObject> GetCustomerFlightsJson(LoginToken<Customer> token, long id)
         {
             if (token.User.Id == id)
@@ -110,7 +120,16 @@ namespace FlightManagerProject
                 throw e;
             }
         }
-
+        /// <summary>
+        /// updates customer user details
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="id"></param>
+        /// <param name="fname"></param>
+        /// <param name="lname"></param>
+        /// <param name="phone"></param>
+        /// <param name="address"></param>
+        /// <returns></returns>
         public JObject UpdateCustomerDetails(LoginToken<Customer> token, long id,string fname,string lname,string phone,string address)
         {
             Customer c = _customerDAO.Get(id);
@@ -121,7 +140,13 @@ namespace FlightManagerProject
             _customerDAO.Update(c);
             return _customerDAO.Get(id).ToJsonPresentable();
         }//revisit id parameter might be unnecessery
-
+        /// <summary>
+        /// changes logged in customer password
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="oldPassword"></param>
+        /// <param name="newPassword"></param>
+        /// <returns></returns>
         public bool ChangePassword(LoginToken<Customer> token,string oldPassword,string newPassword)
         {
             var reg = new Regex(@"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$");

@@ -8,7 +8,7 @@ namespace FlightManagerProject
 {
      public class AirLine : IUser, IPoco
     {
-        public long Id { get; set; }//todo automatic id generator
+        public long Id { get; set; }
         public string AirLine_Name { get; set; }
         public string User_Name { get; set; }
         public string Password { get; set; }
