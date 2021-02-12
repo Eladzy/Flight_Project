@@ -9,7 +9,7 @@ using FlightManagerProject;
 namespace FlightProjectWebServices
 {
     [BasicAuthAdminLogin]
-   // [Authorize(Roles ="Administrator")]
+   // [Authorize(Roles ="Administrator")] 
     public class AdminController : ApiController
     {
 

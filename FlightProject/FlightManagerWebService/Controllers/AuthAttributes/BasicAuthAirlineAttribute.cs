@@ -9,7 +9,10 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 
 namespace FlightProjectWebServices
-{ 
+{
+    /// <summary>
+    /// basic auth attribute not corrently on use due to jwt token
+    /// </summary>
     public class BasicAuthAirlineAttribute : AuthorizationFilterAttribute,IBasicAuthIUserAttribute
     {
         public override void OnAuthorization(HttpActionContext actionContext)

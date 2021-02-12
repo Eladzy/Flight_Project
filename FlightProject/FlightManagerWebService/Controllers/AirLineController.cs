@@ -15,7 +15,7 @@ namespace FlightProjectWebServices
 {
    // [BasicAuthAirline]
     [Authorize(Roles ="AirLine")]
-    public class AirLineController : ApiController//TODO: rethink if the id null check is neccessery or even logical
+    public class AirLineController : ApiController
     {
 
         private LoggedInAirLineFacade Facade 
@@ -34,6 +34,7 @@ namespace FlightProjectWebServices
             LoggedInAirLineFacade facade;
             try
             {
+                //basic auth code is here only for documentation
                 //ActionContext.Request.Properties.TryGetValue("tokenResult", out object tokenResult);
                 //Token = (LoginToken<AirLine>)tokenResult;
                 var identity = User.Identity as ClaimsIdentity;
@@ -179,7 +180,7 @@ namespace FlightProjectWebServices
             
             try
             {
-                //if(flight is Flight&&flight.Id>0)
+               
                 this.Facade.UpdateFlight(Token, flight);
                 return Ok(flight);
             }

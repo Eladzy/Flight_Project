@@ -11,13 +11,15 @@ using FlightManagerProject;
 
 namespace FlightProjectWebServices
 {
+    /// <summary>
+    /// basic auth attribute not corrently on use due to jwt token
+    /// </summary>
     public class BasicAuthCustomerAttribute : AuthorizationFilterAttribute, IBasicAuthIUserAttribute
     {
 
 
         public override void OnAuthorization(HttpActionContext actionContext)
         {
-            //null check
             if (actionContext.Request.Headers.Authorization == null)
             {
                 actionContext.Request.CreateResponse(System.Net.HttpStatusCode.Unauthorized, "Unauthorized");
@@ -33,7 +35,6 @@ namespace FlightProjectWebServices
 
             string username = credentialsArray[0];
             string password = credentialsArray[1];
-            //ILoginTokenBase tokenResult;
 
             LoginToken<Customer> tokenResult;
             LoginService loginService = new LoginService();
@@ -46,7 +47,6 @@ namespace FlightProjectWebServices
                 }
             }
 
-            //tokenResult = loginService.TryLogin(username, password); how to make the casting?
 
             // stops the request
             actionContext.Request.CreateResponse(System.Net.HttpStatusCode.Unauthorized, "Unauthorized");
