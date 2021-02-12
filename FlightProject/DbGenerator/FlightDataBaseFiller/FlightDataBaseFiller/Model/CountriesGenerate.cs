@@ -4,7 +4,7 @@
 //using System.Text;
 //using System.Threading.Tasks;
 //using FlightManagerProject;
-
+////                                                                BACKUP IN CASE COUNTRIES API IS DOWN
 //namespace FlightDataBaseFiller
 //{
 //    class CountriesGenerate

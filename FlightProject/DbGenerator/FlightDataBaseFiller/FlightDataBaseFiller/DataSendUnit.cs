@@ -29,11 +29,60 @@ namespace FlightDataBaseFiller
             Task t = new Task(() =>
             {
                 Debug.WriteLine("1st add data task");
-                Addcountries(countries);
-                AddAirlines(airLines);
-                AddCustomers(customers);
-                List<Flight> flights=AddFlights(countries, airLines,numberOfFlights);
-                BuyTickets(ticketsPerCustomer, customers, flights);
+                try
+                {
+                    Addcountries(countries);
+                    ProgressUpdate.TransferMessage("...Countries added");
+                }
+                catch (Exception e)
+                {
+
+                    ProgressUpdate.TransferMessage("Error: addeing countries failed" + e.Message);
+                }
+                Debug.WriteLine("1st add data task");
+                try
+                {
+                    AddAirlines(airLines);
+                    ProgressUpdate.TransferMessage("...Airlines added");
+                }
+                catch (Exception e)
+                {
+
+                    ProgressUpdate.TransferMessage("Error: Adding airlines failed" + e.Message);
+                }
+                Debug.WriteLine("1st add data task");
+                try
+                {
+                    AddCustomers(customers);
+                    ProgressUpdate.TransferMessage("...Customers added");
+                }
+                catch (Exception e)
+                {
+
+                    ProgressUpdate.TransferMessage("Error: Adding Customers failed" + e.Message);
+                }
+                try
+                {
+                    List<Flight> flights = AddFlights(countries, airLines, numberOfFlights);
+                    ProgressUpdate.TransferMessage("...Flights added");
+                    try
+                    {
+                        BuyTickets(ticketsPerCustomer, customers, flights);
+                        ProgressUpdate.TransferMessage("...Tickets bought");
+                    }
+                    catch (Exception ex)
+                    {
+
+                        ProgressUpdate.TransferMessage("Error: Buying tickets failed code"+ex.Message);
+                    }
+                   
+                }
+                catch (Exception e)
+                {
+
+                    ProgressUpdate.TransferMessage("Error: Flights creation failed"+ e.Message);
+                }
+               
             });
            
             return t;

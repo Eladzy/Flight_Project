@@ -30,9 +30,10 @@ namespace FlightDataBaseFiller
         }
 
 
-       // public  ObservableCollection<string> Status = new ObservableCollection<string>();
+       
        
         private int numCustomers;//bound to the user input
+
         public int NumCustomers {
             get
             {
@@ -55,6 +56,7 @@ namespace FlightDataBaseFiller
             set
             {
                 numAirlines = Math.Abs(value);
+                NotifyPropertyChanged("numAirlines");
             }
         }
 
@@ -97,6 +99,27 @@ namespace FlightDataBaseFiller
                 ticketsPerCustomer = Math.Abs(value);
             }
         }
+        
+        private ObservableCollection<string> updates = new ObservableCollection<string>();
+        public ObservableCollection<string> Updates
+        {
+            get {
+                return updates;
+            }
+        }
+
+        private string update;
+
+        public string Update
+        {
+            get { return update; }
+            set {
+                update = value;
+                Updates.Add(value);
+            }
+            
+        }
+
 
         public DelegateCommand Command { get; set; }
 

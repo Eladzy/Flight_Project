@@ -29,8 +29,15 @@
         <TextBox x:Name="ticketsPerBox" Text="{Binding TicketsPerCustomer,Mode=TwoWay, ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}"  Grid.Row="4" Margin="15,10" Height="15" Width="70"/>
         <TextBlock Text="Countries" Grid.Row="5" Margin="30,10"/>
         <TextBox x:Name="countriesBox" Text="{Binding NumCountries,Mode=TwoWay,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" Margin="15,10" Height="15" Width="70"/>
-        <ProgressBar x:Name="generalProgress" HorizontalAlignment="Center" Grid.Row="7" Height="20" Width="550"/>
-        <ListBox Name="infoLstBox" HorizontalAlignment="Center" ItemsSource="{Binding Status,Mode=TwoWay}" Grid.Row="8" MinWidth="500" Height="120" MaxHeight="120" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+        <ListBox Name="infoLstBox" HorizontalAlignment="Center" ItemsSource="{Binding Updates}" Grid.Row="8" MinWidth="500" Height="120" MaxHeight="120" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <Label Content="{Binding Updates}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
         <TextBlock x:Name="customerErrorBlk" HorizontalAlignment="Left" Margin="429,16,0,0" TextWrapping="Wrap" Text="{Binding ErrorCollection[NumCustomers],UpdateSourceTrigger=PropertyChanged}" FontSize="8" Foreground="Red"  VerticalAlignment="Top" Grid.Row="2"/>
         <TextBlock x:Name="airlineErrorBlk" HorizontalAlignment="Left" Margin="429,15,0,0" TextWrapping="Wrap" Text="{Binding ErrorCollection[NumAirlines],UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Grid.Row="1" FontSize="8" Foreground="Red"/>
         <TextBlock x:Name="flightErrorBlk" HorizontalAlignment="Left" Margin="429,18,0,0" TextWrapping="Wrap"  Text="{Binding ErrorCollection[NumFlights],UpdateSourceTrigger=PropertyChanged}" FontSize="8" Foreground="Red" VerticalAlignment="Top" Grid.Row="3"/>
