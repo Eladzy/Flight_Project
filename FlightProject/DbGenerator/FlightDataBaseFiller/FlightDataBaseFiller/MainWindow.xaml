@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FlightDataBaseFiller"
+       
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="650">
     <Grid>
@@ -33,7 +34,7 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <Label Content="{Binding Updates}"/>
+                        <TextBlock Text="{Binding }"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

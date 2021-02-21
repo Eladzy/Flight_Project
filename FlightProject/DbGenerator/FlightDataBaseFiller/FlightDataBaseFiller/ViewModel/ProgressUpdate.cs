@@ -8,10 +8,10 @@ namespace FlightDataBaseFiller
 {
     class ProgressUpdate
     {
-       static ViewModel _viewModel = new ViewModel();
-        public static void TransferMessage(string message)
+      // static ViewModel _viewModel = new ViewModel();
+        public static  void TransferMessage(string message)
         {
-            _viewModel.Update = message;
+          //  ViewModel.Update(message);
         }
     }
 }

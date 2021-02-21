@@ -81,8 +81,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\FillCommandcs.cs" />
+    <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="DataReceivingUnit.cs" />
     <Compile Include="DataSendUnit.cs" />
+    <Compile Include="Helpers\FieldValidationHelper.cs" />
     <Compile Include="Model\AirlineDictionary.cs" />
     <Compile Include="Model\AirlineFactory.cs" />
     <Compile Include="Model\CountriesGenerate.cs" />

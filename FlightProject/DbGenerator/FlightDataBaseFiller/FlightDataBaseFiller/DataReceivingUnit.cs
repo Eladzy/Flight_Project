@@ -17,12 +17,11 @@ namespace FlightDataBaseFiller
         public int NumberOfCountries { get; set; }
         public int NumberOfTicketsPerCustomer { get; set; }
         private static object Key = new object();
-      
-
-        
 
 
-        public DataReceivingUnit(int customersNum,int airlinesNum, int flightsNum, int countriesNum, int ticketsNum)
+
+
+        public DataReceivingUnit(int customersNum, int airlinesNum, int flightsNum, int countriesNum, int ticketsNum)
         {
             this.NumberOfCustomers = customersNum;
             this.NumberOfAirlines = airlinesNum;
@@ -37,27 +36,27 @@ namespace FlightDataBaseFiller
             List<Country> filteredCountries = new List<Country>();
             List<Country> countries = restCountries.Countries.ToList();
             Random rnd = new Random();
-           NumberOfCountries=NumberOfCountries <= 249 ? NumberOfCountries : 249;
+            NumberOfCountries = NumberOfCountries <= 249 ? NumberOfCountries : 249;
             for (int i = 0; i < NumberOfCountries; i++)
             {
                 int index = rnd.Next(0, countries.Count);
                 filteredCountries.Add(countries[index]);
                 countries.RemoveAt(index);
             }
-            
+
             return filteredCountries;
         }
 
-        private List<AirLine> GetAirLines(List<Country>countries)
+        private List<AirLine> GetAirLines(List<Country> countries)
         {
-            lock(Key)
+            lock (Key)
             {
                 Random rnd = new Random();
-                AirlineFactory GetAirline = new AirlineFactory();          
+                AirlineFactory GetAirline = new AirlineFactory();
                 List<AirLine> airLines = new List<AirLine>();
-                for (int i= 0; i <NumberOfAirlines;i++)
+                for (int i = 0; i < NumberOfAirlines; i++)
                 {
-                  airLines.Add(GetAirline.Generate(countries[rnd.Next(1,countries.Count)]));
+                    airLines.Add(GetAirline.Generate(countries[rnd.Next(1, countries.Count)]));
                 }
                 return airLines;
             }
@@ -76,58 +75,29 @@ namespace FlightDataBaseFiller
         }
 
 
-         //private List<Flight> GetFlights(List<AirLine>airlines,List<Country>countries)//to finish
-         //{
-         //   FlightFactory flightFactory = new FlightFactory();
-         //   Random rnd = new Random();
-         //   List<Flight> flights = new List<Flight>();
-         //   foreach (AirLine airline in airlines)
-         //   {
-         //       for (int i = 0; i < NumberOfFlights; i++)
-         //       {
-         //           try
-         //           {
-                        
-                        
-         //               flights.Add(flightFactory.Generate(airline, countries[rnd.Next(0, countries.Count)], countries[rnd.Next(0, countries.Count)]));
-                        
-         //           }
-         //           catch (Exception e)//rethink
-         //           {
 
-         //               ErrorLogger.Logger(e);
-         //               i--;
-         //           }
-         //       }
-         //   }
-         //   return flights;
-         //}
 
-       
+
 
         public async void GenerateDataAsync()
         {
-            List<Country> countries=new List<Country>();
-            List<Customer> customers=new List<Customer>();
-            List<AirLine> airlines=new List<AirLine>();
-            List<Flight> flights=new List<Flight>();
-            
+            List<Country> countries = new List<Country>();
+            List<Customer> customers = new List<Customer>();
+            List<AirLine> airlines = new List<AirLine>();
+            List<Flight> flights = new List<Flight>();
+
             await Task.Run(() =>
             {
                 countries = GetCountries();
                 customers = GetCustomers();
                 airlines = GetAirLines(countries);
-             //   flights = GetFlights(airlines, countries);
                 Debug.WriteLine("datarecieving task");
-                
 
-            }).ContinueWith((Task t)=> DataSendUnit.AddData(customers, airlines, countries,NumberOfFlights,NumberOfTicketsPerCustomer).Start());
-            
-           
-            
-          //send to db
+
+            }).ContinueWith((Task t) => DataSendUnit.AddData(customers, airlines, countries, NumberOfFlights, NumberOfTicketsPerCustomer).Start());
+
         }
     }
 
-   
+
 }
