@@ -27,6 +27,7 @@ namespace FlightDataBaseFiller
             set
             {
                 isEnabled = value;
+                NotifyPropertyChanged("isEnabled");
             }
         }
 
@@ -73,6 +74,7 @@ namespace FlightDataBaseFiller
             set
             {
                 numCountries = Math.Abs(value);
+                NotifyPropertyChanged("numCountries");
             }
         }
 
@@ -86,6 +88,7 @@ namespace FlightDataBaseFiller
             set
             {
                 numFlights = Math.Abs(value);
+                NotifyPropertyChanged("numFlights");
             }
         }
 
@@ -99,6 +102,7 @@ namespace FlightDataBaseFiller
             set
             {
                 ticketsPerCustomer = Math.Abs(value);
+                NotifyPropertyChanged("ticketsPerCustomer");
             }
         }
 
@@ -215,7 +219,7 @@ namespace FlightDataBaseFiller
         {
             //make sure the number of bought tickets does not exceed the overall tickets
             //FormValueValidation(this.NumAirlines,this.NumCountries,this.NumCustomers,this.NumFlights,this.TicketsPerCustomer) bool?
-            IsEnabled = false;
+            this.IsEnabled = FieldValidationHelper.ErrorCollection.Values.All(v => string.IsNullOrEmpty(v));        
 
         }
 

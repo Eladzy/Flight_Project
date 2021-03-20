@@ -9,32 +9,41 @@ namespace FlightDataBaseFiller.Helpers
 {
     static class FieldValidationHelper
     {
-        private static bool DataRatio(int NumCustomers,int TicketsPerCustomer,int NumFlights,int NumAirlines)
+        public static Dictionary<string, string> ErrorCollection = new Dictionary<string, string>() 
+        { { "numCustomers","" },{ "ticketsPerCustomer","" },{ "numFlights","" },{ "numAirlines","" },{ "numCountries","" } };
+
+        private static bool DataRatio(int numCustomers,int ticketsPerCustomer,int numFlights,int numAirlines)
         {
-            if (NumCustomers * TicketsPerCustomer > NumFlights * NumAirlines * Int32.Parse(ConfigurationManager.AppSettings["TicketsPerFlight"]))
+            if (numCustomers * ticketsPerCustomer > numFlights * numAirlines * Int32.Parse(ConfigurationManager.AppSettings["TicketsPerFlight"]))
             {
                 return true;
             }
             return false;
         }
-        public static string InputValidation(string propertyName, int NumCustomers, int TicketsPerCustomer, int NumFlights, int NumAirlines,int numCountries)
+
+        
+
+        public static string InputValidation(string propertyName, int numCustomers, int ticketsPerCustomer, int numFlights, int numAirlines,int numCountries)
         {
-            //connect with dictionary to make sure error values are empty
+          
             string result = null;
             switch (propertyName)
             {
                 case ("NumCustomers"):
 
-                    if (DataRatio( NumCustomers, TicketsPerCustomer,NumFlights, NumAirlines))
+                    if (DataRatio( numCustomers, ticketsPerCustomer,numFlights, numAirlines))
                     {
                         result = "Tickets and customers ratio exceeds the amount of available tickets";
+                        ErrorCollection[propertyName] = result;
                         return result;
                     }
                     result = string.Empty;
+                    ErrorCollection[propertyName] = result;
                     return result;
                 case ("NumAirlines"):
 
                     result = string.Empty;
+
                     return result;
 
                 case ("NumCountries"):
@@ -42,36 +51,42 @@ namespace FlightDataBaseFiller.Helpers
                     if (numCountries == 0)
                     {
                         result = "Select any amount of countries";
+                        ErrorCollection[propertyName] = result;
                         return result;
                     }
                     else if (numCountries > 249)
                     {
                         result = "Maximum amount of countries is 249 ";
-
+                        ErrorCollection[propertyName] = result;
                         return result;
                     }
 
                     result = string.Empty;
+                    ErrorCollection[propertyName] = result;
                     return result; ;
                 case ("NumFlights"):
 
-                    if (DataRatio(NumCustomers, TicketsPerCustomer, NumFlights, NumAirlines)||(NumFlights>0&&NumAirlines==0))
+                    if (DataRatio(numCustomers, ticketsPerCustomer, numFlights, numAirlines)||(numFlights>0&&numAirlines==0))
                     {
                         result = "Tickets and customers ratio exceeds the amount of available tickets";
+                        ErrorCollection[propertyName] = result;
                         return result;
                     }
                     result = string.Empty;
+                    ErrorCollection[propertyName] = result;
                     return result;
                 case ("TicketsPerCustomer"):
 
-                    if (DataRatio(NumCustomers, TicketsPerCustomer, NumFlights, NumAirlines))
+                    if (DataRatio(numCustomers, ticketsPerCustomer, numFlights, numAirlines))
                     {
                         result = "Tickets and customers ratio exceeds the amount of available tickets";
+                        ErrorCollection[propertyName] = result;
                         return result;
                     }
                     result = string.Empty;
+                    ErrorCollection[propertyName] = result;
                     return result;
-                default: return string.Empty; ;
+                default: return string.Empty; 
             }
         }
     }
