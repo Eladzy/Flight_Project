@@ -49,17 +49,7 @@ namespace FlightProjectWebServices
             return Ok(flights);
         }
 
-        //[ResponseType(typeof(IEnumerable<AirLine>))]//move to admin controller
-        //[HttpGet]
-        //[Route("api/airlines")]
-        //private IHttpActionResult GetAllAirlineCompanies()
-        //{
-        //    List<AirLine> airLines = instance.GetFacade(token).GetAllAirlineCompanies().ToList();
-        //    if (airLines.Count == 0)
-        //        return StatusCode(HttpStatusCode.NoContent);          
-        //    return Ok(airLines);
-
-        //}
+      
 
             /// <summary>
             /// returns a list of flights with available tickets

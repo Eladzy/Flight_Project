@@ -9,7 +9,7 @@ using FlightManagerProject;
 namespace FlightProjectWebServices
 {
     [BasicAuthAdminLogin]
-   // [Authorize(Roles ="Administrator")] 
+    // [Authorize(Roles ="Administrator")] 
     public class AdminController : ApiController
     {
 
@@ -31,11 +31,11 @@ namespace FlightProjectWebServices
             return facade;
 
         }
-       
-   
+
+
         [HttpPost]
         [Route("api/admin/newcompany/{airline}")]
-        IHttpActionResult CreateNewAirline([FromBody]AirLine airline)
+        IHttpActionResult CreateNewAirline([FromBody] AirLine airline)
         {
             if (airline == null || airline.Id == 0)
             {
@@ -56,7 +56,7 @@ namespace FlightProjectWebServices
 
         [HttpPut]
         [Route("api/admin/updateairline/{airLine}")]
-        IHttpActionResult UpdateAirlineDetails([FromBody]AirLine airLine)
+        IHttpActionResult UpdateAirlineDetails([FromBody] AirLine airLine)
         {
             if (airLine == null || airLine.Id == 0)
                 return BadRequest();
@@ -75,7 +75,7 @@ namespace FlightProjectWebServices
 
         [HttpDelete]
         [Route("api/admin/removeairline/{airline}")]
-        IHttpActionResult RemoveAirline([FromBody]AirLine airline)
+        IHttpActionResult RemoveAirline([FromBody] AirLine airline)
         {
             if (airline == null || airline.Id == 0)
                 return BadRequest();
@@ -93,9 +93,9 @@ namespace FlightProjectWebServices
         }
         [HttpPost]
         [Route("api/admin/createnewcustomer/{customer}")]
-        public IHttpActionResult CreateNewCustomer([FromBody]Customer customer)
+        public IHttpActionResult CreateNewCustomer([FromBody] Customer customer)
         {
-            if (customer == null )
+            if (customer == null)
             {
                 return BadRequest();
             }
@@ -111,7 +111,7 @@ namespace FlightProjectWebServices
             }
             return Ok();
         }
-        public IHttpActionResult UpdateCustomerDetails([FromBody]Customer customer)
+        public IHttpActionResult UpdateCustomerDetails([FromBody] Customer customer)
         {
             if (customer == null || customer.Id == 0)
             {
@@ -129,7 +129,7 @@ namespace FlightProjectWebServices
             }
             return Ok();
         }
-        IHttpActionResult RemoveCustomer([FromBody]Customer customer)
+        IHttpActionResult RemoveCustomer([FromBody] Customer customer)
         {
             if (customer == null || customer.Id == 0)
             {
